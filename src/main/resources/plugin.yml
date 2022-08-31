@@ -1,0 +1,28 @@
+name: PrincipalPlugin
+version: '${version}'
+main: fr.silenthill99.principalplugin.Main
+api-version: 1.16
+authors: [ silenthill99 ]
+commands:
+  hrp:
+  radio:
+  menu:
+    permission: group.modo-stagiaire
+    permission-message: §4Vous n'avez pas accès à ceci !
+  logs:
+    permission: group.modo-stagiaire
+  options:
+    permission: group.fondateur
+    permission-message: §4Tu n'as pas accès à cette commande !
+  setspawn:
+    permission: oxydia.setspawn
+  spawn:
+  vanish:
+    aliases: v
+    permission: oxydia.vanish
+  showvanish:
+    permission: oxydia.vanish.show
+    permission-message: §4Vous n'avez pas accès à cette commande
+  builder:
+    permission: oxydia.builder
+    permission-message: §4Seuls les builders veulent faire cette commande !
