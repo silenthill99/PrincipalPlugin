@@ -106,8 +106,8 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
-		Player player = (Player) event.getEntity();
-		event.setCancelled(Main.getInstance().isFreeze(player));
+		if(event.getEntity() instanceof Player)
+			event.setCancelled(Main.getInstance().isFreeze((Player) event.getEntity()));
 	}
 
 	@EventHandler

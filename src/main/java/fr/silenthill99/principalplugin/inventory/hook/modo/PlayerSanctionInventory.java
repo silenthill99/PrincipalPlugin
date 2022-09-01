@@ -157,11 +157,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		switch (current.getType()) {
 		case GREEN_WOOL: {
 			if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Avertissements")) {
-				InventoryManager.openInventory(player, InventoryType.MODO_PLAYER_SANCTION, SanctionType.WARN, 1);
-				/*
-				 * if (!Panel.getInstance().titre.get(player).equalsIgnoreCase("Avertir")) {
-				 * Panel.getInstance().panel_modo(player, target, "Avertir", 1); }
-				 */
+				openInventory(player, target, SanctionType.WARN, 1);
 				return;
 			}
 			String name = ChatColor.stripColor(current.getItemMeta().getDisplayName());
