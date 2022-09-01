@@ -25,4 +25,4 @@ jobs:
       name: Upload Artifact
       with:
         name: PrincipalPlugin
-        path: builds/libs/*.jar
+        path: build/libs/*.jar
