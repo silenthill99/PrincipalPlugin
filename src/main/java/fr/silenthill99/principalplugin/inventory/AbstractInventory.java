@@ -40,7 +40,6 @@ public abstract class AbstractInventory<T extends SilenthillHolder> {
 	public void onPlayerJoin(PlayerJoinEvent e) {}
 	public void onPlayerLeft(PlayerQuitEvent e) {}
 	public void onInteract(PlayerInteractEvent e) {}
-	public void onInteractEntity(PlayerInteractAtEntityEvent e) {}
 	public abstract void openInventory(Player p, Object... args);
 	public void closeInventory(Player p, InventoryCloseEvent e) {}
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, T holder) {}
