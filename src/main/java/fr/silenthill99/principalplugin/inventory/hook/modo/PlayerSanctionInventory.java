@@ -87,8 +87,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL)
 							.setName(ChatColor.DARK_GREEN + itemName).toItemStack()); // add item and go to next slot
 			} else if (page == 2) {
-				sanctions.setItem(27, new ItemBuilder(Material.GREEN_WOOL)
-						.setName(ChatColor.DARK_GREEN + "Insultes HRP").toItemStack());
+				int slot = 27;
+				for (String itemName : Arrays.asList("Insultes HRP"))
+				{
+					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL)
+							.setName(ChatColor.DARK_GREEN + itemName).toItemStack());
+				}
 			}
 			break;
 		}

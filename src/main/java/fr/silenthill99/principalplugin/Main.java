@@ -58,6 +58,8 @@ public final class Main extends JavaPlugin
         getCommand("hrp").setExecutor(new Hrp());
         getCommand("logs").setExecutor(new Logs());
         getCommand("menu").setExecutor(new Menu());
+        getCommand("moderateur").setExecutor(new Moderateur());
+        getCommand("moderateur").setTabCompleter(new Staff());
         getCommand("options").setExecutor(new Options());
         getCommand("radio").setExecutor(new Radio());
         getCommand("radio").setTabCompleter(new Radio());

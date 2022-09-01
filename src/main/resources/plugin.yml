@@ -34,3 +34,7 @@ commands:
   stagiaire:
     permission: oxydia.stagiaire
     permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !
+  moderateur:
+    aliases: modo
+    permission: oxydia.modo
+    permission-message: §4Seuls les modérateurs peuvent faire cette commande !
