@@ -19,7 +19,7 @@ public class Spawn implements CommandExecutor
         }
 
         Player player = (Player) sender;
-        player.teleport(Main.getInstance().spawn);
+        player.teleport(Main.getInstance().getSpawn());
 
         return false;
     }
