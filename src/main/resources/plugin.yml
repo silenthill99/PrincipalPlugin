@@ -9,6 +9,10 @@ depend: [ Vault ]
 softdepend: [ LuckPerms ]
 
 commands:
+  administrateur:
+    aliases: admin
+    permission: oxydia.admin
+    permission-message: §4Seul les administrateurs peuvent faire cette commande !
   hrp:
   radio:
   menu:

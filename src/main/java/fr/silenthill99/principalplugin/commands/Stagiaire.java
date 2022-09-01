@@ -38,7 +38,7 @@ public class Stagiaire implements CommandExecutor {
         {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set modo-stagiaire");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode modérateur stagiaire !");
+            player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Modérateur Stagiaire !");
         }
         else if (args[0].equalsIgnoreCase("off"))
         {
@@ -48,7 +48,7 @@ public class Stagiaire implements CommandExecutor {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-                player.sendMessage(ChatColor.GREEN + "Vous avez quitté le mode modérateur stagiaire !");
+                player.sendMessage(ChatColor.GREEN + "Vous avez quitté le mode Modérateur Stagiaire !");
             }, 20);
         }
 

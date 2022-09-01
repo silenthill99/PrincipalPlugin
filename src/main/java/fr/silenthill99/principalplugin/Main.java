@@ -53,6 +53,8 @@ public final class Main extends JavaPlugin
 
     private void commands()
     {
+        getCommand("administrateur").setExecutor(new Administrateur());
+        getCommand("administrateur").setTabCompleter(new Staff());
         getCommand("builder").setExecutor(new Builder());
         getCommand("builder").setTabCompleter(new Staff());
         getCommand("hrp").setExecutor(new Hrp());

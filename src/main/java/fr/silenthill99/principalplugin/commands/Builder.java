@@ -42,7 +42,7 @@ public class Builder implements CommandExecutor
         {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set builder");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode builder !");
+            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Builder !");
         }
         else if (args[0].equalsIgnoreCase("off"))
         {
@@ -59,7 +59,7 @@ public class Builder implements CommandExecutor
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-                player.sendMessage(ChatColor.GREEN + "Vous avez désactivé le mode builder !");
+                player.sendMessage(ChatColor.GREEN + "Vous avez désactivé le mode Builder !");
             }, 20);
 
         }
