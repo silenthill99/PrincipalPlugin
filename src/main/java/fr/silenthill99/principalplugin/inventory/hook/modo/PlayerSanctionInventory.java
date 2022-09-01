@@ -76,7 +76,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 		switch (type) {
 		case WARN: {
-			avertir.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			avertir.addGlowingEffect();
 			sanctions.setItem(10, avertir.toItemStack());
 			if (page == 1) {
 				int slot = 27;
@@ -93,7 +93,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			break;
 		}
 		case BAN_TEMP: {
-			bannir_temporairement.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			bannir_temporairement.addGlowingEffect();
 			sanctions.setItem(11, bannir_temporairement.toItemStack());
 			if (page == 1) {
 				sanctions.setItem(27, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + "/HRP en mute")
@@ -102,7 +102,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			break;
 		}
 		case BAN: {
-			bannir.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			bannir.addGlowingEffect();
 			sanctions.setItem(12, bannir.toItemStack());
 			if (page == 1) {
 				sanctions.setItem(27, new ItemBuilder(Material.RED_WOOL)
@@ -122,12 +122,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			break;
 		}
 		case KICK: {
-			kick.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			kick.addGlowingEffect();
 			sanctions.setItem(14, kick.toItemStack());
 			break;
 		}
 		case MUTE_TEMP: {
-			tempmute.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			tempmute.addGlowingEffect();
 			ItemBuilder insultes_hrp = new ItemBuilder(Material.PINK_WOOL)
 					.setName(ChatColor.LIGHT_PURPLE + "Insultes HRP").setLore("Durée : 2 heures");
 
@@ -136,7 +136,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			break;
 		}
 		case MUTE: {
-			mute.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+			mute.addGlowingEffect();
 			sanctions.setItem(16, mute.toItemStack());
 			break;
 		}

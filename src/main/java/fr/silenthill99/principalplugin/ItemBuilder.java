@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -95,6 +96,14 @@ public class ItemBuilder
     {
         ItemMeta im = is.getItemMeta();
         im.addEnchant(ench, level, true);
+        is.setItemMeta(im);
+        return this;
+    }
+    
+    public ItemBuilder addGlowingEffect() {
+        ItemMeta im = is.getItemMeta();
+        im.addEnchant(Enchantment.DURABILITY, 1, true);
+        im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         is.setItemMeta(im);
         return this;
     }
