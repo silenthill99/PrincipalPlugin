@@ -13,32 +13,32 @@ commands:
     aliases: admin
     permission: oxydia.admin
     permission-message: §4Seul les administrateurs peuvent faire cette commande !
-  hrp:
-  radio:
-  menu:
-    permission: group.modo-stagiaire
-    permission-message: §4Vous n'avez pas accès à ceci !
-  logs:
-    permission: group.modo-stagiaire
-  options:
-    permission: group.fondateur
-    permission-message: §4Tu n'as pas accès à cette commande !
-  setspawn:
-    permission: oxydia.setspawn
-  spawn:
-  vanish:
-    aliases: v
-    permission: oxydia.vanish
-  showvanish:
-    permission: oxydia.vanish.show
-    permission-message: §4Vous n'avez pas accès à cette commande
   builder:
     permission: oxydia.builder
     permission-message: §4Seuls les builders peuvent faire cette commande !
-  stagiaire:
-    permission: oxydia.stagiaire
-    permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !
+  hrp:
+  logs:
+    permission: group.modo-stagiaire
+  menu:
+    permission: group.modo-stagiaire
+    permission-message: §4Vous n'avez pas accès à ceci !
   moderateur:
     aliases: modo
     permission: oxydia.modo
     permission-message: §4Seuls les modérateurs peuvent faire cette commande !
+  options:
+    permission: group.fondateur
+    permission-message: §4Tu n'as pas accès à cette commande !
+  radio:
+  setspawn:
+    permission: oxydia.setspawn
+  showvanish:
+    permission: oxydia.vanish.show
+    permission-message: §4Vous n'avez pas accès à cette commande
+  spawn:
+  stagiaire:
+    permission: oxydia.stagiaire
+    permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !
+  vanish:
+    aliases: v
+    permission: oxydia.vanish

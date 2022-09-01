@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.silenthill99.principalplugin.inventory.hook.DistributeurInventory;
 import fr.silenthill99.principalplugin.inventory.hook.PoleEmploiInventory;
+import fr.silenthill99.principalplugin.inventory.hook.PoubelleInventory;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminSanctionInventory;
 import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionErreurStaffInventory;
@@ -31,7 +32,8 @@ public enum InventoryType {
 	DIRECTION_RANK_UP(new DirectionRankUpInventory()),
 	DIRECTION_RANK_UP_SUPER(new DirectionRankUpSuperInventory()),
 	POLE_EMPLOI(new PoleEmploiInventory()),
-	DISTRIBUTEUR(new DistributeurInventory());
+	DISTRIBUTEUR(new DistributeurInventory()),
+	POUBELLE(new PoubelleInventory());
 	
 	private final AbstractInventory<?> inv;
 	

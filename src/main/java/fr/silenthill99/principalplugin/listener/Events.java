@@ -145,10 +145,16 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
-				&& event.getClickedBlock().getType().equals(Material.DROPPER)) {
-			event.setCancelled(true);
-			InventoryManager.openInventory(event.getPlayer(), InventoryType.DISTRIBUTEUR);
+		Player player = event.getPlayer();
+		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			if (event.getClickedBlock().getType().equals(Material.DROPPER)) {
+				event.setCancelled(true);
+				InventoryManager.openInventory(player, InventoryType.DISTRIBUTEUR);
+			}
+			else if (event.getClickedBlock().getType().equals(Material.CAULDRON))
+			{
+				InventoryManager.openInventory(player, InventoryType.POUBELLE);
+			}
 		}
 	}
 }
