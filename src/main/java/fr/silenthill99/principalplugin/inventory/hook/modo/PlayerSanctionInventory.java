@@ -165,7 +165,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				return;
 			}
 			String name = ChatColor.stripColor(current.getItemMeta().getDisplayName());
-			if (!name.isBlank()) {
+			if (!name.isEmpty()) {
 				player.closeInventory();
 				if (name.equals("Insultes HRP")) {
 					Bukkit.dispatchCommand(player,

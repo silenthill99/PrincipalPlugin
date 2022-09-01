@@ -55,7 +55,7 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 		case REDSTONE: {
 			player.closeInventory();
 			String name = ChatColor.stripColor(current.getItemMeta().getDisplayName());
-			if (!name.isBlank()) {
+			if (!name.isEmpty()) {
 				Bukkit.dispatchCommand(player, "warn " + target.getName() + " Erreur staff : " + name);
 			}
 			break;
