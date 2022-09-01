@@ -1,6 +1,5 @@
 package fr.silenthill99.principalplugin.commands;
 
-import fr.silenthill99.principalplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -8,8 +7,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+
+import fr.silenthill99.principalplugin.Main;
 
 public class Builder implements CommandExecutor
 {
@@ -46,7 +46,7 @@ public class Builder implements CommandExecutor
         {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fly " + player.getName() + " off");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "god " + player.getName() + " off");
-            if (Vanish.getInstance().vanished.contains(player.getName()))
+            if (Vanish.getVanished().contains(player.getName()))
             {
                 Bukkit.dispatchCommand(player, "vanish off");
             }

@@ -1,6 +1,8 @@
 package fr.silenthill99.principalplugin.commands;
 
-import fr.silenthill99.principalplugin.Main;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,22 +11,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import fr.silenthill99.principalplugin.Main;
 
 public class Vanish implements CommandExecutor
 {
 
-    private static Vanish instance;
-
-    public static Vanish getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new Vanish();
-        }
-        return instance;
-    }
-    public ArrayList<String> vanished = new ArrayList<>();
+    private static final List<String> vanished = new ArrayList<>();
+    public static List<String> getVanished() {
+		return vanished;
+	}
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)

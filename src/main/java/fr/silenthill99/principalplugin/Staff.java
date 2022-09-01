@@ -14,6 +14,7 @@ import java.util.Locale;
 public class Staff implements TabCompleter
 {
     private final List<String> arguments = new ArrayList<>();
+    
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args) {
         String prefix = args[args.length - 1].toLowerCase(Locale.ROOT);

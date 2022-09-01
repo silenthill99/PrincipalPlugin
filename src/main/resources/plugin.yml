@@ -3,6 +3,11 @@ version: '${version}'
 main: fr.silenthill99.principalplugin.Main
 api-version: 1.16
 authors: [ silenthill99 ]
+
+depend: [ Vault ]
+
+softdepend: [ LuckPerms ]
+
 commands:
   hrp:
   radio:
