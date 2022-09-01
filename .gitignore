@@ -10,6 +10,10 @@ out/
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+.classpath
+.project
+.settings/
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 
@@ -116,3 +120,4 @@ run/
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+/bin/
