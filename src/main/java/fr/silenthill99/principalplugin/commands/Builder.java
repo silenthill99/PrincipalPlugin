@@ -1,5 +1,7 @@
 package fr.silenthill99.principalplugin.commands;
 
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -59,6 +61,7 @@ public class Builder implements CommandExecutor
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
                 player.sendMessage(ChatColor.GREEN + "Vous avez désactivé le mode builder !");
             }, 20);
+
         }
         return false;
     }

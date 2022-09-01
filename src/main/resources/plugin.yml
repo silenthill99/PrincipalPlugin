@@ -30,4 +30,7 @@ commands:
     permission-message: §4Vous n'avez pas accès à cette commande
   builder:
     permission: oxydia.builder
-    permission-message: §4Seuls les builders veulent faire cette commande !
+    permission-message: §4Seuls les builders peuvent faire cette commande !
+  stagiaire:
+    permission: oxydia.stagiaire
+    permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !

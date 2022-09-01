@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.silenthill99.principalplugin.commands.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -14,16 +15,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.silenthill99.principalplugin.commands.Builder;
-import fr.silenthill99.principalplugin.commands.Hrp;
-import fr.silenthill99.principalplugin.commands.Logs;
-import fr.silenthill99.principalplugin.commands.Menu;
-import fr.silenthill99.principalplugin.commands.Options;
-import fr.silenthill99.principalplugin.commands.Radio;
-import fr.silenthill99.principalplugin.commands.Setspawn;
-import fr.silenthill99.principalplugin.commands.Showvanish;
-import fr.silenthill99.principalplugin.commands.Spawn;
-import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
 import net.milkbowl.vault.economy.Economy;
@@ -73,6 +64,8 @@ public final class Main extends JavaPlugin
         getCommand("setspawn").setExecutor(new Setspawn());
         getCommand("showvanish").setExecutor(new Showvanish());
         getCommand("spawn").setExecutor(new Spawn());
+        getCommand("stagiaire").setExecutor(new Stagiaire());
+        getCommand("stagiaire").setTabCompleter(new Staff());
         getCommand("vanish").setExecutor(new Vanish());
         getCommand("vanish").setTabCompleter(new Staff());
     }
