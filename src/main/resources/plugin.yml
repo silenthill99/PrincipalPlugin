@@ -16,6 +16,10 @@ commands:
   builder:
     permission: oxydia.builder
     permission-message: §4Seuls les builders peuvent faire cette commande !
+  developpeur:
+    aliases: dev
+    permission: oxydia.developpeu
+    permission-message: §4Seuls les développeurs peuvent faire cette commande !
   hrp:
   logs:
     permission: group.modo-stagiaire
