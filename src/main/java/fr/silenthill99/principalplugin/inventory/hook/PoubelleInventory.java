@@ -1,10 +1,10 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
-import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.InventoryType;
-import fr.silenthill99.principalplugin.inventory.holder.PoubelleHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+
+import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.holder.PoubelleHolder;
 
 public class PoubelleInventory extends AbstractInventory<PoubelleHolder> {
     public PoubelleInventory() {
