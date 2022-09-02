@@ -3,6 +3,7 @@ package fr.silenthill99.principalplugin.inventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -26,8 +27,7 @@ public class InventoryManager implements Listener {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
-		ItemStack item = e.getCurrentItem();
-		if (item == null || e.getClickedInventory() == null || !(e.getWhoClicked() instanceof Player))
+		if (e.getClickedInventory() == null || !(e.getWhoClicked() instanceof Player))
 			return;
 		Player p = (Player) e.getWhoClicked();
 		InventoryHolder holder = e.getClickedInventory().getHolder();
@@ -37,13 +37,18 @@ public class InventoryManager implements Listener {
 				AbstractInventory inv = type.getInv();
 				if(inv.isInstance(nh)) { // found inventory
 					e.setCancelled(true);
-					if(item.isSimilar(AbstractInventory.CLOSE))
-						p.closeInventory();
-					else
-						inv.manageInventory(e, item, p, nh);
+					ItemStack item = e.getCurrentItem();
+					if(item != null) {
+						if(item.isSimilar(AbstractInventory.CLOSE))
+							p.closeInventory();
+						else
+							inv.manageInventory(e, item, p, nh);
+					}
 					return;
 				}
 			}
+		} else if(e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && e.getInventory().getHolder() instanceof SilenthillHolder) {
+			e.setCancelled(true); // when using shit click on below inv
 		}
 	}
 
