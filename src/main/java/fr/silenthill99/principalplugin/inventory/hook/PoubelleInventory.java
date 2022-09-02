@@ -25,8 +25,7 @@ public class PoubelleInventory extends AbstractInventory<PoubelleHolder> {
     }
 
     @Override
-    public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, PoubelleHolder holder) {
+    public void voidInventory(InventoryClickEvent e, Player player, PoubelleHolder holder) {
         e.setCancelled(false);
     }
-
 }
