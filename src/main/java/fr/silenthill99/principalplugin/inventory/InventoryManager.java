@@ -44,9 +44,13 @@ public class InventoryManager implements Listener {
 						else
 							inv.manageInventory(e, item, p, nh);
 					}
+					else
+					{
+						inv.voidInventory(e, p, nh);
+					}
 					return;
 				}
-			}
+            }
 		} else if(e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && e.getInventory().getHolder() instanceof SilenthillHolder) {
 			e.setCancelled(true); // when using shit click on below inv
 		}
