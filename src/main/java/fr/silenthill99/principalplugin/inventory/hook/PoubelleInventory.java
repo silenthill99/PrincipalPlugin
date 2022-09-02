@@ -28,4 +28,5 @@ public class PoubelleInventory extends AbstractInventory<PoubelleHolder> {
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, PoubelleHolder holder) {
         e.setCancelled(false);
     }
+
 }
