@@ -18,7 +18,7 @@ commands:
     permission-message: §4Seuls les builders peuvent faire cette commande !
   developpeur:
     aliases: dev
-    permission: oxydia.developpeu
+    permission: oxydia.developpeur
     permission-message: §4Seuls les développeurs peuvent faire cette commande !
   hrp:
   logs:
