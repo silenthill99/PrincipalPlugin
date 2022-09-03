@@ -127,6 +127,10 @@ public class Events implements Listener {
 		{
 			InventoryManager.openInventory(player, InventoryType.METIERS_ILLEGAUX);
 		}
+		else if (target.getName().equals("MacDo"))
+		{
+			InventoryManager.openInventory(player, InventoryType.MACDO);
+		}
 	}
 
 	@EventHandler
