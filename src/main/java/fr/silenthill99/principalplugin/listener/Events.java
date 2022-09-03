@@ -123,6 +123,10 @@ public class Events implements Listener {
 		if (target.getName().equals("pôle emploi")) {
 			InventoryManager.openInventory(player, InventoryType.POLE_EMPLOI);
 		}
+		else if (target.getName().equals("Gangster"))
+		{
+			InventoryManager.openInventory(player, InventoryType.METIERS_ILLEGAUX);
+		}
 	}
 
 	@EventHandler
