@@ -43,5 +43,6 @@ public abstract class AbstractInventory<T extends SilenthillHolder> {
 	public void closeInventory(Player p, InventoryCloseEvent e) {}
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, T holder) {}
 	public void voidInventory(InventoryClickEvent e, Player player, T holder){}
+	public void moveFromInventory(InventoryClickEvent e, Inventory from, Player player, T holder){}
 	public void actualizeInventory(Player p, Inventory inv, T holder) {}
 }

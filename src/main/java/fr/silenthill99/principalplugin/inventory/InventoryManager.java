@@ -51,8 +51,15 @@ public class InventoryManager implements Listener {
 					return;
 				}
             }
-		} else if(e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && e.getInventory().getHolder() instanceof SilenthillHolder) {
-			e.setCancelled(true); // when using shit click on below inv
+		} else if(e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && e.getInventory().getHolder() instanceof SilenthillHolder) { // when using shift click on below inv
+			SilenthillHolder nh = (SilenthillHolder) e.getInventory().getHolder();
+			for(InventoryType type : InventoryType.values()) {
+				AbstractInventory inv = type.getInv();
+				if(inv.isInstance(nh)) { // found inventory
+					e.setCancelled(true);
+					inv.moveFromInventory(e, e.getInventory(), p, nh);
+				}
+			}
 		}
 	}
 
