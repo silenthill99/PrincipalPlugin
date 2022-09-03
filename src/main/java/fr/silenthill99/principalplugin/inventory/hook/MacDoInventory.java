@@ -1,6 +1,5 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
-import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.MacDoHolder;
@@ -19,10 +18,9 @@ public class MacDoInventory extends AbstractInventory<MacDoHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
-        ItemStack steak = new ItemBuilder(Material.COOKED_BEEF).setLore("Prix : 10€").toItemStack();
-
         Inventory inv = createInventory(new MacDoHolder(), 36, "MacDo");
-        inv.setItem(0, steak);
+        MacDoHolder holder = (MacDoHolder) inv.getHolder();
+        inv.setItem(0, holder.steak);
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
     }
