@@ -27,9 +27,9 @@ public class StaffTchat implements CommandExecutor
         LuckPerms api = LuckPermsProvider.get();
         User user = api.getUserManager().getUser(player.getName());
 
-        if (args.length != 0)
+        if (args.length == 0)
         {
-            player.sendMessage(ChatColor.RED + "Vuillez faire /stafftchat <on|off>");
+            player.sendMessage(ChatColor.RED + "Vuillez faire /stafftchat <message>");
             return false;
         }
 
