@@ -44,7 +44,7 @@ public class StaffTchat implements CommandExecutor
         {
             if (players.hasPermission("oxydia.staff"))
             {
-                players.sendMessage(ChatColor.GRAY + "[Tchat du Staff] " + user.getCachedData().getMetaData().getPrefix().replace("&", "§") + " : " + ChatColor.GREEN + bc);
+                players.sendMessage(ChatColor.GRAY + "[Tchat du Staff] " + user.getCachedData().getMetaData().getPrefix().replace("&", "§") + player.getName() + " : " + ChatColor.GREEN + bc);
             }
         }
 
