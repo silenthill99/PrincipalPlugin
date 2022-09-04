@@ -46,3 +46,7 @@ commands:
   vanish:
     aliases: v
     permission: oxydia.vanish
+  stafftchat:
+    aliases: [staff, st]
+    permission: oxydia.staff
+    permission-message: §4Seuls les staff ont accès à cette commande !

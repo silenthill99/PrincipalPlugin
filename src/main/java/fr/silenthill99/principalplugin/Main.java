@@ -70,6 +70,7 @@ public final class Main extends JavaPlugin
         getCommand("setspawn").setExecutor(new Setspawn());
         getCommand("showvanish").setExecutor(new Showvanish());
         getCommand("spawn").setExecutor(new Spawn());
+        getCommand("stafftchat").setExecutor(new StaffTchat());
         getCommand("stagiaire").setExecutor(new Stagiaire());
         getCommand("stagiaire").setTabCompleter(new Staff());
         getCommand("vanish").setExecutor(new Vanish());
