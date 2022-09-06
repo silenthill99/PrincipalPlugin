@@ -76,7 +76,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
                 {
                     if (!part.equalsIgnoreCase(args[0]))
                     {
-                        message.append(part);
+                        message.append(part + " ");
                     }
                 }
 
@@ -104,7 +104,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
                 {
                     if (!part.equalsIgnoreCase(args[0]))
                     {
-                        message.append(part);
+                        message.append(part + " ");
                     }
                 }
 
