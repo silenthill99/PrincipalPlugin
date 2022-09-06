@@ -34,12 +34,9 @@ commands:
     permission: group.fondateur
     permission-message: §4Tu n'as pas accès à cette commande !
   radio:
-  setspawn:
-    permission: oxydia.setspawn
   showvanish:
     permission: oxydia.vanish.show
     permission-message: §4Vous n'avez pas accès à cette commande
-  spawn:
   stagiaire:
     permission: oxydia.stagiaire
     permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !

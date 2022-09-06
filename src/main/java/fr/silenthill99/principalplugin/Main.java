@@ -24,7 +24,6 @@ public final class Main extends JavaPlugin
 
     public Map<UUID, List<String>> logs = new HashMap<>();
     public List<String> vanish = new ArrayList<>();
-    private Location spawn = new Location(Bukkit.getWorld("world"), -157.108, 65, -56.714, -76.4f, 4.2f);
     private Map<UUID, Location> frozenPlayers = new HashMap<>();
 
     public HashMap<UUID, Double> argent = new HashMap<>();
@@ -67,9 +66,7 @@ public final class Main extends JavaPlugin
         getCommand("options").setExecutor(new Options());
         getCommand("radio").setExecutor(new Radio());
         getCommand("radio").setTabCompleter(new Radio());
-        getCommand("setspawn").setExecutor(new Setspawn());
         getCommand("showvanish").setExecutor(new Showvanish());
-        getCommand("spawn").setExecutor(new Spawn());
         getCommand("stafftchat").setExecutor(new StaffTchat());
         getCommand("stagiaire").setExecutor(new Stagiaire());
         getCommand("stagiaire").setTabCompleter(new Staff());
@@ -100,9 +97,6 @@ public final class Main extends JavaPlugin
      * 
      * @return the spawn location
      */
-    public Location getSpawn() {
-		return spawn;
-	}
 
     public boolean isFreeze(Player player)
     {
