@@ -66,6 +66,8 @@ public final class Main extends JavaPlugin
         getCommand("options").setExecutor(new Options());
         getCommand("radio").setExecutor(new Radio());
         getCommand("radio").setTabCompleter(new Radio());
+        getCommand("responsable").setExecutor(new Responsable());
+        getCommand("responsable").setTabCompleter(new Staff());
         getCommand("showvanish").setExecutor(new Showvanish());
         getCommand("stafftchat").setExecutor(new StaffTchat());
         getCommand("stagiaire").setExecutor(new Stagiaire());

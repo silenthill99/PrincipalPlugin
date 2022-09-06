@@ -34,6 +34,10 @@ commands:
     permission: group.fondateur
     permission-message: §4Tu n'as pas accès à cette commande !
   radio:
+  responsable:
+    aliases: resp
+    permission: oxydia.responsable
+    permission-message: §4Seuls les responsables d'équipe peuvent faire cette commande !
   showvanish:
     permission: oxydia.vanish.show
     permission-message: §4Vous n'avez pas accès à cette commande
