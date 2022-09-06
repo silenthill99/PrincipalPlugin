@@ -11,7 +11,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Responsable implements CommandExecutor {
+public class CoFondateur implements CommandExecutor
+{
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
     {
@@ -25,7 +26,7 @@ public class Responsable implements CommandExecutor {
 
         if (args.length != 1)
         {
-            player.sendMessage(ChatColor.RED + "veuillez faire /responsable <on|off>");
+            player.sendMessage(ChatColor.RED + "Veuillez faire /co-fondateur <on|off>");
             return false;
         }
 
@@ -37,9 +38,9 @@ public class Responsable implements CommandExecutor {
 
         if (args[0].equalsIgnoreCase("on"))
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set responsable");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set co-fondateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Responsable d'équipe !");
+            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Co-Fondateur !");
             return false;
         }
         if (args[0].equalsIgnoreCase("off"))
@@ -53,7 +54,6 @@ public class Responsable implements CommandExecutor {
             Bukkit.dispatchCommand(player, "god off");
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), new Timer(player), 20);
         }
-
         return false;
     }
 }

@@ -11,7 +11,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Responsable implements CommandExecutor {
+public class Fondateur implements CommandExecutor
+{
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
     {
@@ -25,7 +26,7 @@ public class Responsable implements CommandExecutor {
 
         if (args.length != 1)
         {
-            player.sendMessage(ChatColor.RED + "veuillez faire /responsable <on|off>");
+            player.sendMessage(ChatColor.RED + "Veuillez faire /fondateur <on|off>");
             return false;
         }
 
@@ -37,11 +38,12 @@ public class Responsable implements CommandExecutor {
 
         if (args[0].equalsIgnoreCase("on"))
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set responsable");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set fondateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Responsable d'équipe !");
+            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Fondateur !");
             return false;
         }
+
         if (args[0].equalsIgnoreCase("off"))
         {
             if (!player.getGameMode().equals(GameMode.ADVENTURE))

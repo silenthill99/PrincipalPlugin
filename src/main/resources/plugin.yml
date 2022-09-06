@@ -16,10 +16,18 @@ commands:
   builder:
     permission: oxydia.builder
     permission-message: §4Seuls les builders peuvent faire cette commande !
+  co-fondateur:
+    aliases: [cofondateur, co-fonda, cofonda]
+    permission: oxydia.cofonfateur
+    permission-message: §4Seuls les co-fondateurs peuvent faire cette commande !
   developpeur:
     aliases: dev
     permission: oxydia.developpeur
     permission-message: §4Seuls les développeurs peuvent faire cette commande !
+  fondateur:
+    aliases: fonda
+    permission: oxydia.fondateur
+    permission-message: §4Seul le fondateur peut faire cette commande !
   hrp:
   logs:
     permission: group.modo-stagiaire
