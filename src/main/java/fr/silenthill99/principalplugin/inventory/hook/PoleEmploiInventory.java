@@ -1,7 +1,9 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -10,6 +12,7 @@ import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.PoleEmploiHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
@@ -20,12 +23,14 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 	
 	@Override
 	public void openInventory(Player p, Object... args) {
+		ItemStack citoyen = new ItemBuilder(Material.PLAYER_HEAD).setName(ChatColor.YELLOW + "Citoyen").toItemStack();
         Inventory inv = createInventory(new PoleEmploiHolder(), 54, "Choisissez un métier");
-		PoleEmploiHolder holder = (PoleEmploiHolder) inv.getHolder();
-		inv.setItem(0, holder.citoyen);
-		inv.setItem(1, holder.policier);
-		inv.setItem(2, holder.pompier);
-		inv.setItem(3, holder.medecin);
+		inv.setItem(0, citoyen);
+		int slot = 1;
+		for (String itemName : Arrays.asList("Policier", "Pompier", "Medecin"))
+		{
+			inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.YELLOW + itemName).toItemStack());
+		}
         inv.setItem(inv.getSize() - 1, CLOSE);
         p.openInventory(inv);
 	}
