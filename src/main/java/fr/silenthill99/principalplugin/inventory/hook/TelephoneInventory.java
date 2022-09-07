@@ -35,7 +35,6 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
         switch(current.getType())
         {
             case YELLOW_WOOL:
-
                 InventoryManager.openInventory(player, InventoryType.APPEL);
                 break;
             default:
