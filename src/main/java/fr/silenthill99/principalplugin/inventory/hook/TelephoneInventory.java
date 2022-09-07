@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
     public TelephoneInventory()
@@ -25,7 +26,12 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
     @Override
     public void onInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if (player.getInventory().getItemInMainHand().equals(Material.BRICK))
+        ItemStack it = e.getItem();
+        if (it == null)
+        {
+            return;
+        }
+        if (it.getType().equals(Material.BRICK))
         {
             InventoryManager.openInventory(player, InventoryType.TELEPHONE);
         }

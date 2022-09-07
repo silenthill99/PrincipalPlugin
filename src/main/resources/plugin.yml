@@ -48,14 +48,14 @@ commands:
     permission-message: §4Seuls les responsables d'équipe peuvent faire cette commande !
   showvanish:
     permission: oxydia.vanish.show
-    permission-message: §4Vous n'avez pas accès à cette commande
+    permission-message: §4Vous n'avez pas accès à cette command
+  stafftchat:
+    aliases: [ staff, st ]
+    permission: oxydia.staff
+    permission-message: §4Seuls les staff ont accès à cette commande !
   stagiaire:
     permission: oxydia.stagiaire
     permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !
   vanish:
     aliases: v
     permission: oxydia.vanish
-  stafftchat:
-    aliases: [staff, st]
-    permission: oxydia.staff
-    permission-message: §4Seuls les staff ont accès à cette commande !
