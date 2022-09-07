@@ -12,8 +12,7 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
     }
 
     @Override
-    public void openInventory(Player p, Object... args)
-    {
+    public void openInventory(Player p, Object... args) {
         Inventory inv = createInventory(new TelephoneHolder(), 27, "Téléphone");
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);

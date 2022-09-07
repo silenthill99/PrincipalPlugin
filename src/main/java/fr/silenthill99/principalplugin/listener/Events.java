@@ -154,11 +154,6 @@ public class Events implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (player.getInventory().getItemInMainHand().equals(Material.BRICK))
-		{
-			InventoryManager.openInventory(player, InventoryType.TELEPHONE);
-			return;
-		}
 		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			if (event.getClickedBlock().getType().equals(Material.DROPPER)) {
 				event.setCancelled(true);
