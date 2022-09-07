@@ -1,9 +1,11 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.TelephoneHolder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -18,7 +20,11 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
 
     @Override
     public void openInventory(Player p, Object... args) {
+
+        ItemStack appel = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Passer un appel").toItemStack();
+
         Inventory inv = createInventory(new TelephoneHolder(), 27, "Téléphone");
+        inv.setItem(0, appel);
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
     }
