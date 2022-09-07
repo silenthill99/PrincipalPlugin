@@ -33,7 +33,8 @@ public enum InventoryType {
 	OPTIONS_ADMIN(new OptionsAdminInventory()),
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
 	POLE_EMPLOI(new PoleEmploiInventory()),
-	POUBELLE(new PoubelleInventory());
+	POUBELLE(new PoubelleInventory()),
+	TELEPHONE(new TelephoneInventory());
 	
 	private final AbstractInventory<?> inv;
 	
