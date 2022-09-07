@@ -18,7 +18,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
     public void openInventory(Player p, Object... args)
     {
         Inventory inv = createInventory(new AppelHolder(), 9, "Passer un appel");
-        inv.setItem(inv.getSize()-1, RETOUR);
+        inv.setItem(8, RETOUR);
         p.openInventory(inv);
     }
 

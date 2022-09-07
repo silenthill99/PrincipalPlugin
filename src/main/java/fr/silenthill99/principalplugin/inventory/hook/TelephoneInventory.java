@@ -22,7 +22,7 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
     @Override
     public void openInventory(Player p, Object... args) {
 
-        ItemStack appel = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Passer un appel").toItemStack();
+        ItemStack appel = new ItemBuilder(Material.YELLOW_WOOL).setName(ChatColor.YELLOW + "Passer un appel").toItemStack();
 
         Inventory inv = createInventory(new TelephoneHolder(), 27, "Téléphone");
         inv.setItem(0, appel);
@@ -34,7 +34,8 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, TelephoneHolder holder) {
         switch(current.getType())
         {
-            case BRICK:
+            case YELLOW_WOOL:
+
                 InventoryManager.openInventory(player, InventoryType.APPEL);
                 break;
             default:
