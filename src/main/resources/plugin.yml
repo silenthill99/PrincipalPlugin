@@ -29,6 +29,7 @@ commands:
     permission: oxydia.fondateur
     permission-message: §4Seul le fondateur peut faire cette commande !
   hrp:
+  kit:
   logs:
     permission: group.modo-stagiaire
   menu:

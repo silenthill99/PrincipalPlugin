@@ -63,6 +63,7 @@ public final class Main extends JavaPlugin
         getCommand("fondateur").setExecutor(new Fondateur());
         getCommand("fondateur").setTabCompleter(new Staff());
         getCommand("hrp").setExecutor(new Hrp());
+        getCommand("kit").setExecutor(new Kit());
         getCommand("logs").setExecutor(new Logs());
         getCommand("menu").setExecutor(new Menu());
         getCommand("moderateur").setExecutor(new Moderateur());

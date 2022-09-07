@@ -20,11 +20,13 @@ public enum InventoryType {
 
 	ADMIN_MENU(new AdminMenuInventory()),
 	ADMIN_SANCTION(new AdminSanctionInventory()),
+	APPEL(new AppelInventory()),
 	DIRECTION_ERREUR_STAFF(new DirectionErreurStaffInventory()),
 	DIRECTION_MENU(new DirectionMenuInventory()),
 	DIRECTION_RANK_UP(new DirectionRankUpInventory()),
 	DIRECTION_RANK_UP_SUPER(new DirectionRankUpSuperInventory()),
 	DISTRIBUTEUR(new DistributeurInventory()),
+    KIT(new KitInventory()),
 	MACDO(new MacDoInventory()),
 	METIERS_ILLEGAUX(new IllegauxInventory()),
 	MODO_PLAYER_CHOOSE(new PlayerChooseInventory()),
