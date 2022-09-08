@@ -14,6 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Timestamp;
+
 public class AppelInventory extends AbstractInventory<AppelHolder> {
     public AppelInventory() {
         super(AppelHolder.class);
@@ -56,7 +58,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                         players.sendMessage(ChatColor.DARK_BLUE + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_BLUE + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé la police aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé la police aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             case RED_WOOL:
@@ -68,7 +70,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                         players.sendMessage(ChatColor.DARK_RED + "Vous venez de recevoir un appel de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_RED + ", il se trouve aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f",y) + " z: " + String.format("%.2f",z));
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé les pompiers aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé les pompiers aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             case GREEN_WOOL:
@@ -79,7 +81,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                 {
                     players.sendMessage(ChatColor.DARK_GREEN + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_GREEN + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f",y) + " z: " + String.format("%.2f",z));
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé le SAMU aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé le SAMU aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             default:

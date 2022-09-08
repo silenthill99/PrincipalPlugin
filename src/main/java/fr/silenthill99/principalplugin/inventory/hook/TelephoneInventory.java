@@ -26,10 +26,12 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
 
         ItemStack appel = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Passer un appel").toItemStack();
         ItemStack argent = new ItemBuilder(Material.GOLD_INGOT).setName(ChatColor.GREEN + "Voir son argent").toItemStack();
+        ItemStack musique = new ItemBuilder(Material.JUKEBOX).setName(ChatColor.GREEN + "Ecouter de la musique").toItemStack();
 
         Inventory inv = createInventory(new TelephoneHolder(), 27, "Téléphone");
         inv.setItem(0, appel);
         inv.setItem(1, argent);
+        inv.setItem(2, musique);
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
     }
@@ -44,6 +46,9 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
             case GOLD_INGOT:
                 player.closeInventory();
                 Bukkit.dispatchCommand(player, "money");
+                break;
+            case JUKEBOX:
+                InventoryManager.openInventory(player, InventoryType.MUSIQUE);
                 break;
             default:
                 break;

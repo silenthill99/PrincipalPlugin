@@ -32,6 +32,7 @@ public enum InventoryType {
 	MODO_PLAYER_CHOOSE(new PlayerChooseInventory()),
 	MODO_PLAYER_MENU(new PlayerMenuInventory()),
 	MODO_PLAYER_SANCTION(new PlayerSanctionInventory()),
+	MUSIQUE(new MusiqueInventory()),
 	OPTIONS_ADMIN(new OptionsAdminInventory()),
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
 	POLE_EMPLOI(new PoleEmploiInventory()),
