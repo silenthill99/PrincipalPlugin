@@ -32,7 +32,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
         {
             inv.setItem(slot++, new ItemBuilder(Material.NOTE_BLOCK).setName(ChatColor.GREEN + name).toItemStack());
         }
-        inv.setItem(inv.getSize()-1, CLOSE);
+        inv.setItem(inv.getSize()-1, RETOUR);
         p.openInventory(inv);
     }
 
