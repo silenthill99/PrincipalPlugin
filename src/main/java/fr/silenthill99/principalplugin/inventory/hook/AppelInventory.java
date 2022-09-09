@@ -54,7 +54,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                 player.closeInventory();
                 player.sendMessage(ChatColor.DARK_BLUE + "Vous avez appelé la police. Veuillez rester sur place jusqu'à leur arrivée");
                 for (Player players : Bukkit.getOnlinePlayers()) {
-                    if (Main.isPlayerInGroup(player, "policier")) {
+                    if (Main.isPlayerInGroup(players, "policier")) {
                         players.sendMessage(ChatColor.DARK_BLUE + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_BLUE + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                     }
                 }
@@ -79,7 +79,10 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                 player.sendMessage(ChatColor.DARK_GREEN + "Vous venez de lancer un appel au SAMU. Veuillez rester sur place jusqu'à l'arrivée des secours !");
                 for (Player players : Bukkit.getOnlinePlayers())
                 {
-                    players.sendMessage(ChatColor.DARK_GREEN + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_GREEN + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f",y) + " z: " + String.format("%.2f",z));
+                    if (Main.isPlayerInGroup(players, "medecin"))
+                    {
+                        players.sendMessage(ChatColor.DARK_GREEN + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_GREEN + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                    }
                 }
                 Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé le SAMU aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;

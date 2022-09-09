@@ -28,7 +28,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
     {
         Inventory inv = createInventory(new MusiqueHolder(), 54, "Musiques");
         int slot = 0;
-        for (String name : Arrays.asList("Hotel California", "On Melancholy Hill", "Pumped Up Kicks"))
+        for (String name : Arrays.asList("Hotel California", "On Melancholy Hill", "Pokemon","Pumped Up Kicks"))
         {
             inv.setItem(slot++, new ItemBuilder(Material.NOTE_BLOCK).setName(ChatColor.GREEN + name).toItemStack());
         }
