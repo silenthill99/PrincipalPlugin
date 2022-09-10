@@ -52,6 +52,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
                     m_holder.customName.put(e.getSlot(), musics);
                 }
                 InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, m_holder.customName.get(e.getSlot()));
+                break;
             }
             case SUNFLOWER:
             {
