@@ -4,6 +4,7 @@ import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
+import fr.silenthill99.principalplugin.inventory.Musiques;
 import fr.silenthill99.principalplugin.inventory.holder.MusiqueHolder;
 import fr.silenthill99.principalplugin.inventory.holder.musiques.MusiqueGestionHolder;
 import org.bukkit.Bukkit;
@@ -46,7 +47,10 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
             case NOTE_BLOCK:
             {
                 MusiqueGestionHolder m_holder = new MusiqueGestionHolder(ChatColor.stripColor(current.getItemMeta().getDisplayName()));
-                m_holder.customName.put(e.getSlot(), current.getItemMeta().getDisplayName());
+                for (Musiques musics : Musiques.values())
+                {
+                    m_holder.customName.put(e.getSlot(), musics);
+                }
                 InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, m_holder.customName.get(e.getSlot()));
             }
             case SUNFLOWER:
