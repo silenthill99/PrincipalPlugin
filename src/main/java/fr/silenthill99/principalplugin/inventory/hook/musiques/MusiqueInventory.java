@@ -44,6 +44,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
             case NOTE_BLOCK:
             {
                 InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, holder.musics.get(e.getSlot()));
+                break;
             }
             case SUNFLOWER:
             {
