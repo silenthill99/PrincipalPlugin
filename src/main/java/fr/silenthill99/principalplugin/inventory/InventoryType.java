@@ -10,6 +10,7 @@ import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionRankUpS
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerChooseInventory;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory;
+import fr.silenthill99.principalplugin.inventory.hook.musiques.*;
 import fr.silenthill99.principalplugin.inventory.hook.options.OptionsAdminInventory;
 import fr.silenthill99.principalplugin.inventory.hook.options.OptionsJoueurInventory;
 
@@ -37,7 +38,18 @@ public enum InventoryType {
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
 	POLE_EMPLOI(new PoleEmploiInventory()),
 	POUBELLE(new PoubelleInventory()),
-	TELEPHONE(new TelephoneInventory());
+	TELEPHONE(new TelephoneInventory()),
+	/**
+	 * Menu des Musiques
+	 */
+	HOTEL_CALIFORNIA(new HotelCaliforniaInventory()),
+	ON_MELANCHOLY_HILL(new OnMelancholyHillInventory()),
+	POKEMON(new PokemonInventory()),
+	PUMPED_UP_KICKS(new PumpedUpKicksInventory()),
+	VIVA_LA_VIDA(new VivaLaVidaInventory());
+	/**
+	 * Fin du menu des musiques
+	 */
 	
 	private final AbstractInventory<?> inv;
 	
