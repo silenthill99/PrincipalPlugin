@@ -22,6 +22,9 @@ public abstract class AbstractInventory<T extends SilenthillHolder> {
      * Fermera automatiquement l'inventaire lors du clic
      */
     public static final ItemStack CLOSE = new ItemBuilder(Material.BARRIER).setName(ChatColor.YELLOW + "Fermer").toItemStack();
+	public static final ItemStack ECOUTER = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Ecouter la musique").toItemStack();
+	public static final ItemStack PAUSE = new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + "Mettre sur pause").toItemStack();
+	public static final ItemStack ARRET = new ItemBuilder(Material.RED_WOOL).setName(ChatColor.RED + "Arrêter la musique").toItemStack();
 	private final Class<T> holderClass;
 	
 	public AbstractInventory(Class<T> holderClass) {

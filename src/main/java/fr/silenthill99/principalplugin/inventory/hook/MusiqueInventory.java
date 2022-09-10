@@ -28,7 +28,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
     {
         Inventory inv = createInventory(new MusiqueHolder(), 54, "Musiques");
         int slot = 0;
-        for (String name : Arrays.asList("Hotel California", "On Melancholy Hill", "Pokemon","Pumped Up Kicks"))
+        for (String name : Arrays.asList("Hotel California", "On Melancholy Hill", "Pokemon","Pumped Up Kicks", "Viva la vida"))
         {
             inv.setItem(slot++, new ItemBuilder(Material.NOTE_BLOCK).setName(ChatColor.GREEN + name).toItemStack());
         }
@@ -42,8 +42,7 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
         switch (current.getType())
         {
             case NOTE_BLOCK:
-                String name = ChatColor.stripColor(current.getItemMeta().getDisplayName()).replace(" ", "_").toLowerCase(Locale.ROOT);
-                player.closeInventory();
+                String name = ChatColor.stripColor(current.getItemMeta().getDisplayName()).replace(" ","_").toLowerCase(Locale.ROOT);
                 Bukkit.dispatchCommand(player, "function " + name + ":play");
                 break;
             case SUNFLOWER:

@@ -1,8 +1,5 @@
 package fr.silenthill99.principalplugin.inventory;
 
-import java.util.Arrays;
-import java.util.List;
-
 import fr.silenthill99.principalplugin.inventory.hook.*;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminSanctionInventory;
@@ -15,6 +12,9 @@ import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory;
 import fr.silenthill99.principalplugin.inventory.hook.options.OptionsAdminInventory;
 import fr.silenthill99.principalplugin.inventory.hook.options.OptionsJoueurInventory;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum InventoryType {
 
