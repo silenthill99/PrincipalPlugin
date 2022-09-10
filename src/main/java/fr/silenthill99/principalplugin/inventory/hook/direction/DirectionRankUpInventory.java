@@ -15,6 +15,7 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.direction.DirectionRankUpHolder;
 
+@SuppressWarnings("deprecation")
 public class DirectionRankUpInventory extends AbstractInventory<DirectionRankUpHolder> {
 
 	public DirectionRankUpInventory() {
