@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
+@SuppressWarnings("deprecation")
 public class ItemBuilder
 {
 

@@ -19,6 +19,7 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.modo.PlayerSanctionHolder;
 
+@SuppressWarnings("deprecation")
 public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHolder> {
 
 	public PlayerSanctionInventory() {

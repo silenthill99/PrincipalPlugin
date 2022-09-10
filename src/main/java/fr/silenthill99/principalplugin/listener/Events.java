@@ -29,6 +29,7 @@ import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 
+@SuppressWarnings("deprecation")
 public class Events implements Listener {
 
 	@EventHandler
