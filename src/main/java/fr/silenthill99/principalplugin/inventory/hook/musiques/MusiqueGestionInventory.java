@@ -3,7 +3,7 @@ package fr.silenthill99.principalplugin.inventory.hook.musiques;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
-import fr.silenthill99.principalplugin.inventory.holder.musiques.HotelCaliforniaHolder;
+import fr.silenthill99.principalplugin.inventory.holder.musiques.MusiqueGestionHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,17 +11,19 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class HotelCaliforniaInventory extends AbstractInventory<HotelCaliforniaHolder>
+import java.util.Locale;
+
+public class MusiqueGestionInventory extends AbstractInventory<MusiqueGestionHolder>
 {
-    public HotelCaliforniaInventory()
-    {
-        super(HotelCaliforniaHolder.class);
+    public MusiqueGestionInventory() {
+        super(MusiqueGestionHolder.class);
     }
 
     @Override
     public void openInventory(Player p, Object... args)
     {
-        Inventory inv = createInventory(new HotelCaliforniaHolder(), 9, "Hotel California");
+        String name = (String) args[0];
+        Inventory inv = createInventory(new MusiqueGestionHolder(name), 9, name);
         inv.setItem(0, ECOUTER);
         inv.setItem(1, PAUSE);
         inv.setItem(2, ARRET);
@@ -30,29 +32,31 @@ public class HotelCaliforniaInventory extends AbstractInventory<HotelCaliforniaH
     }
 
     @Override
-    public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, HotelCaliforniaHolder holder) {
+    public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MusiqueGestionHolder holder)
+    {
+        String name = ChatColor.stripColor(holder.name()).replace(" ", "_").toLowerCase(Locale.ROOT);
         player.closeInventory();
         switch (current.getType())
         {
             case GREEN_WOOL:
             {
-                player.sendMessage(ChatColor.GREEN + "Lecture en cours : The Eagles - Hotel California");
-                Bukkit.dispatchCommand(player, "function hotel_california:play");
+                Bukkit.dispatchCommand(player, "function " + name + ":play");
                 break;
             }
             case ORANGE_WOOL:
             {
-                Bukkit.dispatchCommand(player, "function hotel_california:pause");
+                Bukkit.dispatchCommand(player, "function " + name + ":pause");
                 break;
             }
             case RED_WOOL:
             {
-                Bukkit.dispatchCommand(player, "function hotel_california:stop");
+                Bukkit.dispatchCommand(player, "function " + name + ":stop");
                 break;
             }
             case SUNFLOWER:
             {
                 InventoryManager.openInventory(player, InventoryType.MUSIQUE);
+                break;
             }
             default:
                 break;

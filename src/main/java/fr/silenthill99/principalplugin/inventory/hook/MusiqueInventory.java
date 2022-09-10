@@ -5,6 +5,8 @@ import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.MusiqueHolder;
+import fr.silenthill99.principalplugin.inventory.holder.musiques.MusiqueGestionHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,6 +15,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
 {
@@ -41,27 +45,9 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
         {
             case NOTE_BLOCK:
             {
-                if (current.getItemMeta().getDisplayName().contains("Hotel California"))
-                {
-                    InventoryManager.openInventory(player, InventoryType.HOTEL_CALIFORNIA);
-                }
-                else if (current.getItemMeta().getDisplayName().contains("On Melancholy Hill"))
-                {
-                    InventoryManager.openInventory(player, InventoryType.ON_MELANCHOLY_HILL);
-                }
-                else if (current.getItemMeta().getDisplayName().contains("Pokemon"))
-                {
-                    InventoryManager.openInventory(player, InventoryType.POKEMON);
-                }
-                else if (current.getItemMeta().getDisplayName().contains("Pumped Up Kicks"))
-                {
-                    InventoryManager.openInventory(player, InventoryType.PUMPED_UP_KICKS);
-                }
-                else if (current.getItemMeta().getDisplayName().contains("Viva la vida"))
-                {
-                    InventoryManager.openInventory(player, InventoryType.VIVA_LA_VIDA);
-                }
-                break;
+                MusiqueGestionHolder m_holder = new MusiqueGestionHolder(ChatColor.stripColor(current.getItemMeta().getDisplayName()));
+                m_holder.customName.put(e.getSlot(), current.getItemMeta().getDisplayName());
+                InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, m_holder.customName.get(e.getSlot()));
             }
             case SUNFLOWER:
             {

@@ -34,22 +34,12 @@ public enum InventoryType {
 	MODO_PLAYER_MENU(new PlayerMenuInventory()),
 	MODO_PLAYER_SANCTION(new PlayerSanctionInventory()),
 	MUSIQUE(new MusiqueInventory()),
+	MUSIQUE_GESTION(new MusiqueGestionInventory()),
 	OPTIONS_ADMIN(new OptionsAdminInventory()),
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
 	POLE_EMPLOI(new PoleEmploiInventory()),
 	POUBELLE(new PoubelleInventory()),
-	TELEPHONE(new TelephoneInventory()),
-	/**
-	 * Menu des Musiques
-	 */
-	HOTEL_CALIFORNIA(new HotelCaliforniaInventory()),
-	ON_MELANCHOLY_HILL(new OnMelancholyHillInventory()),
-	POKEMON(new PokemonInventory()),
-	PUMPED_UP_KICKS(new PumpedUpKicksInventory()),
-	VIVA_LA_VIDA(new VivaLaVidaInventory());
-	/**
-	 * Fin du menu des musiques
-	 */
+	TELEPHONE(new TelephoneInventory());
 	
 	private final AbstractInventory<?> inv;
 	
