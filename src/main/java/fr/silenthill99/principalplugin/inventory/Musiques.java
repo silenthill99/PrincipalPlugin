@@ -7,4 +7,9 @@ public enum Musiques
     POKEMON,
     PUMPED_UP_KICKS,
     VIVA_LA_VIDA;
+
+    Musiques()
+    {
+    }
+
 }
