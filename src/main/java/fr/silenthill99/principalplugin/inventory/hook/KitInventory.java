@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class KitInventory extends AbstractInventory<KitHolder> {
+
+    HashMap<UUID, Double> cooldown = new HashMap<>();
     public KitInventory() {
         super(KitHolder.class);
     }
@@ -34,8 +36,6 @@ public class KitInventory extends AbstractInventory<KitHolder> {
         switch (current.getType())
         {
             case GREEN_WOOL:
-                HashMap<UUID, Double> cooldown = new HashMap<>();
-
                 if (cooldown.containsKey(player.getUniqueId()))
                 {
                     player.sendMessage(ChatColor.RED + "Il reste encore " + (System.currentTimeMillis() - cooldown.get(player.getUniqueId())));
