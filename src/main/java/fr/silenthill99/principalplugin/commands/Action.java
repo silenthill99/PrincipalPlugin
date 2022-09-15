@@ -1,5 +1,6 @@
 package fr.silenthill99.principalplugin.commands;
 
+import fr.silenthill99.principalplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -7,6 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.sql.Timestamp;
 
 public class Action implements CommandExecutor {
     @Override
@@ -39,6 +42,7 @@ public class Action implements CommandExecutor {
             {
                 players.sendMessage(ChatColor.GRAY + player.getName() + " " + message);
             }
+            Main.getInstance().logs.get(players.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a fait l'action suivante : " + ChatColor.AQUA + message);
         }
 
         return false;
