@@ -42,7 +42,7 @@ public class KitInventory extends AbstractInventory<KitHolder> {
                 if (cooldown.containsKey(player.getUniqueId()))
                 {
                     long time = cooldown.get(player.getUniqueId()) - System.currentTimeMillis();
-                    if (time <= 1000*3600*24)
+                    if (time > 0)
                     {
                         player.sendMessage(ChatColor.RED + "Il reste encore " + convertSecondsToHMmSs(time/1000));
                         return;

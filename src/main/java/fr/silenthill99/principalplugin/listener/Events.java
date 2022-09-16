@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -108,7 +110,10 @@ public class Events implements Listener {
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
 		if(event.getEntity() instanceof Player)
+		{
 			event.setCancelled(Main.getInstance().isFreeze((Player) event.getEntity()));
+			return;
+		}
 	}
 
 	@EventHandler
@@ -131,6 +136,10 @@ public class Events implements Listener {
 		else if (target.getName().equals("MacDo"))
 		{
 			InventoryManager.openInventory(player, InventoryType.MACDO);
+		}
+		else if (target.getName().equals("Armurier"))
+		{
+			InventoryManager.openInventory(player, InventoryType.ARMURERIE);
 		}
 	}
 
@@ -165,5 +174,22 @@ public class Events implements Listener {
 				InventoryManager.openInventory(player, InventoryType.POUBELLE);
 			}
 		}
+	}
+
+	@EventHandler
+	public void onAttack(PlayerAttackEntityCooldownResetEvent event)
+	{
+		Player player = event.getPlayer();
+		Entity entity = event.getAttackedEntity();
+		if (!(entity instanceof Player))
+		{
+			return;
+		}
+		Player target = (Player) entity;
+		float x = (float) target.getLocation().getX();
+		float y = (float) target.getLocation().getY();
+		float z = (float) target.getLocation().getZ();
+		Main.getInstance().logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 	}
 }

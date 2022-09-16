@@ -22,6 +22,7 @@ public enum InventoryType {
 	ADMIN_MENU(new AdminMenuInventory()),
 	ADMIN_SANCTION(new AdminSanctionInventory()),
 	APPEL(new AppelInventory()),
+	ARMURERIE(new ArmurerieInventory()),
 	DIRECTION_ERREUR_STAFF(new DirectionErreurStaffInventory()),
 	DIRECTION_MENU(new DirectionMenuInventory()),
 	DIRECTION_RANK_UP(new DirectionRankUpInventory()),
