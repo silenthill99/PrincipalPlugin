@@ -4,8 +4,6 @@ import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.KitHolder;
-import org.apache.commons.lang.time.DurationFormatUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,8 +11,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -44,7 +40,7 @@ public class KitInventory extends AbstractInventory<KitHolder> {
                     long time = cooldown.get(player.getUniqueId()) - System.currentTimeMillis();
                     if (time > 0)
                     {
-                        player.sendMessage(ChatColor.RED + "Il reste encore " + convertSecondsToHMmSs(time/1000));
+                        player.sendMessage(ChatColor.RED + "Il reste encore " + Main.convertSecondsToHMmSs(time/1000));
                         return;
                     }
                 }
@@ -57,12 +53,5 @@ public class KitInventory extends AbstractInventory<KitHolder> {
             default:
                 break;
         }
-    }
-
-    public static String convertSecondsToHMmSs(long seconds) {
-        long s = seconds % 60;
-        long m = (seconds / 60) % 60;
-        long h = (seconds / (60 * 60)) % 24;
-        return String.format("%dh %02dmin et %02ds", h,m,s);
     }
 }

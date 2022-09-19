@@ -53,6 +53,7 @@ public final class Main extends JavaPlugin
     private void commands()
     {
         getCommand("action").setExecutor(new Action());
+        getCommand("aide").setExecutor(new Aide());
         getCommand("administrateur").setExecutor(new Administrateur());
         getCommand("administrateur").setTabCompleter(new Staff());
         getCommand("builder").setExecutor(new Builder());
@@ -117,5 +118,12 @@ public final class Main extends JavaPlugin
             economy = eco.getProvider();
         }
         return economy != null;
+    }
+
+    public static String convertSecondsToHMmSs(long seconds) {
+        long s = seconds % 60;
+        long m = (seconds / 60) % 60;
+        long h = (seconds / (60 * 60)) % 24;
+        return String.format("%dh %02dmin et %02ds", h,m,s);
     }
 }
