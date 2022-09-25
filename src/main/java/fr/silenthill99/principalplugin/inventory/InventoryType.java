@@ -28,6 +28,7 @@ public enum InventoryType {
 	DIRECTION_RANK_UP(new DirectionRankUpInventory()),
 	DIRECTION_RANK_UP_SUPER(new DirectionRankUpSuperInventory()),
 	DISTRIBUTEUR(new DistributeurInventory()),
+	GPS(new GPSInventory()),
     KIT(new KitInventory()),
 	MACDO(new MacDoInventory()),
 	METIERS_ILLEGAUX(new IllegauxInventory()),

@@ -32,6 +32,7 @@ public final class Main extends JavaPlugin
     {
         return instance;
     }
+
     public MySQL mysql = new MySQL();
     public Economy economy = null;
     public int inter;

@@ -63,4 +63,4 @@ commands:
     permission: oxydia.vanish
   aide:
     aliases: a
-    description: Commande permettant de demander d'e l'aide à un membre du staff
+    description: Commande permettant de demander de l'aide à un membre du staff

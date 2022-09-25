@@ -27,7 +27,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
         Inventory inv = createInventory(new PoleEmploiHolder(), 54, "Choisissez un métier");
 		inv.setItem(0, citoyen);
 		int slot = 1;
-		for (String itemName : Arrays.asList("Policier", "Pompier", "Medecin", "Cuisinier"))
+		for (String itemName : Arrays.asList("Policier", "Pompier", "Medecin", "Cuisinier", "Chasseur"))
 		{
 			inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.YELLOW + itemName).toItemStack());
 		}
@@ -64,6 +64,10 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 				else if (grade.equalsIgnoreCase("cuisinier"))
 				{
 					changeMetier(player, grade, "http://novask.in/5921353192.png");
+				}
+				else if (grade.equalsIgnoreCase("chasseur"))
+				{
+					changeMetier(player, grade, "http://novask.in/5448143538.png");
 				}
 				break;
 		}
