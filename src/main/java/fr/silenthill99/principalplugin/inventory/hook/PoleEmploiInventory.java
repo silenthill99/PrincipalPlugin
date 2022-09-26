@@ -49,16 +49,16 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 				break;
 			}
 			default:
-				changeMetier(player, holder.metiers.get(e.getSlot()), holder.metiers.get(e.getSlot()).url());
+				changeMetier(player, holder.metiers.get(e.getSlot()));
 				break;
 		}
 	}
 
-	public void changeMetier(Player player, Metiers metier, String url)
+	public void changeMetier(Player player, Metiers metier)
 	{
 		player.closeInventory();
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + metier.name().toLowerCase(Locale.ROOT));
-		Bukkit.dispatchCommand(player, "skin set " + url);
+		Bukkit.dispatchCommand(player, "skin set " + metier.url());
 		player.sendMessage(ChatColor.GREEN + "Vous êtes désormais " + metier.getName() + " !");
 	}
 }
