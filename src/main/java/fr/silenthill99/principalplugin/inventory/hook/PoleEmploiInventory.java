@@ -49,11 +49,11 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 			}
 			default:
 				String grade = ChatColor.stripColor(current.getItemMeta().getDisplayName()).toLowerCase(Locale.ROOT);
-				if (grade.equalsIgnoreCase("policier"))
+				if (grade.equalsIgnoreCase(holder.metiers.get(e.getSlot()).name()))
 				{
 					changeMetier(player, grade, "http://novask.in/5911833608.png");
 				}
-				else if (grade.equalsIgnoreCase("pompier"))
+				else if (grade.equalsIgnoreCase(holder.metiers.get(e.getSlot()).name()))
 				{
 					changeMetier(player, grade, "http://novask.in/5925383309.png");
 				}
