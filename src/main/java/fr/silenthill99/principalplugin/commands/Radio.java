@@ -110,7 +110,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
 
                 for (Player players : Bukkit.getOnlinePlayers())
                 {
-                    if (Main.isPlayerInGroup(players, "pompiers"))
+                    if (Main.isPlayerInGroup(players, "pompier"))
                     {
                         players.sendMessage(ChatColor.DARK_RED + "[Radio Pompiers] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
