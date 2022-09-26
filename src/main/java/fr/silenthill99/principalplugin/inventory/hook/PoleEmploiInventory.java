@@ -12,6 +12,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 
 	public PoleEmploiInventory() {
@@ -47,7 +49,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 				break;
 			}
 			default:
-				changeMetier(player, holder.metiers.get(e.getSlot()).getName(), holder.metiers.get(e.getSlot()).url());
+				changeMetier(player, holder.metiers.get(e.getSlot()).getName().toLowerCase(Locale.ROOT), holder.metiers.get(e.getSlot()).url());
 				break;
 		}
 	}
