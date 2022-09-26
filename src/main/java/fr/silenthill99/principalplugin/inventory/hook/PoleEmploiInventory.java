@@ -49,7 +49,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 				break;
 			}
 			default:
-				changeMetier(player, holder.metiers.get(e.getSlot()));
+				changeMetier(player, holder.metiers.get(e.getSlot()-1));
 				break;
 		}
 	}
