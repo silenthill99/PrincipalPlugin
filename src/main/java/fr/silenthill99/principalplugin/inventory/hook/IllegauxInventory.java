@@ -41,6 +41,10 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
             case PAPER:
             {
                 player.closeInventory();
+                if (holder.metiers.get(e.getSlot()) == null)
+                {
+                    return;
+                }
                 Bukkit.dispatchCommand(player, "lp user " + player.getName() + " parent set " + holder.metiers.get(e.getSlot()).name().toLowerCase(Locale.ROOT));
                 Bukkit.dispatchCommand(player, "skin set " + holder.metiers.get(e.getSlot()).getUrl());
                 player.sendMessage(ChatColor.RED + "Vous êtes désormais " + holder.metiers.get(e.getSlot()).getName() + " !");
@@ -53,12 +57,12 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
         }
     }
 
-    public static enum Metiers {
+    public enum Metiers {
         GANGSTER("Gangster", "http://novask.in/5621013128.png")
         ;
 
-        private final String name;
-        private final String url;
+        private String name;
+        private String url;
 
         Metiers(String name, String url)
         {
@@ -75,5 +79,14 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
             return this.url;
         }
 
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public void setUrl(String url)
+        {
+            this.url = url;
+        }
     }
 }
