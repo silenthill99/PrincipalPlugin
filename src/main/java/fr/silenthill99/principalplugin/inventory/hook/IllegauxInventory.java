@@ -22,13 +22,12 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
     public void openInventory(Player p, Object... args)
     {
         IllegauxHolder holder = new IllegauxHolder();
-
-        Inventory inv = createInventory(new IllegauxHolder(), 27, ChatColor.DARK_RED + "Métiers illégaux");
+        Inventory inv = createInventory(holder, 27, ChatColor.DARK_RED + "Métiers illégaux");
         int slot = 0;
         for (Metiers metiers : Metiers.values())
         {
             holder.metiers.put(slot, metiers);
-            inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.DARK_RED + metiers.name).toItemStack());
+            inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.DARK_RED + metiers.getName()).toItemStack());
         }
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
@@ -40,14 +39,11 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
         {
             case PAPER:
             {
+                Metiers illegal = holder.metiers.get(e.getSlot());
                 player.closeInventory();
-                if (holder.metiers.get(e.getSlot()) == null)
-                {
-                    return;
-                }
-                Bukkit.dispatchCommand(player, "lp user " + player.getName() + " parent set " + holder.metiers.get(e.getSlot()).name().toLowerCase(Locale.ROOT));
-                Bukkit.dispatchCommand(player, "skin set " + holder.metiers.get(e.getSlot()).getUrl());
-                player.sendMessage(ChatColor.RED + "Vous êtes désormais " + holder.metiers.get(e.getSlot()).getName() + " !");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + illegal.name().toLowerCase(Locale.ROOT));
+                Bukkit.dispatchCommand(player, "skin set " + illegal.getUrl());
+                player.sendMessage(ChatColor.RED + "Vous êtes désormais " + illegal.getName() + " !");
                 break;
             }
             default:
@@ -56,8 +52,8 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
             }
         }
     }
-
-    public enum Metiers {
+    public enum Metiers
+    {
         GANGSTER("Gangster", "http://novask.in/5621013128.png")
         ;
 
