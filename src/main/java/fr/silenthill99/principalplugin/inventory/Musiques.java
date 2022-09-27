@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory;
 
 public enum Musiques
 {
+	GANGSTAS_PARADISE("Gangsta's Paradise"),
     HOTEL_CALIFORNIA("Hotel California"),
     ON_MELANCHOLY_HILL("On Melancholy Hill"),
     POKEMON("Pokemon"),
@@ -10,7 +11,7 @@ public enum Musiques
 	
 	private final String name;
 	
-	private Musiques(String name) {
+	Musiques(String name) {
 		this.name = name;
 	}
 	
