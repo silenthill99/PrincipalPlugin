@@ -12,8 +12,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-
 public class GPSInventory extends AbstractInventory<GPSHolder> {
     public GPSInventory() {
         super(GPSHolder.class);
@@ -22,11 +20,13 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
-        Inventory inv = Bukkit.createInventory(new GPSHolder(), 54, "GPS");
+        GPSHolder holder = new GPSHolder();
+        Inventory inv = Bukkit.createInventory(holder, 54, "GPS");
         int slot = 0;
-        for (String part : Arrays.asList("Mairie", "Pôle emploi"))
+        for (Gps gps : Gps.values())
         {
-            inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(part).toItemStack());
+            holder.gps.put(slot, gps);
+            inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(gps.getName()).toItemStack());
         }
         inv.setItem(inv.getSize()-1, RETOUR);
         p.openInventory(inv);
@@ -34,19 +34,13 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
 
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, GPSHolder holder) {
+        Gps gps = holder.gps.get(e.getSlot());
         switch(current.getType())
         {
             case FILLED_MAP:
             {
                 player.closeInventory();
-                if (current.getItemMeta().getDisplayName().equalsIgnoreCase("Mairie"))
-                {
-                    player.sendMessage("x : -141.9, y : 64.0, z : -43.9");
-                }
-                else if (current.getItemMeta().getDisplayName().equalsIgnoreCase("Pôle emploi"))
-                {
-                    player.sendMessage("x : -148.3, y : 64.0, z : 10.4");
-                }
+                player.sendMessage(gps.coord());
                 break;
             }
             case SUNFLOWER:
@@ -54,6 +48,26 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
                 InventoryManager.openInventory(player, InventoryType.TELEPHONE);
                 break;
             }
+        }
+    }
+    public enum Gps
+    {
+        MAIRIE("Mairie", "x : -141.9, y : 64.0, z : -43.9"),
+        POLE_EMPLOI("Pôle emploi", "x : -148.3, y : 64.0, z : 10.4");
+        private final String name;
+        private final String coord;
+
+        Gps(String name, String coord) {
+            this.name = name;
+            this.coord = coord;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String coord() {
+            return coord;
         }
     }
 }
