@@ -42,8 +42,8 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
             {
                 player.closeInventory();
                 Bukkit.dispatchCommand(player, "lp user " + player.getName() + " parent set " + holder.metiers.get(e.getSlot()).name().toLowerCase(Locale.ROOT));
-                Bukkit.dispatchCommand(player, "skin set " + holder.metiers.get(e.getSlot()).url);
-                player.sendMessage(ChatColor.RED + "Vous êtes désormais " + holder.metiers.get(e.getSlot()).name + " !");
+                Bukkit.dispatchCommand(player, "skin set " + holder.metiers.get(e.getSlot()).getUrl());
+                player.sendMessage(ChatColor.RED + "Vous êtes désormais " + holder.metiers.get(e.getSlot()).getName() + " !");
                 break;
             }
             default:
@@ -53,7 +53,7 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
         }
     }
 
-    public enum Metiers {
+    public static enum Metiers {
         GANGSTER("Gangster", "http://novask.in/5621013128.png")
         ;
 
@@ -64,6 +64,15 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
         {
             this.name = name;
             this.url = url;
+        }
+        public String getName()
+        {
+            return this.name;
+        }
+
+        public String getUrl()
+        {
+            return this.url;
         }
 
     }
