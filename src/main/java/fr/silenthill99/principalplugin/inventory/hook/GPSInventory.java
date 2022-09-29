@@ -52,6 +52,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
     }
     public enum Gps
     {
+        HOPITAL("Hôpital", "x : 31.15, y : 64.0, z : 65.24"),
         MAIRIE("Mairie", "x : -141.9, y : 64.0, z : -43.9"),
         POLE_EMPLOI("Pôle emploi", "x : -148.3, y : 64.0, z : 10.4");
         private final String name;

@@ -26,7 +26,6 @@ public final class Main extends JavaPlugin
     public List<String> vanish = new ArrayList<>();
     private Map<UUID, Location> frozenPlayers = new HashMap<>();
 
-    public HashMap<UUID, Double> argent = new HashMap<>();
     private static Main instance;
     public static Main getInstance()
     {
@@ -68,6 +67,7 @@ public final class Main extends JavaPlugin
         getCommand("hrp").setExecutor(new Hrp());
         getCommand("kit").setExecutor(new Kit());
         getCommand("logs").setExecutor(new Logs());
+        getCommand("maire").setExecutor(new Maire());
         getCommand("menu").setExecutor(new Menu());
         getCommand("moderateur").setExecutor(new Moderateur());
         getCommand("moderateur").setTabCompleter(new Staff());

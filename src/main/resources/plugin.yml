@@ -33,6 +33,10 @@ commands:
   kit:
   logs:
     permission: group.modo-stagiaire
+  maire:
+    description: Commande pour le maire !
+    permission: group.maire
+    permission-message: §4Seul le maire peut faire cette commande !
   menu:
     permission: group.modo-stagiaire
     permission-message: §4Vous n'avez pas accès à ceci !

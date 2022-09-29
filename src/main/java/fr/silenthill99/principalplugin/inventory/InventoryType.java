@@ -31,6 +31,7 @@ public enum InventoryType {
 	GPS(new GPSInventory()),
     KIT(new KitInventory()),
 	MACDO(new MacDoInventory()),
+    MAIRE(new MaireInventory()),
 	METIERS_ILLEGAUX(new IllegauxInventory()),
 	MODO_PLAYER_CHOOSE(new PlayerChooseInventory()),
 	MODO_PLAYER_MENU(new PlayerMenuInventory()),
