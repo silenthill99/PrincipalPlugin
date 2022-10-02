@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.CandidatHolder;
 import org.bukkit.Bukkit;
@@ -24,7 +25,7 @@ public class CandidatInventory extends AbstractInventory<CandidatHolder> {
         int slot = 0;
         for (Player players : Bukkit.getOnlinePlayers())
         {
-            if (Main.getInstance().candidat.contains(players))
+            if (Variables.candidat.contains(players))
             {
                 holder.candidats.put(slot, players);
                 inv.setItem(slot++, new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(players.getName()).setName(ChatColor.YELLOW + "Votez " + players.getName()).toItemStack());

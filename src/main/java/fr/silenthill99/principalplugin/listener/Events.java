@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
+import fr.silenthill99.principalplugin.Variables;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,7 +49,7 @@ public class Events implements Listener {
 				}
 			}
 		}
-		Main.getInstance().logs.get(player.getUniqueId())
+		Variables.logs.get(player.getUniqueId())
 				.add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE
 						+ player.getName() + " a dit " + ChatColor.BLUE + message);
 	}
@@ -71,7 +72,7 @@ public class Events implements Listener {
 			Main.getInstance().getFrozenPlayers().remove(player.getUniqueId());
 		}
 		event.setQuitMessage(ChatColor.AQUA + "[" + ChatColor.RED + "-" + ChatColor.AQUA + "] " + player.getName());
-		Main.getInstance().logs.get(player.getUniqueId())
+		Variables.logs.get(player.getUniqueId())
 				.add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE
 						+ player.getName() + ChatColor.BLUE + " s'est déconnecté(e)");
 
@@ -81,11 +82,11 @@ public class Events implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
-		Main.getInstance().logs.remove(player.getUniqueId());
+		Variables.logs.remove(player.getUniqueId());
 		List<String> list = new ArrayList<>();
 		list.add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE
 				+ player.getName() + ChatColor.BLUE + " s'est connecté(e)");
-		Main.getInstance().logs.put(player.getUniqueId(), list);
+		Variables.logs.put(player.getUniqueId(), list);
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
 					+ " Vient de débarquer à Bessemer city ! Veuillez lui souhaiter la bienvenue !\n");
@@ -189,7 +190,7 @@ public class Events implements Listener {
 		float x = (float) target.getLocation().getX();
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
-		Main.getInstance().logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-		Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		Variables.logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 	}
 }

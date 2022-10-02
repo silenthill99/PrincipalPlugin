@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -47,13 +48,13 @@ public class MaireInventory extends AbstractInventory<MaireHolder> {
                     player.sendMessage(ChatColor.DARK_RED + "Réservé aux VIP");
                     return;
                 }
-                if (Main.getInstance().candidat.contains(player))
+                if (Variables.candidat.contains(player))
                 {
                     player.sendMessage(ChatColor.RED + "Vous êtes déjà représentant !");
                     return;
                 }
 
-                Main.getInstance().candidat.add(player);
+                Variables.candidat.add(player);
                 player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Votre candidature a été postée avec succès !");
                 player.closeInventory();
                 break;

@@ -22,9 +22,6 @@ import net.milkbowl.vault.economy.Economy;
 public final class Main extends JavaPlugin
 {
 
-    public Map<UUID, List<String>> logs = new HashMap<>();
-    public List<String> vanish = new ArrayList<>();
-    public List<Player> candidat = new ArrayList<>();
     private Map<UUID, Location> frozenPlayers = new HashMap<>();
 
     private static Main instance;

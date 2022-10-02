@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -58,7 +59,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                         players.sendMessage(ChatColor.DARK_BLUE + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_BLUE + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé la police aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé la police aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             case RED_WOOL:
@@ -70,7 +71,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                         players.sendMessage(ChatColor.DARK_RED + "Vous venez de recevoir un appel de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_RED + ", il se trouve aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f",x) + " y: " + String.format("%.2f",y) + " z: " + String.format("%.2f",z));
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé les pompiers aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé les pompiers aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             case GREEN_WOOL:
@@ -84,7 +85,7 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
                         players.sendMessage(ChatColor.DARK_GREEN + "Une personne du nom de " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_GREEN + " vous attend aux coordonnées " + ChatColor.YELLOW + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé le SAMU aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "]" + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a appelé le SAMU aux coordonnées " + ChatColor.AQUA + "x: " + String.format("%.2f", x) + " y: " + String.format("%.2f", y) + " z: " + String.format("%.2f", z));
                 break;
             }
             default:

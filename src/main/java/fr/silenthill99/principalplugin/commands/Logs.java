@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin.commands;
 
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -22,13 +23,13 @@ public class Logs implements CommandExecutor
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-        if (!Main.getInstance().logs.containsKey(target.getUniqueId()))
+        if (!Variables.logs.containsKey(target.getUniqueId()))
         {
             sender.sendMessage(ChatColor.RED + "Ce joueur n'a pas de logs !");
             return false;
         }
 
-        for (String logs : Main.getInstance().logs.get(target.getUniqueId()))
+        for (String logs : Variables.logs.get(target.getUniqueId()))
         {
             sender.sendMessage(logs);
         }

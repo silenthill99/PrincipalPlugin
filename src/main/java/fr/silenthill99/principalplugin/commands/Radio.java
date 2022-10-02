@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin.commands;
 
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -59,7 +60,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
                         players.sendMessage(ChatColor.DARK_GREEN + "[Radio Médecins] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des médecins " + ChatColor.AQUA + message);
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des médecins " + ChatColor.AQUA + message);
                 break;
             }
             case "17":
@@ -87,7 +88,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
                         players.sendMessage(ChatColor.BLUE + "[Radio Police] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio de la police " + ChatColor.AQUA + message);
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio de la police " + ChatColor.AQUA + message);
                 break;
             }
             case "18":
@@ -115,7 +116,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
                         players.sendMessage(ChatColor.DARK_RED + "[Radio Pompiers] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Main.getInstance().logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des pompiers " + ChatColor.AQUA + message);
+                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des pompiers " + ChatColor.AQUA + message);
                 break;
             }
             default:
