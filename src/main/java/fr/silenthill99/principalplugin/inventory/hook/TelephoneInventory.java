@@ -28,12 +28,14 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
         ItemStack argent = new ItemBuilder(Material.GOLD_INGOT).setName(ChatColor.GREEN + "Voir son argent").toItemStack();
         ItemStack musique = new ItemBuilder(Material.JUKEBOX).setName(ChatColor.GREEN + "Ecouter de la musique").toItemStack();
         ItemStack gps = new ItemBuilder(Material.COMPASS).setName(ChatColor.GREEN + "GPS").toItemStack();
+        ItemStack mairie = new ItemBuilder(Material.REPEATER).setName(ChatColor.GREEN + "Mairie").toItemStack();
 
         Inventory inv = createInventory(new TelephoneHolder(), 27, "Téléphone");
         inv.setItem(0, appel);
         inv.setItem(1, argent);
         inv.setItem(2, musique);
         inv.setItem(3, gps);
+        inv.setItem(4, mairie);
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
     }

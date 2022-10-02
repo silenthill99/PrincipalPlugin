@@ -2,7 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.holder.MaireHolder;
+import fr.silenthill99.principalplugin.inventory.holder.MairieHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,18 +11,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class MaireInventory extends AbstractInventory<MaireHolder> {
-    public MaireInventory() {
-        super(MaireHolder.class);
+public class MairieInventory extends AbstractInventory<MairieHolder> {
+    public MairieInventory() {
+        super(MairieHolder.class);
     }
 
-    ItemStack dictature = new ItemBuilder(Material.RED_DYE).setName(ChatColor.RED + "Régime : dictature").toItemStack();
-    ItemStack democratie = new ItemBuilder(Material.GREEN_DYE).setName(ChatColor.RED + "Régime : démocratie").toItemStack();
+    ItemStack dictature = new ItemBuilder(Material.RED_WOOL).setName(ChatColor.RED + "Régime : dictature").toItemStack();
+    ItemStack democratie = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Régime : démocratie").toItemStack();
 
     @Override
     public void openInventory(Player p, Object... args)
     {
-        MaireHolder holder = new MaireHolder();
+        MairieHolder holder = new MairieHolder();
 
         ItemStack lois = new ItemBuilder(Material.OAK_SIGN).setName("Lois").toItemStack();
 
@@ -40,7 +40,7 @@ public class MaireInventory extends AbstractInventory<MaireHolder> {
     }
 
     @Override
-    public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MaireHolder holder) {
+    public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MairieHolder holder) {
         switch(current.getType())
         {
             case RED_DYE:

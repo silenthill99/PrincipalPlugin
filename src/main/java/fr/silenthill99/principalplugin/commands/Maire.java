@@ -20,7 +20,7 @@ public class Maire implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        InventoryManager.openInventory(player, InventoryType.MAIRE);
+        InventoryManager.openInventory(player, InventoryType.MAIRIE);
 
         return false;
     }
