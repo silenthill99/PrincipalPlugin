@@ -60,6 +60,11 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
                 InventoryManager.openInventory(player, InventoryType.GPS);
                 break;
             }
+            case REPEATER:
+            {
+                InventoryManager.openInventory(player, InventoryType.MAIRE);
+                break;
+            }
             default:
                 break;
         }
