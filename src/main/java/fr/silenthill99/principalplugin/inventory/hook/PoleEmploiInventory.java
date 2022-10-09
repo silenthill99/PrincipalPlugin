@@ -1,7 +1,6 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
-import fr.silenthill99.principalplugin.Metiers;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.PoleEmploiHolder;
 import org.bukkit.Bukkit;
@@ -38,7 +37,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 
 	@Override
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, PoleEmploiHolder holder) {
-		Metiers m = holder.metiers.get(e.getSlot());
+		Metiers metier = holder.metiers.get(e.getSlot());
 		switch(current.getType())
 		{
 			case PLAYER_HEAD:
@@ -51,7 +50,10 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 			}
 			case PAPER:
 			{
-				changeMetier(player, m);
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + metier.name().toLowerCase(Locale.ROOT));
+				Bukkit.dispatchCommand(player, "skin set " + metier.url());
+				player.sendMessage(ChatColor.GREEN + "Vous êtes désormais " + metier.getName() + " !");
 				break;
 			}
 			default:
@@ -59,11 +61,30 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 		}
 	}
 
-	public void changeMetier(Player player, Metiers metier)
-	{
-		player.closeInventory();
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + metier.name().toLowerCase(Locale.ROOT));
-		Bukkit.dispatchCommand(player, "skin set " + metier.url());
-		player.sendMessage(ChatColor.GREEN + "Vous êtes désormais " + metier.getName() + " !");
+	public enum Metiers {
+		POLICIER("Policier", "http://novask.in/5911833608.png"),
+		POMPIER("Pompier", "http://novask.in/5925383309.png"),
+		MEDECIN("Médecin", "http://novask.in/5290663328.png"),
+		CUISINIER("Cuisinier", "http://novask.in/5921353192.png"),
+		CHASSEUR("Chasseur", "http://novask.in/5448143538.png");
+
+		private final String name;
+		private final String url;
+
+		Metiers(String name, String url)
+		{
+			this.name = name;
+			this.url = url;
+		}
+
+		public String getName()
+		{
+			return name;
+		}
+
+		public String url() {
+			return url;
+		}
 	}
+
 }
