@@ -48,8 +48,12 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 				player.sendMessage(ChatColor.GREEN + "Vous êtes désormais citoyen");
 				break;
 			}
+			case PAPER:
+			{
+				changeMetier(player, holder.metiers.get(e.getSlot()));
+				break;
+			}
 			default:
-				changeMetier(player, holder.metiers.get(e.getSlot()-1));
 				break;
 		}
 	}

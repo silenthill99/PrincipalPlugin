@@ -22,7 +22,7 @@ public class MaireInventory extends AbstractInventory<MaireHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
-        ItemStack represrentant = new ItemBuilder(Material.WRITTEN_BOOK).setName(ChatColor.GOLD + " Se représenter").toItemStack();
+        ItemStack represrentant = new ItemBuilder(Material.WRITTEN_BOOK).setName(ChatColor.GOLD + "Se représenter").toItemStack();
         ItemStack voter = new ItemBuilder(Material.PAPER).setName(ChatColor.GOLD + "Voter").toItemStack();
 
         Inventory inv = createInventory(new MaireHolder(), 27, "Devenir maire");
