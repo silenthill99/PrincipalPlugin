@@ -38,6 +38,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 
 	@Override
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, PoleEmploiHolder holder) {
+		Metiers m = holder.metiers.get(e.getSlot());
 		switch(current.getType())
 		{
 			case PLAYER_HEAD:
@@ -50,7 +51,7 @@ public class PoleEmploiInventory extends AbstractInventory<PoleEmploiHolder> {
 			}
 			case PAPER:
 			{
-				changeMetier(player, holder.metiers.get(e.getSlot()));
+				changeMetier(player, m);
 				break;
 			}
 			default:
