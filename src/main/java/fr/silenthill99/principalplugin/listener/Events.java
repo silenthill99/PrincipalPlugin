@@ -1,12 +1,11 @@
 package fr.silenthill99.principalplugin.listener;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
+import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
-import net.kyori.adventure.title.Title;
+import fr.silenthill99.principalplugin.commands.Vanish;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -19,18 +18,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
-import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.commands.Vanish;
-import fr.silenthill99.principalplugin.inventory.InventoryManager;
-import fr.silenthill99.principalplugin.inventory.InventoryType;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
@@ -128,7 +120,7 @@ public class Events implements Listener {
 		Player player = event.getPlayer();
 		Entity target = event.getRightClicked();
 		if (target.getName().equals("pôle emploi")) {
-			InventoryManager.openInventory(player, InventoryType.POLE_EMPLOI);
+			InventoryManager.openInventory(player, InventoryType.METIER);
 		}
 		else if (target.getName().equals("Gangster"))
 		{

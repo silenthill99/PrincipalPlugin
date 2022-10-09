@@ -34,6 +34,7 @@ public enum InventoryType {
 	MACDO(new MacDoInventory()),
 	MAIRE(new MaireInventory()),
     MAIRIE(new MairieInventory()),
+	METIER(new MetierInventory()),
 	METIERS_ILLEGAUX(new IllegauxInventory()),
 	MODO_PLAYER_CHOOSE(new PlayerChooseInventory()),
 	MODO_PLAYER_MENU(new PlayerMenuInventory()),
@@ -42,9 +43,9 @@ public enum InventoryType {
 	MUSIQUE_GESTION(new MusiqueGestionInventory()),
 	OPTIONS_ADMIN(new OptionsAdminInventory()),
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
-	POLE_EMPLOI(new PoleEmploiInventory()),
 	POUBELLE(new PoubelleInventory()),
-	TELEPHONE(new TelephoneInventory());
+	TELEPHONE(new TelephoneInventory()),
+	TEST(new TestInventory());
 	
 	private final AbstractInventory<?> inv;
 	

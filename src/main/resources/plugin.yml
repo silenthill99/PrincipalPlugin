@@ -62,6 +62,7 @@ commands:
   stagiaire:
     permission: oxydia.stagiaire
     permission-message: §4Seuls les modérateurs stagiaire peuvent faire cette commande !
+  test:
   vanish:
     aliases: v
     permission: oxydia.vanish

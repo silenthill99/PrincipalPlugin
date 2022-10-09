@@ -1,13 +1,9 @@
 package fr.silenthill99.principalplugin;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import fr.silenthill99.principalplugin.commands.*;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.listener.Events;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -15,9 +11,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.silenthill99.principalplugin.inventory.InventoryManager;
-import fr.silenthill99.principalplugin.listener.Events;
-import net.milkbowl.vault.economy.Economy;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class Main extends JavaPlugin
 {
@@ -78,6 +75,7 @@ public final class Main extends JavaPlugin
         getCommand("stafftchat").setExecutor(new StaffTchat());
         getCommand("stagiaire").setExecutor(new Stagiaire());
         getCommand("stagiaire").setTabCompleter(new Staff());
+        getCommand("test").setExecutor(new Test());
         getCommand("vanish").setExecutor(new Vanish());
         getCommand("vanish").setTabCompleter(new Staff());
     }
