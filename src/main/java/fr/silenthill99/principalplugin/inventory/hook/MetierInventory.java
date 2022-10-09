@@ -63,14 +63,14 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
 
     public enum Metier
     {
-        POLICIER("Policier", "http://novask.in/5911833608.png"),
-        POMPIER("Pompier", "http://novask.in/5925383309.png"),
-        MEDECIN("Médecin", "http://novask.in/5290663328.png"),
+        CHASSEUR("Chasseur", "http://novask.in/5448143538.png"),
         CUISINIER("Cuisinier", "http://novask.in/5921353192.png"),
-        CHASSEUR("Chasseur", "http://novask.in/5448143538.png");
+        FACTEUR("Facteur", "http://novask.in/2887483160.png"),
+        MEDECIN("Médecin", "http://novask.in/5290663328.png"),
+        POLICIER("Policier", "http://novask.in/5911833608.png"),
+        POMPIER("Pompier", "http://novask.in/5925383309.png");
         private final String titre;
         private final String url;
-
 
         Metier(String titre, String url)
         {
@@ -79,11 +79,11 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
         }
 
         public String getTitre() {
-            return titre;
+            return this.titre;
         }
 
         public String getUrl() {
-            return url;
+            return this.url;
         }
     }
 }
