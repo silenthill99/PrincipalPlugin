@@ -4,7 +4,7 @@ main: fr.silenthill99.principalplugin.Main
 api-version: 1.16
 authors: [ silenthill99 ]
 
-depend: [ Vault ]
+depend: [ Vault, WorldGuard ]
 
 softdepend: [ LuckPerms ]
 
