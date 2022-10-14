@@ -1,7 +1,11 @@
 package fr.silenthill99.principalplugin.inventory.hook.modo;
 
-import java.util.Arrays;
-
+import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
+import fr.silenthill99.principalplugin.inventory.holder.modo.PlayerSanctionHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,13 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import fr.silenthill99.principalplugin.ItemBuilder;
-import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.InventoryManager;
-import fr.silenthill99.principalplugin.inventory.InventoryType;
-import fr.silenthill99.principalplugin.inventory.holder.modo.PlayerSanctionHolder;
 
 @SuppressWarnings("deprecation")
 public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHolder> {
@@ -31,6 +28,9 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		OfflinePlayer target = (OfflinePlayer) args[0];
 		SanctionType type = (SanctionType) args[1];
 		int page = (int) args[2];
+
+		PlayerSanctionHolder holder = new PlayerSanctionHolder(target, type, page);
+
 		ItemBuilder tete = new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(target.getName());
 		ItemBuilder avertir = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Avertissements");
 		ItemBuilder bannir_temporairement = new ItemBuilder(Material.ORANGE_WOOL)
@@ -43,7 +43,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		ItemBuilder page_suivante = new ItemBuilder(Material.GREEN_DYE).setName(ChatColor.GREEN + "Page suivante");
 		ItemBuilder page_precedente = new ItemBuilder(Material.RED_DYE).setName(ChatColor.RED + "Page précédente");
 
-		Inventory sanctions = createInventory(new PlayerSanctionHolder(target, type, page), 54,
+		Inventory sanctions = createInventory(holder, 54,
 				"Sanctionner " + target.getName());
 		sanctions.setItem(4, tete.toItemStack());
 		sanctions.setItem(8, RETOUR);
@@ -81,18 +81,18 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			sanctions.setItem(10, avertir.toItemStack());
 			if (page == 1) {
 				int slot = 27;
-				for (String itemName : Arrays.asList("NoFearRP", "PowerGaming / NoPainRP", "MétaGaming", "NLR", "RTZ",
-						"Non respect du Serious RP", "Braquage rue", "Braquage solo", "Hrp en RP", "NoRP",
-						"Conduite NoRP", "Véhicule bâtiment", "FreeTaze", "FreeJail", "FreePunch", "FreeShot",
-						"Armes en métier légal", "Objet Illégal en métier légal"))
-					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL)
-							.setName(ChatColor.DARK_GREEN + itemName).toItemStack()); // add item and go to next slot
-			} else if (page == 2) {
-				int slot = 27;
-				for (String itemName : Arrays.asList("Insultes HRP"))
+				for (WarnPage1 page1 : WarnPage1.values())
 				{
-					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL)
-							.setName(ChatColor.DARK_GREEN + itemName).toItemStack());
+					holder.warn_page_1.put(slot, page1);
+					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.DARK_GREEN + page1.getName()).toItemStack());
+				}
+			}
+			else if (page == 2) {
+				int slot = 27;
+				for (WarnPage2 page2 : WarnPage2.values())
+				{
+					holder.warn_page_2.put(slot, page2);
+					sanctions.setItem(slot++, new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.DARK_GREEN + page2.getName()).toItemStack());
 				}
 			}
 			break;
@@ -101,8 +101,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			bannir_temporairement.addGlowingEffect();
 			sanctions.setItem(11, bannir_temporairement.toItemStack());
 			if (page == 1) {
-				sanctions.setItem(27, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + "/HRP en mute")
-						.setLore("Durée : 2 heures").toItemStack());
+				int slot = 27;
+				for (TempBanPage1 page1 : TempBanPage1.values())
+				{
+					holder.temp_ban_page_1.put(slot, page1);
+					sanctions.setItem(27, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + page1.getName()).setLore(page1.getLore()).toItemStack());
+				}
 			}
 			break;
 		}
@@ -158,6 +162,9 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 	@Override
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, PlayerSanctionHolder holder) {
 		OfflinePlayer target = holder.getTarget();
+		WarnPage1 warn_1 = holder.warn_page_1.get(e.getSlot());
+		WarnPage2 warn_2 = holder.warn_page_2.get(e.getSlot());
+		TempBanPage1 temp_ban_1 = holder.temp_ban_page_1.get(e.getSlot());
 		int page = holder.getPage();
 		switch (current.getType()) {
 		case GREEN_WOOL: {
@@ -172,7 +179,10 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 					Bukkit.dispatchCommand(player,
 							"warn " + target.getName() + " Insultes HRP (La prochaine fois c'est un mute de 2 heures)");
 				} else {
-					Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + name);
+					if (holder.getPage() == 1)
+					{
+						Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + warn_1.getName());
+					}
 				}
 			}
 			return;
@@ -182,11 +192,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				openInventory(player, target, SanctionType.BAN_TEMP, 1);
 				return;
 			}
-			if (current.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "/HRP en mute")) {
-				player.closeInventory();
-				Bukkit.dispatchCommand(player, "tempipban " + target.getName() + " 2h Utilisation du /hrp en mute");
-				return;
-			}
+			player.closeInventory();
+			Bukkit.dispatchCommand(player, "tempipban " + target.getName() + temp_ban_1.getDuree() + " " + temp_ban_1.getSanction());
 			break;
 		}
 		case RED_WOOL: {
@@ -286,7 +293,86 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 	}
 
-	public static enum SanctionType {
+	public enum SanctionType {
 		MENU, WARN, BAN, BAN_TEMP, FREEZE, KICK, MUTE, MUTE_TEMP
+	}
+
+	public enum WarnPage1 {
+		NO_FEAR_RP("NoFearRP"),
+		POWER_GAMING("PowerGaming / NoPainRP"),
+		META_GAMING("MétaGaming"),
+		NLR("NLR"),
+		RTZ("RTZ"),
+		SERIOUS_RP("Non respect du Serious RP"),
+		BRAQUAGE_RUE("Braquage rue"),
+		BRAQUAGE_SOLO("Braquage solo"),
+		HRP_EN_RP("Hrp en RP"),
+		NORP("NoRP"),
+		CONDUITE("Conduite NoRP"),
+		VEHICULE_BATIMENT("Véhicule bâtiment"),
+		FREE_TAZE("FreeTaze"),
+		FREE_JAIL("FreeJail"),
+		FREE_PUNCH("FreePunch"),
+		FREE_SHOT("FreeShot"),
+		ARMES("Armes en métier légal"),
+		OBJET_ILLEGAL("Objet Illégal en métier légal");
+
+		private final String name;
+		WarnPage1(String name)
+		{
+			this.name = name;
+		}
+
+		public String getName() {
+			return this.name;
+		}
+	}
+
+	public enum WarnPage2
+	{
+		INSULTES_HRP("Insultes HRP");
+
+		private final String name;
+
+		WarnPage2(String name)
+		{
+			this.name = name;
+		}
+		public String getName() {
+			return this.name;
+		}
+	}
+
+	public enum TempBanPage1
+	{
+		HRP_EN_MUTE("/HRP en mute", "2h", "Utilisation du /hrp en mute", "Durée : 2 heures");
+
+		private final String name;
+		private final String duree;
+		private final String sanction;
+		private final String[] lore;
+		TempBanPage1(String name, String duree, String sanction, String... lore)
+		{
+			this.name = name;
+			this.duree = duree;
+			this.sanction = sanction;
+			this.lore = lore;
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public String getDuree() {
+			return this.duree;
+		}
+
+		public String[] getLore() {
+			return this.lore;
+		}
+
+		public String getSanction() {
+			return this.sanction;
+		}
 	}
 }
