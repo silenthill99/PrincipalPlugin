@@ -179,10 +179,21 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 					Bukkit.dispatchCommand(player,
 							"warn " + target.getName() + " Insultes HRP (La prochaine fois c'est un mute de 2 heures)");
 				} else {
-					if (holder.getPage() == 1)
-					{
-						Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + warn_1.getName());
-					}
+                    switch (page)
+                    {
+                        case 1:
+                        {
+                            Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + warn_1.getName());
+                            break;
+                        }
+                        case 2:
+                        {
+                            Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + warn_2.getName());
+                            break;
+                        }
+                        default:
+                            break;
+                    }
 				}
 			}
 			return;
@@ -193,7 +204,19 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				return;
 			}
 			player.closeInventory();
-			Bukkit.dispatchCommand(player, "tempipban " + target.getName() + temp_ban_1.getDuree() + " " + temp_ban_1.getSanction());
+            switch (page)
+            {
+                case 1:
+                {
+                    Bukkit.dispatchCommand(player, "tempipban " + target.getName() + temp_ban_1.getDuree() + " " + temp_ban_1.getSanction());
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+
 			break;
 		}
 		case RED_WOOL: {
