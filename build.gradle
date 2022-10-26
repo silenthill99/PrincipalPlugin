@@ -6,7 +6,7 @@ plugins {
 group = 'fr.silenthill99'
 version = '1.0-SNAPSHOT'
 
-compileJava.getOptions().setEncoding("UTF-8")
+compileJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()

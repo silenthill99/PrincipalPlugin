@@ -1,10 +1,7 @@
 package fr.silenthill99.principalplugin.inventory.holder.modo;
 
 import fr.silenthill99.principalplugin.inventory.SilenthillHolder;
-import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory.SanctionType;
-import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory.TempBanPage1;
-import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory.WarnPage1;
-import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory.WarnPage2;
+import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory.*;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
@@ -36,4 +33,7 @@ public class PlayerSanctionHolder extends SilenthillHolder {
 	public HashMap<Integer, WarnPage1> warn_page_1 = new HashMap<>();
 	public HashMap<Integer, WarnPage2> warn_page_2 = new HashMap<>();
 	public HashMap<Integer, TempBanPage1> temp_ban_page_1 = new HashMap<>();
+	public HashMap<Integer, BanPage1> ban_page_1 = new HashMap<>();
+	public HashMap<Integer, KickPage1> kick_page_1 = new HashMap<>();
+	public HashMap<Integer, MutePage1> mute_page_1 = new HashMap<>();
 }

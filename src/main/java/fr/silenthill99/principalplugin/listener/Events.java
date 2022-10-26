@@ -10,7 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -41,9 +44,14 @@ public class Events implements Listener {
 				}
 			}
 		}
-		Variables.logs.get(player.getUniqueId())
-				.add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE
-						+ player.getName() + " a dit " + ChatColor.BLUE + message);
+		Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
+        ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+        tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
+        tchat.setCustomNameVisible(true);
+        tchat.setVisible(false);
+        tchat.setGravity(false);
+        tchat.setCanMove(true);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> tchat.setHealth(0), 100);
 	}
 
 	@EventHandler

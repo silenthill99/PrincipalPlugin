@@ -105,7 +105,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				for (TempBanPage1 page1 : TempBanPage1.values())
 				{
 					holder.temp_ban_page_1.put(slot, page1);
-					sanctions.setItem(27, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + page1.getName()).setLore(page1.getLore()).toItemStack());
+					sanctions.setItem(slot++, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + page1.getName()).setLore(page1.getLore()).toItemStack());
 				}
 			}
 			break;
@@ -114,16 +114,18 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			bannir.addGlowingEffect();
 			sanctions.setItem(12, bannir.toItemStack());
 			if (page == 1) {
-				sanctions.setItem(27, new ItemBuilder(Material.RED_WOOL)
-						.setName(ChatColor.DARK_RED + "Menace d'attaque DDoS").toItemStack());
+				int slot = 27;
+				for (BanPage1 ban_page_1 : BanPage1.values())
+				{
+					holder.ban_page_1.put(slot, ban_page_1);
+					sanctions.setItem(slot++, new ItemBuilder(Material.RED_WOOL).setName(ChatColor.DARK_RED + ban_page_1.getTitre()).toItemStack());
+				}
 			}
 			break;
 		}
 		case FREEZE: {
-			ItemBuilder freeze_on = new ItemBuilder(Material.LIGHT_BLUE_WOOL)
-					.setName(ChatColor.AQUA + "Freeze le joueur");
-			ItemBuilder freeze_off = new ItemBuilder(Material.LIGHT_BLUE_WOOL)
-					.setName(ChatColor.AQUA + "UnFreeze le joueur");
+			ItemBuilder freeze_on = new ItemBuilder(Material.LIGHT_BLUE_WOOL).setName(ChatColor.AQUA + "Freeze le joueur");
+			ItemBuilder freeze_off = new ItemBuilder(Material.LIGHT_BLUE_WOOL).setName(ChatColor.AQUA + "UnFreeze le joueur");
 			freeze.addEnchantment(Enchantment.DAMAGE_ALL, 5);
 			sanctions.setItem(13, freeze.toItemStack());
 			sanctions.setItem(37, freeze_on.toItemStack());
@@ -133,6 +135,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		case KICK: {
 			kick.addGlowingEffect();
 			sanctions.setItem(14, kick.toItemStack());
+			int slot = 27;
+			for (KickPage1 kick_page_1 : KickPage1.values())
+			{
+				holder.kick_page_1.put(slot, kick_page_1);
+				sanctions.setItem(slot++, new ItemBuilder(Material.MAGENTA_WOOL).setName(ChatColor.LIGHT_PURPLE + kick_page_1.getTitre()).toItemStack());
+			}
 			break;
 		}
 		case MUTE_TEMP: {
@@ -147,6 +155,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		case MUTE: {
 			mute.addGlowingEffect();
 			sanctions.setItem(16, mute.toItemStack());
+			int slot = 27;
+			for (MutePage1 mute_page_1 : MutePage1.values())
+			{
+				holder.mute_page_1.put(slot, mute_page_1);
+				sanctions.setItem(slot++, new ItemBuilder(Material.PURPLE_WOOL).setName(ChatColor.DARK_PURPLE + mute_page_1.getTitre()).toItemStack());
+			}
 			break;
 		}
 		default: {
@@ -165,6 +179,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		WarnPage1 warn_1 = holder.warn_page_1.get(e.getSlot());
 		WarnPage2 warn_2 = holder.warn_page_2.get(e.getSlot());
 		TempBanPage1 temp_ban_1 = holder.temp_ban_page_1.get(e.getSlot());
+		BanPage1 ban_page_1 = holder.ban_page_1.get(e.getSlot());
+		KickPage1 kick_page_1 = holder.kick_page_1.get(e.getSlot());
 		int page = holder.getPage();
 		switch (current.getType()) {
 		case GREEN_WOOL: {
@@ -224,15 +240,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				openInventory(player, target, SanctionType.BAN, 1);
 				return;
 			}
-			if (current.getItemMeta().getDisplayName().equals(ChatColor.DARK_RED + "Menace d'attaque DDoS")) {
-				player.closeInventory();
-				if (!Main.isPlayerInGroup(player, "moderateur")) {
-					Bukkit.dispatchCommand(player, "tempipban " + target.getName() + " 100y Menace d'attaque DDoS");
-					return;
-				}
-				Bukkit.dispatchCommand(player, "ipban " + target.getName() + " Menace d'attaque DDoS");
+			player.closeInventory();
+			if (!Main.isPlayerInGroup(player, "moderateur")) {
+				Bukkit.dispatchCommand(player, "tempipban " + target.getName() + " 100y " + ban_page_1.getTitre());
 				return;
 			}
+			Bukkit.dispatchCommand(player, "ipban " + target.getName() + " " + ban_page_1.getTitre());
 			break;
 		}
 		case LIGHT_BLUE_WOOL: {
@@ -276,7 +289,9 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		case MAGENTA_WOOL: {
 			if (current.getItemMeta().getDisplayName().equals(ChatColor.LIGHT_PURPLE + "Kick")) {
 				openInventory(player, target, SanctionType.KICK, 1);
+				return;
 			}
+			Bukkit.dispatchCommand(player, "kick " + target.getName() + " " + kick_page_1.getTitre());
 			break;
 		}
 		case SUNFLOWER: {
@@ -365,7 +380,20 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			return this.name;
 		}
 	}
+	public enum BanPage1
+	{
+		MENACE_ATTAQUE_DDOS("Menace d'attaque DDoS");
 
+		private final String titre;
+		BanPage1(String titre)
+		{
+			this.titre = titre;
+		}
+
+		public String getTitre() {
+			return this.titre;
+		}
+	}
 	public enum TempBanPage1
 	{
 		HRP_EN_MUTE("/HRP en mute", "2h", "Utilisation du /hrp en mute", "Durée : 2 heures");
@@ -398,4 +426,35 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			return this.sanction;
 		}
 	}
+	public enum Freeze
+	{}
+	public enum KickPage1
+	{
+		;
+		private final String titre;
+		KickPage1(String titre)
+		{
+			this.titre = titre;
+		}
+
+		public String getTitre()
+		{
+			return this.titre;
+		}
+	}
+	public enum MutePage1
+	{
+		;
+		private final String titre;
+		MutePage1(String titre)
+		{
+			this.titre = titre;
+		}
+		public String getTitre()
+		{
+			return this.titre;
+		}
+	}
+	public enum MuteTempPage1
+	{}
 }
