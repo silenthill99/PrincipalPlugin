@@ -26,12 +26,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
 
+    Main main = Main.getInstance();
 	@EventHandler
-	public void onTchat(AsyncPlayerChatEvent event) {
+	public void onTchat(PlayerChatEvent event) {
 		event.setCancelled(true);
 		String message = event.getMessage();
 		Player player = event.getPlayer();
@@ -45,13 +47,25 @@ public class Events implements Listener {
 			}
 		}
 		Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
-        ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+		ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
         tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
         tchat.setCustomNameVisible(true);
         tchat.setVisible(false);
         tchat.setGravity(false);
         tchat.setCanMove(true);
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> tchat.setHealth(0), 100);
+		Bukkit.getScheduler().runTaskTimer(main, new TimerTask() {
+			int time = 100;
+			@Override
+			public void run() {
+				tchat.teleport(player.getLocation());
+				if (time == 0)
+				{
+					cancel();
+					tchat.setHealth(0);
+				}
+				time--;
+			}
+		}, 0, 1);
 	}
 
 	@EventHandler
