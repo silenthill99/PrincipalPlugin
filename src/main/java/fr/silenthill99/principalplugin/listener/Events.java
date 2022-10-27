@@ -6,11 +6,8 @@ import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.*;
+import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -21,7 +18,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -47,23 +43,17 @@ public class Events implements Listener {
 			}
 		}
 		Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
-		ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
-        tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
-        tchat.setCustomNameVisible(true);
-        tchat.setVisible(false);
-        tchat.setGravity(false);
-        tchat.setCanMove(true);
+
+        AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
+		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
+		tchat.setCustomNameVisible(true);
+		tchat.setGravity(false);
+		tchat.setParticle(Particle.BLOCK_CRACK, Material.AIR.createBlockData());
+		tchat.setDuration(100);
 		Bukkit.getScheduler().runTaskTimer(main, new TimerTask() {
-			int time = 100;
 			@Override
 			public void run() {
-				tchat.teleport(player.getLocation());
-				if (time == 0)
-				{
-					cancel();
-					tchat.setHealth(0);
-				}
-				time--;
+				tchat.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()));
 			}
 		}, 0, 1);
 	}
