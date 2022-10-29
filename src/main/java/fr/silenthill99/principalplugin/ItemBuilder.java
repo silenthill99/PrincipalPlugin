@@ -18,7 +18,11 @@ public class ItemBuilder
 
     public static ItemStack getArgent()
     {
-        return new ItemBuilder(Material.GOLD_INGOT).setName(ChatColor.GREEN + "100€").toItemStack();
+        return getArgent(1);
+    }
+    public static ItemStack getArgent(int amount)
+    {
+        return new ItemBuilder(Material.GOLD_INGOT, amount).setName(ChatColor.GREEN + "100€").toItemStack();
     }
 
     private ItemStack is;
