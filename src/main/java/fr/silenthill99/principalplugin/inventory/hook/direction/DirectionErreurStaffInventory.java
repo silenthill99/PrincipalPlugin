@@ -15,6 +15,8 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.direction.DirectionErreurStaffHolder;
 
+import java.util.Arrays;
+
 public class DirectionErreurStaffInventory extends AbstractInventory<DirectionErreurStaffHolder> {
 
 	public DirectionErreurStaffInventory() {
@@ -24,10 +26,21 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 	@Override
 	public void openInventory(Player p, Object... args) {
 		OfflinePlayer target = (OfflinePlayer) args[0];
+		DirectionErreurStaffHolder holder = new DirectionErreurStaffHolder(target);
 		
-        Inventory inv = createInventory(new DirectionErreurStaffHolder(target), 27, "Erreurs staff");
-        inv.setItem(0, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + "Fly sans vanish").toItemStack());
-        inv.setItem(1, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + "God en WZ").setLore("Uniquement si vanish désactivé !").toItemStack());
+        Inventory inv = createInventory(holder, 27, "Erreurs staff");
+		int slot = 0;
+		for (ErreurStaff erreur_staff : ErreurStaff.values())
+		{
+			holder.erreur_staff.put(slot, erreur_staff);
+			ItemStack e_s = new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + erreur_staff.getTitre()).toItemStack();
+			if (erreur_staff.getLore() != null)
+			{
+				e_s.setLore(Arrays.asList(erreur_staff.getLore()));
+			}
+			inv.setItem(slot++, e_s);
+
+		}
         inv.setItem(2, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + "Non-respect | Règlement staff").toItemStack());
         inv.setItem(3, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + "Non-respect d'autrui").toItemStack());
         inv.setItem(4, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + "Abus de pouvoir").setLore("Passible d'un dérank immédiat").toItemStack());
@@ -47,6 +60,8 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player,
 			DirectionErreurStaffHolder holder) {
         OfflinePlayer target = holder.getTarget();
+		ErreurStaff erreur_staff = holder.erreur_staff.get(e.getSlot());
+
 		switch (current.getType()) {
 		case SUNFLOWER: {
 			InventoryManager.openInventory(player, InventoryType.DIRECTION_MENU, holder.getTarget());
@@ -54,14 +69,36 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 		}
 		case REDSTONE: {
 			player.closeInventory();
-			String name = ChatColor.stripColor(current.getItemMeta().getDisplayName());
-			if (!name.isEmpty()) {
-				Bukkit.dispatchCommand(player, "warn " + target.getName() + " Erreur staff : " + name);
-			}
+			Bukkit.dispatchCommand(player, "warn " + target.getName() + " Erreur staff : " + erreur_staff.getTitre());
 			break;
 		}
 		default:
 			break;
+		}
+	}
+
+	public enum ErreurStaff
+	{
+		FLY_SANS_VANISH("Fly sans vanish"),
+		GOD_EN_WZ("God en WZ", "Uniquement si vanish désactivé !"),
+		NON_RESPECT_REGLEMENT_STAFF("Non-respect | Règlement staff")
+		;
+
+		private final String titre;
+		private final String[] lore;
+		ErreurStaff(String titre, String... lore)
+		{
+			this.titre = titre;
+			this.lore = lore;
+		}
+		public String getTitre()
+		{
+			return this.titre;
+		}
+
+		public String[] getLore()
+		{
+			return this.lore;
 		}
 	}
 }
