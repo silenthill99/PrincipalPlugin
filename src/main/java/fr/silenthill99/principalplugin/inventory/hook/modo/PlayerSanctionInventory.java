@@ -430,8 +430,10 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 	{}
 	public enum KickPage1
 	{
+		AFK("AFK")
 		;
 		private final String titre;
+
 		KickPage1(String titre)
 		{
 			this.titre = titre;

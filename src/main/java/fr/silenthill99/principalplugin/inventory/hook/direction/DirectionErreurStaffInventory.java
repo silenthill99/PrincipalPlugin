@@ -1,5 +1,10 @@
 package fr.silenthill99.principalplugin.inventory.hook.direction;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
+import fr.silenthill99.principalplugin.inventory.holder.direction.DirectionErreurStaffHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,14 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import fr.silenthill99.principalplugin.ItemBuilder;
-import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.InventoryManager;
-import fr.silenthill99.principalplugin.inventory.InventoryType;
-import fr.silenthill99.principalplugin.inventory.holder.direction.DirectionErreurStaffHolder;
-
-import java.util.Arrays;
 
 public class DirectionErreurStaffInventory extends AbstractInventory<DirectionErreurStaffHolder> {
 
@@ -33,12 +30,7 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 		for (ErreurStaff erreur_staff : ErreurStaff.values())
 		{
 			holder.erreur_staff.put(slot, erreur_staff);
-			ItemStack e_s = new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + erreur_staff.getTitre()).toItemStack();
-			if (erreur_staff.getLore() != null)
-			{
-				e_s.setLore(Arrays.asList(erreur_staff.getLore()));
-			}
-			inv.setItem(slot++, e_s);
+			inv.setItem(slot++, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + erreur_staff.getTitre()).setLore(erreur_staff.getLore()).toItemStack());
 
 		}
         inv.setItem(18, RETOUR);
