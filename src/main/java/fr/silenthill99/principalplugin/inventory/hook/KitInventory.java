@@ -35,12 +35,11 @@ public class KitInventory extends AbstractInventory<KitHolder> {
         switch (current.getType())
         {
             case GREEN_WOOL:
-                if (cooldown.containsKey(player.getUniqueId()))
-                {
+            {
+                if (cooldown.containsKey(player.getUniqueId())) {
                     long time = cooldown.get(player.getUniqueId()) - System.currentTimeMillis();
-                    if (time > 0)
-                    {
-                        player.sendMessage(ChatColor.RED + "Il reste encore " + Main.convertSecondsToHMmSs(time/1000));
+                    if (time > 0) {
+                        player.sendMessage(ChatColor.RED + "Il reste encore " + Main.convertSecondsToHMmSs(time / 1000));
                         return;
                     }
                 }
@@ -49,8 +48,9 @@ public class KitInventory extends AbstractInventory<KitHolder> {
                 player.closeInventory();
                 player.getInventory().addItem(telephone);
                 player.getInventory().addItem(ItemBuilder.getArgent(30));
-                cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 1000*3600*24);
+                cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * 3600 * 24);
                 break;
+            }
             default:
                 break;
         }

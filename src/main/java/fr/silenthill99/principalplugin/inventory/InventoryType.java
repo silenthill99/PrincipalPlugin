@@ -44,6 +44,7 @@ public enum InventoryType {
 	OPTIONS_ADMIN(new OptionsAdminInventory()),
 	OPTIONS_JOUEUR(new OptionsJoueurInventory()),
 	POUBELLE(new PoubelleInventory()),
+	POLICIER(new PolicierInventory()),
 	TELEPHONE(new TelephoneInventory()),
 	TEST(new TestInventory());
 	
