@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin;
 
 import fr.silenthill99.principalplugin.commands.*;
+import fr.silenthill99.principalplugin.commands.staff.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
 import net.milkbowl.vault.economy.Economy;

@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
@@ -182,15 +183,11 @@ public class Events implements Listener {
 	}
 
 	@EventHandler
-	public void onAttack(PlayerAttackEntityCooldownResetEvent event)
+	public void onAttack(EntityDamageByEntityEvent event)
 	{
-		Player player = event.getPlayer();
-		Entity entity = event.getAttackedEntity();
-		if (!(entity instanceof Player))
-		{
-			return;
-		}
-		Player target = (Player) entity;
+		if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player)) return;
+		Player player = (Player) event.getDamager();
+		Player target = (Player) event.getEntity();
 		float x = (float) target.getLocation().getX();
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
