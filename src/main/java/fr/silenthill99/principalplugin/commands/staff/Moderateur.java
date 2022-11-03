@@ -1,4 +1,4 @@
-package fr.silenthill99.principalplugin.commands;
+package fr.silenthill99.principalplugin.commands.staff;
 
 import fr.silenthill99.principalplugin.Main;
 import org.bukkit.Bukkit;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Moderateur implements CommandExecutor
 {
+    Main main = Main.getInstance();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
     {
@@ -45,7 +46,8 @@ public class Moderateur implements CommandExecutor
             Bukkit.dispatchCommand(player, "fly off");
             Bukkit.dispatchCommand(player, "god off");
             Bukkit.dispatchCommand(player, "vanish off");
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            Bukkit.dispatchCommand(player, "skin clear");
+            Bukkit.getScheduler().runTaskLater(main, () -> {
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");

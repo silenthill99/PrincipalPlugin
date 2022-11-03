@@ -1,7 +1,6 @@
-package fr.silenthill99.principalplugin.commands;
+package fr.silenthill99.principalplugin.commands.staff;
 
 import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -11,10 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class CoFondateur implements CommandExecutor
+public class Developpeur implements CommandExecutor
 {
+    Main main = Main.getInstance();
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args)
     {
         if (!(sender instanceof Player))
         {
@@ -26,7 +26,7 @@ public class CoFondateur implements CommandExecutor
 
         if (args.length != 1)
         {
-            player.sendMessage(ChatColor.RED + "Veuillez faire /co-fondateur <on|off>");
+            player.sendMessage(ChatColor.RED + "Veuillez faire /developpeur <on|off>");
             return false;
         }
 
@@ -38,21 +38,25 @@ public class CoFondateur implements CommandExecutor
 
         if (args[0].equalsIgnoreCase("on"))
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set co-fondateur");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set developpeur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Co-Fondateur !");
-            return false;
+            player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Développeur !");
         }
-        if (args[0].equalsIgnoreCase("off"))
+        else if (args[0].equalsIgnoreCase("off"))
         {
             if (!player.getGameMode().equals(GameMode.ADVENTURE))
             {
                 player.setGameMode(GameMode.ADVENTURE);
             }
             Bukkit.dispatchCommand(player, "fly off");
-            Bukkit.dispatchCommand(player, "vanish off");
             Bukkit.dispatchCommand(player, "god off");
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), new Timer(player), 20);
+            Bukkit.dispatchCommand(player, "vanish off");
+            Bukkit.dispatchCommand(player, "skin clear");
+            Bukkit.getScheduler().runTaskLater(main, () -> {
+                Bukkit.dispatchCommand(player, "lp user " + player.getName() + " parent set default");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"list");
+                player.sendMessage(ChatColor.GREEN + "Vous n'êtes plus en mode Développeur !");
+            }, 20);
         }
         return false;
     }

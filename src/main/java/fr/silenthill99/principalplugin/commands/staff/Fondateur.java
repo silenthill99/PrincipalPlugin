@@ -1,6 +1,7 @@
-package fr.silenthill99.principalplugin.commands;
+package fr.silenthill99.principalplugin.commands.staff;
 
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.Timer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -10,8 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class Administrateur implements CommandExecutor
+public class Fondateur implements CommandExecutor
 {
+    Main main = Main.getInstance();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
     {
@@ -25,7 +27,7 @@ public class Administrateur implements CommandExecutor
 
         if (args.length != 1)
         {
-            player.sendMessage(ChatColor.RED + "Veuillez faire /administrateur <on|off>");
+            player.sendMessage(ChatColor.RED + "Veuillez faire /fondateur <on|off>");
             return false;
         }
 
@@ -37,24 +39,23 @@ public class Administrateur implements CommandExecutor
 
         if (args[0].equalsIgnoreCase("on"))
         {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set administrateur");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set fondateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Administrateur !");
+            player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Fondateur !");
+            return false;
         }
-        else if (args[0].equalsIgnoreCase("off"))
+
+        if (args[0].equalsIgnoreCase("off"))
         {
             if (!player.getGameMode().equals(GameMode.ADVENTURE))
             {
                 player.setGameMode(GameMode.ADVENTURE);
             }
             Bukkit.dispatchCommand(player, "fly off");
-            Bukkit.dispatchCommand(player, "god off");
             Bukkit.dispatchCommand(player, "vanish off");
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
-                player.sendMessage(ChatColor.GREEN + "Vous avez désactivé le mode Administrateur !");
-            }, 20);
+            Bukkit.dispatchCommand(player, "god off");
+            Bukkit.dispatchCommand(player, "skin clear");
+            Bukkit.getScheduler().runTaskLater(main, new Timer(player), 20);
         }
 
         return false;

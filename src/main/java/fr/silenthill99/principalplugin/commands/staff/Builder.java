@@ -1,5 +1,6 @@
-package fr.silenthill99.principalplugin.commands;
+package fr.silenthill99.principalplugin.commands.staff;
 
+import fr.silenthill99.principalplugin.commands.Vanish;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -13,6 +14,7 @@ import fr.silenthill99.principalplugin.Main;
 
 public class Builder implements CommandExecutor
 {
+    Main main = Main.getInstance();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
     {
@@ -54,7 +56,8 @@ public class Builder implements CommandExecutor
             {
                 player.setGameMode(GameMode.ADVENTURE);
             }
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            Bukkit.dispatchCommand(player, "skin clear");
+            Bukkit.getScheduler().runTaskLater(main, () -> {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
                 player.sendMessage(ChatColor.GREEN + "Vous avez désactivé le mode Builder !");
