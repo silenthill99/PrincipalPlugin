@@ -42,6 +42,7 @@ public class CoFondateur implements CommandExecutor
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set co-fondateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
             player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Co-Fondateur !");
+            Bukkit.dispatchCommand(player, "skin clear");
             return false;
         }
         if (args[0].equalsIgnoreCase("off"))
@@ -53,7 +54,6 @@ public class CoFondateur implements CommandExecutor
             Bukkit.dispatchCommand(player, "fly off");
             Bukkit.dispatchCommand(player, "vanish off");
             Bukkit.dispatchCommand(player, "god off");
-            Bukkit.dispatchCommand(player, "skin clear");
             Bukkit.getScheduler().runTaskLater(main, new Timer(player), 20);
         }
         return false;

@@ -43,6 +43,7 @@ public class Builder implements CommandExecutor
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set builder");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
             player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Builder !");
+            Bukkit.dispatchCommand(player, "skin clear");
         }
         else if (args[0].equalsIgnoreCase("off"))
         {
@@ -56,7 +57,6 @@ public class Builder implements CommandExecutor
             {
                 player.setGameMode(GameMode.ADVENTURE);
             }
-            Bukkit.dispatchCommand(player, "skin clear");
             Bukkit.getScheduler().runTaskLater(main, () -> {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");

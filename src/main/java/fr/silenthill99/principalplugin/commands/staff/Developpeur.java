@@ -41,6 +41,7 @@ public class Developpeur implements CommandExecutor
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set developpeur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
             player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Développeur !");
+            Bukkit.dispatchCommand(player, "skin clear");
         }
         else if (args[0].equalsIgnoreCase("off"))
         {
@@ -51,7 +52,6 @@ public class Developpeur implements CommandExecutor
             Bukkit.dispatchCommand(player, "fly off");
             Bukkit.dispatchCommand(player, "god off");
             Bukkit.dispatchCommand(player, "vanish off");
-            Bukkit.dispatchCommand(player, "skin clear");
             Bukkit.getScheduler().runTaskLater(main, () -> {
                 Bukkit.dispatchCommand(player, "lp user " + player.getName() + " parent set default");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"list");

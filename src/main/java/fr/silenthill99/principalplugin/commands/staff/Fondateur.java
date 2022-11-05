@@ -42,6 +42,7 @@ public class Fondateur implements CommandExecutor
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set fondateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
             player.sendMessage(ChatColor.GREEN + "Vous avez activé le mode Fondateur !");
+            Bukkit.dispatchCommand(player, "skin clear");
             return false;
         }
 
@@ -54,7 +55,6 @@ public class Fondateur implements CommandExecutor
             Bukkit.dispatchCommand(player, "fly off");
             Bukkit.dispatchCommand(player, "vanish off");
             Bukkit.dispatchCommand(player, "god off");
-            Bukkit.dispatchCommand(player, "skin clear");
             Bukkit.getScheduler().runTaskLater(main, new Timer(player), 20);
         }
 

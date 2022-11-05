@@ -40,13 +40,13 @@ public class Moderateur implements CommandExecutor
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set moderateur");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "list");
             player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en mode Modérateur !");
+            Bukkit.dispatchCommand(player, "skin clear");
         }
         else if (args[0].equalsIgnoreCase("off"))
         {
             Bukkit.dispatchCommand(player, "fly off");
             Bukkit.dispatchCommand(player, "god off");
             Bukkit.dispatchCommand(player, "vanish off");
-            Bukkit.dispatchCommand(player, "skin clear");
             Bukkit.getScheduler().runTaskLater(main, () -> {
 
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set default");
