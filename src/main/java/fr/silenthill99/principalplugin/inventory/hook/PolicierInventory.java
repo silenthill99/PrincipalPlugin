@@ -32,7 +32,7 @@ public class PolicierInventory extends AbstractInventory<PolicierHolder>
         if (!(event.getRightClicked() instanceof Player)) return;
         Player target = (Player) event.getRightClicked();
 
-        if ((!Main.isPlayerInGroup(player, "policier") || player.isOp()) && target.hasMetadata("NPC")) return;
+        if (!Main.isPlayerInGroup(player, "policier") || player.isOp() || target.hasMetadata("NPC")) return;
 
         InventoryManager.openInventory(player, InventoryType.POLICIER, target);
     }
