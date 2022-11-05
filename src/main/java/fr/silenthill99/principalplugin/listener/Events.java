@@ -1,6 +1,5 @@
 package fr.silenthill99.principalplugin.listener;
 
-import com.destroystokyo.paper.event.player.PlayerAttackEntityCooldownResetEvent;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.commands.Vanish;
@@ -8,7 +7,6 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
 import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -126,27 +124,6 @@ public class Events implements Listener {
 	public void onDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 		event.setCancelled(Main.getInstance().isFreeze(player));
-	}
-
-	@EventHandler
-	public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
-		Player player = event.getPlayer();
-		Entity target = event.getRightClicked();
-		if (target.getName().equals("pôle emploi")) {
-			InventoryManager.openInventory(player, InventoryType.METIER);
-		}
-		else if (target.getName().equals("Gangster"))
-		{
-			InventoryManager.openInventory(player, InventoryType.METIERS_ILLEGAUX);
-		}
-		else if (target.getName().equals("MacDo"))
-		{
-			InventoryManager.openInventory(player, InventoryType.MACDO);
-		}
-		else if (target.getName().equals("Armurier"))
-		{
-			InventoryManager.openInventory(player, InventoryType.ARMURERIE);
-		}
 	}
 
 	@EventHandler

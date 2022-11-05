@@ -3,12 +3,16 @@ package fr.silenthill99.principalplugin.inventory.hook;
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.ArmurerieHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,6 +53,17 @@ public class ArmurerieInventory extends AbstractInventory<ArmurerieHolder> {
             }
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        Player player = event.getPlayer();
+        Entity target = event.getRightClicked();
+
+        if (target.getName().equalsIgnoreCase("Armurier"))
+        {
+            InventoryManager.openInventory(player, InventoryType.ARMURERIE);
         }
     }
 }

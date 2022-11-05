@@ -29,11 +29,11 @@ public class PolicierInventory extends AbstractInventory<PolicierHolder>
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-
-        if (!Main.isPlayerInGroup(player, "policier") && !player.isOp()) return;
         if (!(event.getRightClicked() instanceof Player)) return;
-
         Player target = (Player) event.getRightClicked();
+
+        if ((!Main.isPlayerInGroup(player, "policier") || player.isOp()) && !(target.getName().equalsIgnoreCase("pôle emploi") || target.getName().equalsIgnoreCase("Gangster") || target.getName().equalsIgnoreCase("MacDo") || target.getName().equalsIgnoreCase("Armurier"))) return;
+
         InventoryManager.openInventory(player, InventoryType.POLICIER, target);
     }
 }

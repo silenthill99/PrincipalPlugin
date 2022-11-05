@@ -2,12 +2,16 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.IllegauxHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -52,6 +56,17 @@ public class IllegauxInventory extends AbstractInventory<IllegauxHolder> {
             }
         }
     }
+
+    @Override
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        Player player = event.getPlayer();
+        Entity target = event.getRightClicked();
+        if (target.getName().equalsIgnoreCase("Gangster"))
+        {
+            InventoryManager.openInventory(player, InventoryType.METIERS_ILLEGAUX);
+        }
+    }
+
     public enum Metiers
     {
         GANGSTER("Gangster", "http://novask.in/5621013128.png")
