@@ -1,14 +1,17 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.PolicierHolder;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class PolicierInventory extends AbstractInventory<PolicierHolder>
 {
@@ -17,13 +20,18 @@ public class PolicierInventory extends AbstractInventory<PolicierHolder>
     }
 
     @Override
-    public void openInventory(Player p, Object... args)
+    public void openInventory(Player player, Object... args)
     {
         Player target = (Player) args[0];
         PolicierHolder holder = new PolicierHolder(target);
 
         Inventory inv = createInventory(holder, 18, ChatColor.BLUE + "Menu Policier");
-        p.openInventory(inv);
+        if (Main.isPlayerInGroup(target, "cuisinier"))
+        {
+            ItemStack magasin = new ItemBuilder(Material.BOOK).setName(ChatColor.GOLD + "Ouvrir le magazin").toItemStack();
+            inv.setItem(inv.getSize()-1, magasin);
+        }
+        player.openInventory(inv);
     }
 
     @Override
