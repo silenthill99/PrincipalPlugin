@@ -9,16 +9,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Radio implements CommandExecutor, @Nullable TabCompleter {
+public class Radio implements CommandExecutor, TabCompleter {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
+    public boolean onCommand( CommandSender sender, Command cmd, String msg, String[] args)
     {
         if (! (sender instanceof Player))
         {
@@ -132,7 +130,7 @@ public class Radio implements CommandExecutor, @Nullable TabCompleter {
     private List<String> numero = new ArrayList<>();
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args) {
+    public List<String> onTabComplete(CommandSender sender,Command cmd, String msg, String[] args) {
         numero.add("15");
         numero.add("17");
         numero.add("18");

@@ -4,12 +4,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 public class Showvanish implements CommandExecutor
 {
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
     {
         if (Vanish.getVanished().isEmpty())
         {

@@ -1,17 +1,15 @@
 package fr.silenthill99.principalplugin.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.silenthill99.principalplugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-import fr.silenthill99.principalplugin.Main;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Vanish implements CommandExecutor
 {
@@ -22,7 +20,7 @@ public class Vanish implements CommandExecutor
 	}
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, @NotNull String[] args)
+    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
     {
 
         if (!(sender instanceof Player)) return false;

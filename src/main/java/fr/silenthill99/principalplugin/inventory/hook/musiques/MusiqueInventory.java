@@ -39,11 +39,12 @@ public class MusiqueInventory extends AbstractInventory<MusiqueHolder>
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MusiqueHolder holder)
     {
+        Musiques music = holder.musics.get(e.getSlot());
         switch (current.getType())
         {
             case NOTE_BLOCK:
             {
-                InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, holder.musics.get(e.getSlot()));
+                InventoryManager.openInventory(player, InventoryType.MUSIQUE_GESTION, music);
                 break;
             }
             case SUNFLOWER:

@@ -1,5 +1,6 @@
 package fr.silenthill99.principalplugin.inventory;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,9 +14,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import fr.silenthill99.principalplugin.ItemBuilder;
-import net.kyori.adventure.text.Component;
 
 public abstract class AbstractInventory<T extends SilenthillHolder> {
 
@@ -35,20 +33,20 @@ public abstract class AbstractInventory<T extends SilenthillHolder> {
 	}
 	
 	protected Inventory createInventory(T holder, int size, String name) {
-		return Bukkit.createInventory(holder, size, Component.text(name));
+		return Bukkit.createInventory(holder, size, name);
 	}
 	protected Inventory createInventory(T holder, InventoryType type, String name) {
-		return Bukkit.createInventory(holder, type, Component.text(name));
+		return Bukkit.createInventory(holder, type, name);
 	}
 
 	public void onPlayerJoin(PlayerJoinEvent e) {}
 	public void onPlayerLeft(PlayerQuitEvent e) {}
 	public void onInteract(PlayerInteractEvent e) {}
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {}
-	public abstract void openInventory(Player p, Object... args);
-	public void closeInventory(Player p, InventoryCloseEvent e) {}
+	public abstract void openInventory(Player player, Object... args);
+	public void closeInventory(Player player, InventoryCloseEvent e) {}
 	public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, T holder) {}
 	public void voidInventory(InventoryClickEvent e, Player player, T holder){}
 	public void moveFromInventory(InventoryClickEvent e, Inventory from, Player player, T holder){}
-	public void actualizeInventory(Player p, Inventory inv, T holder) {}
+	public void actualizeInventory(Player player, Inventory inv, T holder) {}
 }

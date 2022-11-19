@@ -36,22 +36,23 @@ public class MusiqueGestionInventory extends AbstractInventory<MusiqueGestionHol
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MusiqueGestionHolder holder)
     {
+        Musiques music = holder.getMusic();
         player.closeInventory();
         switch (current.getType())
         {
             case GREEN_WOOL:
             {
-                Bukkit.dispatchCommand(player, "function " + holder.getMusic().name().toLowerCase() + ":play");
+                Bukkit.dispatchCommand(player, "function " + music.name().toLowerCase() + ":play");
                 break;
             }
             case ORANGE_WOOL:
             {
-                Bukkit.dispatchCommand(player, "function " + holder.getMusic().name().toLowerCase() + ":pause");
+                Bukkit.dispatchCommand(player, "function " + music.name().toLowerCase() + ":pause");
                 break;
             }
             case RED_WOOL:
             {
-                Bukkit.dispatchCommand(player, "function " + holder.getMusic().name().toLowerCase() + ":stop");
+                Bukkit.dispatchCommand(player, "function " + music.name().toLowerCase() + ":stop");
                 break;
             }
             case SUNFLOWER:
