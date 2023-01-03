@@ -1,5 +1,7 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
@@ -25,7 +27,6 @@ public class AppelInventory extends AbstractInventory<AppelHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
-
         ItemStack police = new ItemBuilder(Material.BLUE_WOOL).setName(ChatColor.DARK_BLUE + "Appeler la police").toItemStack();
         ItemStack pompiers = new ItemBuilder(Material.RED_WOOL).setName(ChatColor.DARK_RED + "Appeler les pompiers").toItemStack();
         ItemStack samu = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.DARK_GREEN + "Appeler le SAMU").toItemStack();

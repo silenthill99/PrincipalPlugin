@@ -7,6 +7,7 @@ import java.sql.SQLException;
 public class MySQL
 {
     private Connection conn;
+    Main main = Main.getInstance();
 
     public void connect(String host, int port, String database, String user, String password)
     {
@@ -15,7 +16,7 @@ public class MySQL
             try
             {
                 conn = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port  + "/" + database, user, password);
-                Main.getInstance().getLogger().info("Connection établie avec la BDD");
+                main.getLogger().info("Connection établie avec la BDD");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

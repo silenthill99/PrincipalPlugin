@@ -12,10 +12,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public final class Main extends JavaPlugin
 {
@@ -44,6 +41,7 @@ public final class Main extends JavaPlugin
         pm.registerEvents(new Events(), this);
         pm.registerEvents(new InventoryManager(), this);
         commands();
+        
     }
 
     private void commands()

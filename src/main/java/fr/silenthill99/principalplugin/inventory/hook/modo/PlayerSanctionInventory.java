@@ -182,6 +182,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		BanPage1 ban_page_1 = holder.ban_page_1.get(e.getSlot());
 		KickPage1 kick_page_1 = holder.kick_page_1.get(e.getSlot());
 		int page = holder.getPage();
+		SanctionType type = holder.getName();
+
 		switch (current.getType()) {
 		case GREEN_WOOL: {
 			if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Avertissements")) {
@@ -299,11 +301,11 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			break;
 		}
 		case GREEN_DYE: {
-			openInventory(player, target, holder.getName(), page + 1);
+			openInventory(player, target, type, page + 1);
 			break;
 		}
 		case RED_DYE: {
-			openInventory(player, target, holder.getName(), page - 1);
+			openInventory(player, target, type, page - 1);
 			break;
 		}
 		case PINK_WOOL: {

@@ -1,5 +1,9 @@
 package fr.silenthill99.principalplugin.listener;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.commands.Vanish;

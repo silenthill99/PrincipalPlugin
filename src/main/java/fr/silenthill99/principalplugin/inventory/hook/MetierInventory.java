@@ -26,16 +26,18 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
     public void openInventory(Player p, Object... args)
     {
         ItemStack tete = new ItemBuilder(Material.PLAYER_HEAD).setName(ChatColor.GOLD + "Citoyen").toItemStack();
+        ItemStack benevolat = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Faire du bénévolat").toItemStack();
 
         MetierHolder holder = new MetierHolder();
         Inventory inv = createInventory(holder, 54, ChatColor.YELLOW + "Pôle emploi");
         int slot = 1;
+        inv.setItem(0, tete);
         for (Metier metier : Metier.values())
         {
             holder.metier.put(slot, metier);
             inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.GOLD + metier.getTitre()).toItemStack());
         }
-        inv.setItem(0, tete);
+        inv.setItem(53, benevolat);
         p.openInventory(inv);
     }
 
@@ -58,6 +60,11 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + metier.name().toLowerCase(Locale.ROOT));
                 Bukkit.dispatchCommand(player, "skin set " + metier.getUrl());
                 player.sendMessage(ChatColor.GREEN + "Vous êtes désormais " + metier.getTitre() + " !");
+                break;
+            }
+            case GREEN_WOOL:
+            {
+                InventoryManager.openInventory(player, InventoryType.BENEVOLAT);
                 break;
             }
             default:
