@@ -6,7 +6,9 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.GPSHolder;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -40,7 +42,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             case FILLED_MAP:
             {
                 player.closeInventory();
-                player.sendMessage(gps.coord());
+                player.teleport(gps.coord());
                 break;
             }
             case SUNFLOWER:
@@ -50,15 +52,18 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             }
         }
     }
+    static World world = Bukkit.getWorld("world");
+
     public enum Gps
     {
-        HOPITAL("Hôpital", "x : 31.15, y : 64.0, z : 65.24"),
-        MAIRIE("Mairie", "x : -141.9, y : 64.0, z : -43.9"),
-        POLE_EMPLOI("Pôle emploi", "x : -148.3, y : 64.0, z : 10.4");
-        private final String name;
-        private final String coord;
 
-        Gps(String name, String coord) {
+        HOPITAL("Hôpital", new Location(world, 31.15, 64.0, 65.24)),
+        MAIRIE("Mairie", new Location(world,-141.9, 64.0, -43.9)),
+        POLE_EMPLOI("Pôle emploi", new Location(world, -148.3, 64.0, 10.4));
+        private final String name;
+        private final Location coord;
+
+        Gps(String name, Location coord) {
             this.name = name;
             this.coord = coord;
         }
@@ -67,7 +72,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             return name;
         }
 
-        public String coord() {
+        public Location coord() {
             return coord;
         }
     }
