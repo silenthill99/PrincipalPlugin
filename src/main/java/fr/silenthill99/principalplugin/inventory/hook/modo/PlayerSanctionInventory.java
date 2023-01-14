@@ -13,6 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -71,6 +72,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			else
 				inv.setItem(slot, new ItemBuilder(Material.PAPER).setName("Page " + page).toItemStack());
 		}
+
 		switch (type)
 		{
 			case WARN: {
@@ -116,7 +118,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				break;
 			}
 			case FREEZE: {
-				freeze.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+				freeze.addGlowingEffect();
 				inv.setItem(13, freeze.toItemStack());
 				for (Freeze freezed : Freeze.values())
 				{
@@ -147,8 +149,11 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				int slot = 27;
 				for (MuteTemp muteTemp : MuteTemp.values())
 				{
-					holder.muteTemp.put(slot, muteTemp);
-					inv.setItem(slot++, new ItemBuilder(Material.PINK_WOOL).setName(ChatColor.LIGHT_PURPLE + muteTemp.getName()).setLore(muteTemp.getLore()).toItemStack());
+					if (page == muteTemp.getPage())
+					{
+						holder.muteTemp.put(slot, muteTemp);
+						inv.setItem(slot++, new ItemBuilder(Material.PINK_WOOL).setName(ChatColor.LIGHT_PURPLE + muteTemp.getName()).setLore(muteTemp.getLore()).toItemStack());
+					}
 				}
 				break;
 			}
@@ -191,6 +196,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		Freeze freezed = holder.freeze.get(e.getSlot());
 		MuteTemp muteTemp = holder.muteTemp.get(e.getSlot());
 		Mute muted = holder.mute.get(e.getSlot());
+
+		removeEffects();
 
 		switch (current.getType()) {
 		case GREEN_WOOL:
@@ -329,6 +336,22 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 	}
 
+	@Override
+	public void closeInventory(Player player, InventoryCloseEvent e)
+	{
+		removeEffects();
+	}
+
+	private void removeEffects()
+	{
+		avertir.removeEnchantment(Enchantment.DURABILITY);
+		bannir_temporairement.removeEnchantment(Enchantment.DURABILITY);
+		bannir.removeEnchantment(Enchantment.DURABILITY);
+		freeze.removeEnchantment(Enchantment.DURABILITY);
+		kick.removeEnchantment(Enchantment.DURABILITY);
+		tempmute.removeEnchantment(Enchantment.DURABILITY);
+		mute.removeEnchantment(Enchantment.DURABILITY);
+	}
 	public enum SanctionType
 	{
 		MENU, WARN, BAN, BAN_TEMP, FREEZE, KICK, MUTE, MUTE_TEMP

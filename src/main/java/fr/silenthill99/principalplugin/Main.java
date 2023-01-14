@@ -36,7 +36,7 @@ public final class Main extends JavaPlugin
         setupEconomy();
         inter = 0;
         getLogger().info("Le plugin est opérationnel !");
-        mysql.connect("minecraft1009.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
+        //mysql.connect("minecraft1009.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Events(), this);
         pm.registerEvents(new InventoryManager(), this);
