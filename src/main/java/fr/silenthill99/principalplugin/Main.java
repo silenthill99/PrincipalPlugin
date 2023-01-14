@@ -25,7 +25,6 @@ public final class Main extends JavaPlugin
         return instance;
     }
 
-    public MySQL mysql = new MySQL();
     public Economy economy = null;
     public int inter;
 
@@ -36,7 +35,6 @@ public final class Main extends JavaPlugin
         setupEconomy();
         inter = 0;
         getLogger().info("Le plugin est opérationnel !");
-        //mysql.connect("minecraft1009.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new Events(), this);
         pm.registerEvents(new InventoryManager(), this);
@@ -77,6 +75,7 @@ public final class Main extends JavaPlugin
         getCommand("test").setExecutor(new Test());
         getCommand("vanish").setExecutor(new Vanish());
         getCommand("vanish").setTabCompleter(new Staff());
+        getCommand("worldname").setExecutor(new WorldName());
     }
 
     public static boolean isPlayerInGroup(Player player, String group) {

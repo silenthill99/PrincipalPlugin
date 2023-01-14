@@ -69,3 +69,7 @@ commands:
   vanish:
     aliases: v
     permission: oxydia.vanish
+  worldname:
+    aliases: wn
+    permission: oxydia.worldname
+    permission-message: §4Seul un admin peut éxécuter cette commande !
