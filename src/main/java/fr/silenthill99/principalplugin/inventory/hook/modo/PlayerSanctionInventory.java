@@ -202,11 +202,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		switch (current.getType()) {
 		case GREEN_WOOL:
 		{
-			if (current.isSimilar(avertir.toItemStack()))
+			if (!type.equals(SanctionType.WARN))
 			{
 				openInventory(player, target, SanctionType.WARN, 1);
 				return;
 			}
+			if (!holder.warns.containsKey(e.getSlot())) return;
 			player.closeInventory();
 			if (warns.equals(Warns.INSULTES_HRP)) {
 				Bukkit.dispatchCommand(player,
@@ -216,26 +217,28 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			{
 				Bukkit.dispatchCommand(player, "warn " + target.getName() + " " + warns.getName());
 			}
-			return;
+			break;
 		}
 		case ORANGE_WOOL:
 		{
-			if (current.isSimilar(bannir_temporairement.toItemStack()))
+			if (!type.equals(SanctionType.BAN_TEMP))
 			{
 				openInventory(player, target, SanctionType.BAN_TEMP, 1);
 				return;
 			}
+			if (!holder.temp_ban.containsKey(e.getSlot())) return;
 			player.closeInventory();
 			Bukkit.dispatchCommand(player, "tempipban " + target.getName() + temp_ban.getDuree() + " " + temp_ban.getSanction());
 			break;
 		}
 		case RED_WOOL:
 		{
-			if (current.isSimilar(bannir.toItemStack()))
+			if (!type.equals(SanctionType.BAN))
 			{
 				openInventory(player, target, SanctionType.BAN, 1);
 				return;
 			}
+			if(!holder.ban.containsKey(e.getSlot())) return;
 			player.closeInventory();
 			if (!Main.isPlayerInGroup(player, "moderateur")) {
 				Bukkit.dispatchCommand(player, "tempipban " + target.getName() + " 100y " + bans.getTitre());
@@ -246,11 +249,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 		case LIGHT_BLUE_WOOL:
 		{
-			if (current.isSimilar(freeze.toItemStack()))
+			if (!type.equals(SanctionType.FREEZE))
 			{
 				openInventory(player, target, SanctionType.FREEZE, 1);
 				return;
 			}
+			if (!holder.freeze.containsKey(e.getSlot())) return;
 			if (freezed.equals(Freeze.FREEZE)) {
 				if (!target.isOnline()) {
 					player.sendMessage(ChatColor.RED + "Vous ne pouvez pas freeze des joueurs hors ligne !");
@@ -286,11 +290,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 		case MAGENTA_WOOL:
 		{
-			if (current.isSimilar(kick.toItemStack()))
+			if (!type.equals(SanctionType.KICK))
 			{
 				openInventory(player, target, SanctionType.KICK, 1);
 				return;
 			}
+			if(!holder.kick.containsKey(e.getSlot())) return;
 			Bukkit.dispatchCommand(player, "kick " + target.getName() + " " + kicks.getTitre());
 			break;
 		}
@@ -311,10 +316,11 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 		case PINK_WOOL:
 		{
-			if (current.isSimilar(tempmute.toItemStack())) {
+			if (!type.equals(SanctionType.MUTE_TEMP)) {
 				openInventory(player, target, SanctionType.MUTE_TEMP, 1);
 				return;
 			}
+			if (!holder.muteTemp.containsKey(e.getSlot())) return;
 			if (muteTemp.equals(MuteTemp.INSULTES_HRP)) {
 				player.closeInventory();
 				Bukkit.dispatchCommand(player, "tempmute " + target.getName() + " 2h Insultes HRP (la prochaine fois un ban de 24h)");
@@ -324,11 +330,12 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		}
 		case PURPLE_WOOL:
 		{
-			if (current.isSimilar(mute.toItemStack()))
+			if (!type.equals(SanctionType.MUTE))
 			{
 				openInventory(player, target, SanctionType.MUTE, 1);
 				return;
 			}
+			if (!holder.mute.containsKey(e.getSlot())) return;
 			break;
 		}
 		default:
