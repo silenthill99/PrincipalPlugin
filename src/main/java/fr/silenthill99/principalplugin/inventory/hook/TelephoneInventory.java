@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Items;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -79,7 +80,7 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
         {
             return;
         }
-        if (it.getType().equals(Material.BRICK) && (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)))
+        if (it.equals(Items.TELEPHONE.getItems()) && (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)))
         {
             InventoryManager.openInventory(player, InventoryType.TELEPHONE);
         }

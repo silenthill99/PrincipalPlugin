@@ -228,7 +228,7 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 			}
 			if (!holder.temp_ban.containsKey(e.getSlot())) return;
 			player.closeInventory();
-			Bukkit.dispatchCommand(player, "tempipban " + target.getName() + temp_ban.getDuree() + " " + temp_ban.getSanction());
+			Bukkit.dispatchCommand(player, "tempipban " + target.getName() + " " + temp_ban.getDuree() + " " + temp_ban.getSanction());
 			break;
 		}
 		case RED_WOOL:
@@ -425,7 +425,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 	}
 	public enum TempBan
 	{
-		HRP_EN_MUTE(1, "/HRP en mute", "2h", "Utilisation du /hrp en mute", "Durée : 2 heures");
+		HRP_EN_MUTE(1, "/HRP en mute", "2h", "Utilisation du /hrp en mute", "Durée : 2 heures"),
+		INTRUSION_BATIMENT_STAFF(1, "Intrusion Bâtiment staff", "1h", "Intrusion bâtiment staff", "Durée : 1 heure");
 
 		private final int page;
 		private final String name;

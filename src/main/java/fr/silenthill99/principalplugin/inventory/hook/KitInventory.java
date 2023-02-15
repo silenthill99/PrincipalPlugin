@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Items;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.KitHolder;
@@ -44,9 +45,9 @@ public class KitInventory extends AbstractInventory<KitHolder> {
                     }
                 }
 
-                ItemStack telephone = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Téléphone").toItemStack();
+                /*ItemStack telephone = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Téléphone").toItemStack();*/
                 player.closeInventory();
-                player.getInventory().addItem(telephone);
+                player.getInventory().addItem(Items.TELEPHONE.getItems());
                 player.getInventory().addItem(ItemBuilder.getArgent(30));
                 cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * 3600 * 24);
                 break;

@@ -50,6 +50,7 @@ public class BenevolatInventory extends AbstractInventory<BenevolatHolder>
             {
                 player.closeInventory();
                 Bukkit.dispatchCommand(player, "skin set " + association.getUrl());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + association.getGrade());
                 break;
             }
             default:
@@ -61,15 +62,17 @@ public class BenevolatInventory extends AbstractInventory<BenevolatHolder>
 
     public enum Association
     {
-        LA_CROIX_ROUGE(ChatColor.RED + "La croix rouge", "http://novask.in/4425683059.png")
+        LA_CROIX_ROUGE(ChatColor.RED + "La croix rouge", "http://novask.in/4425683059.png", "lacroixrouge")
         ;
         private final String name;
         private final String url;
+        private final String grade;
 
-        Association(String name, String url)
+        Association(String name, String url, String grade)
         {
             this.name = name;
             this.url = url;
+            this.grade = grade;
         }
 
         public String getName()
@@ -80,6 +83,11 @@ public class BenevolatInventory extends AbstractInventory<BenevolatHolder>
         public String getUrl()
         {
             return this.url;
+        }
+
+        public String getGrade()
+        {
+            return this.grade;
         }
     }
 }
