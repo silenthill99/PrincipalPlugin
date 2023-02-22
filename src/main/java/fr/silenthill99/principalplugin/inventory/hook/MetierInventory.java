@@ -56,6 +56,11 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
             }
             case PAPER:
             {
+                if (metier == Metier.MEDECIN)
+                {
+                    InventoryManager.openInventory(player, InventoryType.MEDECIN);
+                    return;
+                }
                 player.closeInventory();
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set " + metier.name().toLowerCase(Locale.ROOT));
                 Bukkit.dispatchCommand(player, "skin set " + metier.getUrl());
@@ -65,6 +70,7 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
             case GREEN_WOOL:
             {
                 InventoryManager.openInventory(player, InventoryType.BENEVOLAT);
+                player.sendMessage(ChatColor.RED + "[Rappel] " + ChatColor.GREEN + "En faisant du bénévolat, vous n'êtes pas censés être payés. Par conséquent, votre salaire sera identique à celui d'un citoyen.");
                 break;
             }
             default:

@@ -35,6 +35,7 @@ public enum InventoryType {
 	MACDO(new MacDoInventory()),
 	MAIRE(new MaireInventory()),
     MAIRIE(new MairieInventory()),
+	MEDECIN(new MedecinInventory()),
 	METIER(new MetierInventory()),
 	METIERS_ILLEGAUX(new IllegauxInventory()),
 	MODO_PLAYER_CHOOSE(new PlayerChooseInventory()),
