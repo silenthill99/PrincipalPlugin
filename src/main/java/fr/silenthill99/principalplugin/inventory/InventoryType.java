@@ -21,6 +21,7 @@ public enum InventoryType {
 
 	ADMIN_MENU(new AdminMenuInventory()),
 	ADMIN_SANCTION(new AdminSanctionInventory()),
+	AMENDE(new AmendeInventory()),
 	APPEL(new AppelInventory()),
 	ARMURERIE(new ArmurerieInventory()),
 	BENEVOLAT(new BenevolatInventory()),

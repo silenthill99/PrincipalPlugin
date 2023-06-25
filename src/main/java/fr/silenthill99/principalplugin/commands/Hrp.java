@@ -45,7 +45,7 @@ public class Hrp implements CommandExecutor
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "[/HRP] " + user.getCachedData().getMetaData().getPrefix().replace("&", "§") + player.getName() + ChatColor.WHITE + " : " + message);
 
-        Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a dit dans le tchat HRP " + ChatColor.AQUA + message);
+        //Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a dit dans le tchat HRP " + ChatColor.AQUA + message);
 
         return false;
     }

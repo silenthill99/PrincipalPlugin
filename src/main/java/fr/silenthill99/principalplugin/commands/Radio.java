@@ -58,7 +58,7 @@ public class Radio implements CommandExecutor, TabCompleter {
                         players.sendMessage(ChatColor.DARK_GREEN + "[Radio Médecins] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des médecins " + ChatColor.AQUA + message);
+                //Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des médecins " + ChatColor.AQUA + message);
                 break;
             }
             case "17":
@@ -86,7 +86,7 @@ public class Radio implements CommandExecutor, TabCompleter {
                         players.sendMessage(ChatColor.BLUE + "[Radio Police] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio de la police " + ChatColor.AQUA + message);
+                //Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio de la police " + ChatColor.AQUA + message);
                 break;
             }
             case "18":
@@ -114,7 +114,7 @@ public class Radio implements CommandExecutor, TabCompleter {
                         players.sendMessage(ChatColor.DARK_RED + "[Radio Pompiers] " + ChatColor.WHITE + player.getName() + " : " + message);
                     }
                 }
-                Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des pompiers " + ChatColor.AQUA + message);
+                //Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a envoyé dans la radio des pompiers " + ChatColor.AQUA + message);
                 break;
             }
             default:

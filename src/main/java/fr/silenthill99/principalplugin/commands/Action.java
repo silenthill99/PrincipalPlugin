@@ -41,7 +41,7 @@ public class Action implements CommandExecutor {
             {
                 players.sendMessage(ChatColor.GRAY + player.getName() + " " + message);
             }
-            Variables.logs.get(players.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a fait l'action suivante : " + ChatColor.AQUA + message);
+            //Variables.logs.get(players.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a fait l'action suivante : " + ChatColor.AQUA + message);
         }
 
         return false;

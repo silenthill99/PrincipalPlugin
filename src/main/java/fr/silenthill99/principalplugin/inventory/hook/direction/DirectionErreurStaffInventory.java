@@ -71,7 +71,8 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 		ABSENCE_NON_JUSTIFIEE("Absence non justifiée"),
 		FAVORITISME("Favoritisme", "A ne pas confondre avec l'attribution de circonstances atténuantes"),
 		DIVULGATION("Divulgations d'infos confidencielles"),
-		CORRUPTION("Corruption")
+		CORRUPTION("Corruption"),
+		SANCTION_INAPPROPRIEE("Sanction inappropriée")
 		;
 
 		private final String titre;

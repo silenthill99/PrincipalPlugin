@@ -1,5 +1,6 @@
 package fr.silenthill99.principalplugin.commands;
 
+import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Variables;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,6 +8,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Logs implements CommandExecutor
 {
@@ -21,16 +24,15 @@ public class Logs implements CommandExecutor
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
 
-        if (!Variables.logs.containsKey(target.getUniqueId()))
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
+        ConfigurationSection configurationSection = config.getConfigurationSection(target.getName() + ".");
+
+        if (configurationSection == null)
         {
             sender.sendMessage(ChatColor.RED + "Ce joueur n'a pas de logs !");
             return false;
         }
-
-        for (String logs : Variables.logs.get(target.getUniqueId()))
-        {
-            sender.sendMessage(logs);
-        }
+        sender.sendMessage(ChatColor.RED + "Le système de logs est en cours de redéveloppement");
         return false;
     }
 }
