@@ -12,7 +12,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class Main extends JavaPlugin
 {
@@ -59,6 +62,7 @@ public final class Main extends JavaPlugin
         getCommand("hrp").setExecutor(new Hrp());
         getCommand("kit").setExecutor(new Kit());
         getCommand("logs").setExecutor(new Logs());
+        getCommand("lois").setExecutor(new Lois());
         getCommand("maire").setExecutor(new Maire());
         getCommand("menu").setExecutor(new Menu());
         getCommand("moderateur").setExecutor(new Moderateur());

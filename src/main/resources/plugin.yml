@@ -36,6 +36,9 @@ commands:
   kit:
   logs:
     permission: group.modo-stagiaire
+  lois:
+    permission: oxydia.maire
+    permission-message: §cSeul le maire peut changer les lois
   maire:
     description: Commande pour le maire !
     permission: group.maire
