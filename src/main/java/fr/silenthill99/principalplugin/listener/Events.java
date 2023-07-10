@@ -1,11 +1,13 @@
 package fr.silenthill99.principalplugin.listener;
 
+import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -18,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,14 +83,15 @@ public class Events implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
+	public void onJoin(PlayerJoinEvent event) throws IOException {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
-		//Variables.logs.remove(player.getUniqueId());
-		List<String> list = new ArrayList<>();
-		list.add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE
-				+ player.getName() + ChatColor.BLUE + " s'est connecté(e)");
-		//Variables.logs.put(player.getUniqueId(), list);
+		YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
+
+		config.getStringList(player.getName() + ".logs").add(player.getName() + " s'est connecté(e)");
+
+		config.save(CustomFiles.LOGS.getFile());
+
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
 					+ " Vient de débarquer à Bessemer city ! Veuillez lui souhaiter la bienvenue !\n");

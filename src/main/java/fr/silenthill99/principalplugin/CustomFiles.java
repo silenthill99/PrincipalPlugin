@@ -4,7 +4,7 @@ import java.io.File;
 
 public enum CustomFiles
 {
-    LOGS(new File(Main.getInstance().getDataFolder(), "logs"));
+    LOGS(new File(Main.getInstance().getDataFolder(), "logs.yml"));
 
     private final File file;
     CustomFiles(File file)
