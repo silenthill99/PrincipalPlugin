@@ -34,6 +34,7 @@ public final class Main extends JavaPlugin
     @Override
     public void onEnable()
     {
+        saveDefaultConfig();
         instance = this;
         setupEconomy();
         inter = 0;
