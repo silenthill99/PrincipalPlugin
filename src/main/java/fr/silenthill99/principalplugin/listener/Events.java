@@ -48,6 +48,7 @@ public class Events implements Listener {
 				config.set(player.getName() + ".logs", messages);
 			}
 		}
+		config.save(CustomFiles.LOGS.getFile());
 //		messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
         AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
@@ -62,7 +63,6 @@ public class Events implements Listener {
 				tchat.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()));
 			}
 		}, 0, 1);
-		config.save(CustomFiles.LOGS.getFile());
 	}
 
 	@EventHandler
@@ -171,15 +171,23 @@ public class Events implements Listener {
 	}
 
 	@EventHandler
-	public void onAttack(EntityDamageByEntityEvent event)
-	{
+	public void onAttack(EntityDamageByEntityEvent event) throws IOException {
 		if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player)) return;
 		Player player = (Player) event.getDamager();
 		Player target = (Player) event.getEntity();
 		float x = (float) target.getLocation().getX();
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
-		//messageiables.logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-		//messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+
+		List<String> messages1 = config.getStringList(player.getName() + ".logs");
+		List<String> messages2 = config.getStringList(target.getName() + ".logs");
+
+		messages2.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + target.getName() + " &9a été attaqué(e) par &1" + player.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		messages1.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a attaqué(e) &1" + target.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+
+		config.set(player.getName() + ".logs", messages1);
+		config.set(target.getName() + ".logs", messages2);
+
+		config.save(CustomFiles.LOGS.getFile());
 	}
 }

@@ -1,5 +1,6 @@
 package fr.silenthill99.principalplugin.commands;
 
+import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.Variables;
 import net.luckperms.api.LuckPerms;
@@ -10,9 +11,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Hrp implements CommandExecutor
 {
@@ -44,8 +48,15 @@ public class Hrp implements CommandExecutor
         }
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "[/HRP] " + user.getCachedData().getMetaData().getPrefix().replace("&", "§") + player.getName() + ChatColor.WHITE + " : " + message);
-
-        //Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a dit dans le tchat HRP " + ChatColor.AQUA + message);
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
+        List<String> messages = config.getStringList(player.getName() + ".logs");
+        messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a dit dans le tchat HRP &b" + message);
+        config.set(player.getName() + ".logs", messages);
+        try {
+            config.save(CustomFiles.LOGS.getFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return false;
     }
