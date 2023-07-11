@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -42,6 +43,9 @@ public class Events implements Listener {
 				} else {
 					players.sendMessage(ChatColor.GOLD + "vous dites : " + ChatColor.GREEN + message);
 				}
+				List<String> messages = config.getStringList(players.getName() + ".logs");
+				messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a dit &b" + message);
+				config.set(player.getName() + ".logs", messages);
 			}
 		}
 //		messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
@@ -58,9 +62,6 @@ public class Events implements Listener {
 				tchat.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()));
 			}
 		}, 0, 1);
-		List<String> messages = config.getStringList(player.getName() + ".logs");
-		messages.add(player.getName() + " a dit \"" + message + "\"");
-		config.set(player.getName() + ".logs", messages);
 		config.save(CustomFiles.LOGS.getFile());
 	}
 
@@ -84,7 +85,7 @@ public class Events implements Listener {
 		event.setQuitMessage(ChatColor.AQUA + "[" + ChatColor.RED + "-" + ChatColor.AQUA + "] " + player.getName());
 
 		List<String> messages = config.getStringList(player.getName() + ".logs");
-		messages.add(player.getName() + " s'est déconnecté(e)");
+		messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9s'est déconnecté(e)");
 		config.set(player.getName(), messages);
 		config.save(CustomFiles.LOGS.getFile());
 	}
@@ -96,7 +97,7 @@ public class Events implements Listener {
 
 		List<String> message = config.getStringList(player.getName() + ".logs");
 		message.clear();
-		message.add(player.getName() + " s'est connecté(e)");
+		message.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9s'est connecté(e)");
 		config.set(player.getName() + ".logs", message);
 
 		config.save(CustomFiles.LOGS.getFile());
@@ -127,7 +128,6 @@ public class Events implements Listener {
 		if(event.getEntity() instanceof Player)
 		{
 			event.setCancelled(Main.getInstance().isFreeze((Player) event.getEntity()));
-			return;
 		}
 	}
 

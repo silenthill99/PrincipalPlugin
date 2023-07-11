@@ -24,6 +24,8 @@ public class Logs implements CommandExecutor
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
 
+        if(target == null) return false;
+
         if (!config.contains(target.getName() + ".logs"))
         {
             sender.sendMessage(ChatColor.RED + "Ce joueur n'a pas de logs !");
@@ -32,7 +34,7 @@ public class Logs implements CommandExecutor
 
         for (String logs : config.getStringList(target.getName() + ".logs"))
         {
-            sender.sendMessage(logs);
+            sender.sendMessage(logs.replace('&', '§'));
         }
         return false;
     }
