@@ -1,10 +1,12 @@
 package fr.silenthill99.principalplugin.listener;
 
+import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -18,14 +20,18 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
 
     Main main = Main.getInstance();
+
+	YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
+
 	@EventHandler
-	public void onTchat(PlayerChatEvent event) {
+	public void onTchat(PlayerChatEvent event) throws IOException {
 		event.setCancelled(true);
 		String message = event.getMessage();
 		Player player = event.getPlayer();
@@ -38,7 +44,7 @@ public class Events implements Listener {
 				}
 			}
 		}
-//		Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
+//		messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
         AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
 		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
@@ -52,10 +58,14 @@ public class Events implements Listener {
 				tchat.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()));
 			}
 		}, 0, 1);
+		List<String> messages = config.getStringList(player.getName() + ".logs");
+		messages.add(player.getName() + " a dit \"" + message + "\"");
+		config.set(player.getName() + ".logs", messages);
+		config.save(CustomFiles.LOGS.getFile());
 	}
 
 	@EventHandler
-	public void onQuit(PlayerQuitEvent event) {
+	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
 		if (Vanish.getVanished().contains(player.getName()) && player.hasPermission("oxydia.vanish")) {
 			Bukkit.dispatchCommand(player, "vanish off");
@@ -72,8 +82,11 @@ public class Events implements Listener {
 			Main.getInstance().getFrozenPlayers().remove(player.getUniqueId());
 		}
 		event.setQuitMessage(ChatColor.AQUA + "[" + ChatColor.RED + "-" + ChatColor.AQUA + "] " + player.getName());
-		//Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE+ player.getName() + ChatColor.BLUE + " s'est déconnecté(e)");
 
+		List<String> messages = config.getStringList(player.getName() + ".logs");
+		messages.add(player.getName() + " s'est déconnecté(e)");
+		config.set(player.getName(), messages);
+		config.save(CustomFiles.LOGS.getFile());
 	}
 
 	@EventHandler
@@ -81,28 +94,17 @@ public class Events implements Listener {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
 
-//		if (!CustomFiles.LOGS.getFile().exists()) return;
-//		YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
-//		List<String> var = config.getStringList(player.getName() + ".logs");
-//		var.add(player.getName() + " s'est connecté(e)");
-//
-//		for (String vars : var)
-//		{
-//			config.getStringList(player.getName() + ".logs").add(vars);
-//		}
-//
-//		config.save(CustomFiles.LOGS.getFile());
+		List<String> message = config.getStringList(player.getName() + ".logs");
+		message.clear();
+		message.add(player.getName() + " s'est connecté(e)");
+		config.set(player.getName() + ".logs", message);
+
+		config.save(CustomFiles.LOGS.getFile());
 
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
 					+ " Vient de débarquer à Bessemer city ! Veuillez lui souhaiter la bienvenue !\n");
 		}
-		if (main.getConfig().getConfigurationSection("logs." + player.getName()) == null)
-		{
-			main.getConfig().getConfigurationSection("logs").createSection(player.getName());
-		}
-		main.getConfig().getStringList("logs." + player.getName()).add(player.getName() + " s'est connecté(e)");
-		main.saveConfig();
 
 		if (!player.getGameMode().equals(GameMode.ADVENTURE)) {
 			player.setGameMode(GameMode.ADVENTURE);
@@ -177,7 +179,7 @@ public class Events implements Listener {
 		float x = (float) target.getLocation().getX();
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
-		//Variables.logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-		//Variables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		//messageiables.logs.get(target.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		//messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 	}
 }
