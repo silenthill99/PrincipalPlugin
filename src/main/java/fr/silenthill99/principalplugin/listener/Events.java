@@ -6,7 +6,7 @@ import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
-import org.bukkit.entity.AreaEffectCloud;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +17,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
-import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
@@ -41,18 +41,13 @@ public class Events implements Listener {
 		}
 		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
-        AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
+        ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.ARMOR_STAND);
 		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
 		tchat.setCustomNameVisible(true);
 		tchat.setGravity(false);
-		tchat.setParticle(Particle.BLOCK_CRACK, Material.AIR.createBlockData());
-		tchat.setDuration(100);
-		Bukkit.getScheduler().runTaskTimer(main, new TimerTask() {
-			@Override
-			public void run() {
-				tchat.teleport(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()));
-			}
-		}, 0, 1);
+		tchat.setInvulnerable(true);
+		tchat.setInvisible(true);
+		new TchatDuration(player, tchat);
 	}
 
 	@SuppressWarnings("RedundantCollectionOperation")
@@ -82,7 +77,6 @@ public class Events implements Listener {
 	public void onJoin(PlayerJoinEvent event) throws IOException {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
-
 
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
@@ -166,5 +160,30 @@ public class Events implements Listener {
 		float z = (float) target.getLocation().getZ();
 		CustomFiles.LOGS.addLog(target, ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+	}
+
+	private class TchatDuration implements Runnable {
+		private final Player player;
+		private final ArmorStand tchat;
+		private final BukkitTask task;
+		public TchatDuration(Player player, ArmorStand tchat)
+		{
+			this.player = player;
+			this.tchat = tchat;
+			this.task = Bukkit.getScheduler().runTaskTimer(main, this, 0, 1);
+		}
+
+		int i = 100;
+		@Override
+		public void run()
+		{
+			i--;
+			if (i == 0)
+			{
+				task.cancel();
+				tchat.remove();
+			}
+			tchat.teleport(player.getLocation());
+		}
 	}
 }
