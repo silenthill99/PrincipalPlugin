@@ -48,14 +48,10 @@ public class Hrp implements CommandExecutor
         }
 
         Bukkit.broadcastMessage(ChatColor.DARK_RED + "[/HRP] " + user.getCachedData().getMetaData().getPrefix().replace("&", "§") + player.getName() + ChatColor.WHITE + " : " + message);
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
-        List<String> messages = config.getStringList(player.getName() + ".logs");
-        messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a dit dans le tchat HRP &b" + message);
-        config.set(player.getName() + ".logs", messages);
         try {
-            config.save(CustomFiles.LOGS.getFile());
+            CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9a dit dans le tchat HRP &b" + message);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            player.sendMessage(ChatColor.RED + "Erreur lors du chargement des logs !");
         }
 
         return false;

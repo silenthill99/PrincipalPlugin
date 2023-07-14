@@ -29,8 +29,6 @@ public class Events implements Listener {
 
     Main main = Main.getInstance();
 
-	YamlConfiguration config = YamlConfiguration.loadConfiguration(CustomFiles.LOGS.getFile());
-
 	@EventHandler
 	public void onTchat(PlayerChatEvent event) throws IOException {
 		event.setCancelled(true);
@@ -43,13 +41,9 @@ public class Events implements Listener {
 				} else {
 					players.sendMessage(ChatColor.GOLD + "vous dites : " + ChatColor.GREEN + message);
 				}
-				List<String> messages = config.getStringList(players.getName() + ".logs");
-				messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a dit &b" + message);
-				config.set(player.getName() + ".logs", messages);
+				CustomFiles.LOGS.addLog(players, "&1" + player.getName() + " &9a dit &b" + message);
 			}
 		}
-		config.save(CustomFiles.LOGS.getFile());
-//		messageiables.logs.get(player.getUniqueId()).add(ChatColor.YELLOW + "[" + new Timestamp(System.currentTimeMillis()) + "] " + ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
         AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
 		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
@@ -83,24 +77,15 @@ public class Events implements Listener {
 			Main.getInstance().getFrozenPlayers().remove(player.getUniqueId());
 		}
 		event.setQuitMessage(ChatColor.AQUA + "[" + ChatColor.RED + "-" + ChatColor.AQUA + "] " + player.getName());
-
-		List<String> messages = config.getStringList(player.getName() + ".logs");
-		messages.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9s'est déconnecté(e)");
-		config.set(player.getName(), messages);
-		config.save(CustomFiles.LOGS.getFile());
+		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9s'est déconnecté(e)");
 	}
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) throws IOException {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
-
-		List<String> message = config.getStringList(player.getName() + ".logs");
-		message.clear();
-		message.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9s'est connecté(e)");
-		config.set(player.getName() + ".logs", message);
-
-		config.save(CustomFiles.LOGS.getFile());
+		CustomFiles.LOGS.removeLog(player);
+		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9s'est connecté(e)");
 
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
@@ -179,15 +164,8 @@ public class Events implements Listener {
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
 
-		List<String> messages1 = config.getStringList(player.getName() + ".logs");
-		List<String> messages2 = config.getStringList(target.getName() + ".logs");
+		CustomFiles.LOGS.addLog(target, "&1" + target.getName() + " &9a été attaqué(e) par &1" + player.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9a attaqué(e) &1" + target.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 
-		messages2.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + target.getName() + " &9a été attaqué(e) par &1" + player.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-		messages1.add("&e[" + new Timestamp(System.currentTimeMillis()) + "] &1" + player.getName() + " &9a attaqué(e) &1" + target.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-
-		config.set(player.getName() + ".logs", messages1);
-		config.set(target.getName() + ".logs", messages2);
-
-		config.save(CustomFiles.LOGS.getFile());
 	}
 }
