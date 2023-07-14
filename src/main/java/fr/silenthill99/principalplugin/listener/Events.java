@@ -37,9 +37,9 @@ public class Events implements Listener {
 				} else {
 					players.sendMessage(ChatColor.GOLD + "vous dites : " + ChatColor.GREEN + message);
 				}
+				CustomFiles.LOGS.addLog(players, ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 			}
 		}
-		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
         ArmorStand tchat = (ArmorStand) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.ARMOR_STAND);
 		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
