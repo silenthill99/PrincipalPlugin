@@ -6,7 +6,6 @@ import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -20,15 +19,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.List;
 import java.util.TimerTask;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
 
     Main main = Main.getInstance();
-
 	@EventHandler
 	public void onTchat(PlayerChatEvent event) throws IOException {
 		event.setCancelled(true);
@@ -41,9 +37,9 @@ public class Events implements Listener {
 				} else {
 					players.sendMessage(ChatColor.GOLD + "vous dites : " + ChatColor.GREEN + message);
 				}
-				CustomFiles.LOGS.addLog(players, "&1" + player.getName() + " &9a dit &b" + message);
 			}
 		}
+		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + " a dit " + ChatColor.BLUE + message);
 
         AreaEffectCloud tchat = (AreaEffectCloud) player.getWorld().spawnEntity(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY()+1.5, player.getLocation().getZ()), EntityType.AREA_EFFECT_CLOUD);
 		tchat.setCustomName(ChatColor.GOLD + player.getName() + " ► " + ChatColor.AQUA + message);
@@ -59,6 +55,7 @@ public class Events implements Listener {
 		}, 0, 1);
 	}
 
+	@SuppressWarnings("RedundantCollectionOperation")
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
@@ -77,20 +74,23 @@ public class Events implements Listener {
 			Main.getInstance().getFrozenPlayers().remove(player.getUniqueId());
 		}
 		event.setQuitMessage(ChatColor.AQUA + "[" + ChatColor.RED + "-" + ChatColor.AQUA + "] " + player.getName());
-		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9s'est déconnecté(e)");
+		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE+ player.getName() + ChatColor.BLUE + " s'est déconnecté(e)");
+
 	}
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) throws IOException {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
-		CustomFiles.LOGS.removeLog(player);
-		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9s'est connecté(e)");
+
 
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
 					+ " Vient de débarquer à Bessemer city ! Veuillez lui souhaiter la bienvenue !\n");
 		}
+
+		CustomFiles.LOGS.removeLog(player);
+		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " s'est connecté(e)");
 
 		if (!player.getGameMode().equals(GameMode.ADVENTURE)) {
 			player.setGameMode(GameMode.ADVENTURE);
@@ -140,6 +140,7 @@ public class Events implements Listener {
 		}
 	}
 
+	@SuppressWarnings("DataFlowIssue")
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
@@ -163,9 +164,7 @@ public class Events implements Listener {
 		float x = (float) target.getLocation().getX();
 		float y = (float) target.getLocation().getY();
 		float z = (float) target.getLocation().getZ();
-
-		CustomFiles.LOGS.addLog(target, "&1" + target.getName() + " &9a été attaqué(e) par &1" + player.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-		CustomFiles.LOGS.addLog(player, "&1" + player.getName() + " &9a attaqué(e) &1" + target.getName() + " &baux coordonnées : &ex : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
-
+		CustomFiles.LOGS.addLog(target, ChatColor.DARK_BLUE + target.getName() + ChatColor.BLUE + " a été attaqué(e) par " + ChatColor.DARK_BLUE + player.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
+		CustomFiles.LOGS.addLog(player, ChatColor.DARK_BLUE + player.getName() + ChatColor.BLUE + " a attaqué(e) " + ChatColor.DARK_BLUE + target.getName() + ChatColor.AQUA + " aux coordonnées : " + ChatColor.YELLOW +"x : " + String.format("%.2f", x) + " y : " + String.format("%.2f", y) + " z : " + String.format("%.2f", z));
 	}
 }

@@ -1,13 +1,11 @@
 package fr.silenthill99.principalplugin;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
 public enum CustomFiles
@@ -39,5 +37,11 @@ public enum CustomFiles
         messages.clear();
         config.set(player.getName() + ".logs", messages);
         config.save(file);
+    }
+
+    @SuppressWarnings("unused")
+    public YamlConfiguration getConfig()
+    {
+        return this.config;
     }
 }
