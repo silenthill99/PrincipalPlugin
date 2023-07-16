@@ -95,7 +95,8 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
         FACTEUR("Facteur", "http://novask.in/2887483160.png"),
         MEDECIN("Médecin", "http://novask.in/5290663328.png"),
         POLICIER("Policier", "http://novask.in/5911833608.png"),
-        POMPIER("Pompier", "http://novask.in/5925383309.png");
+        POMPIER("Pompier", "http://novask.in/5925383309.png"),
+        UBEREATS("Coursier Uber Eats", "http://novask.in/5259253120.png");
         private final String titre;
         private final String url;
 
