@@ -20,7 +20,7 @@ import java.util.UUID;
 public final class Main extends JavaPlugin
 {
 
-    private Map<UUID, Location> frozenPlayers = new HashMap<>();
+    private final Map<UUID, Location> frozenPlayers = new HashMap<>();
 
     private static Main instance;
     public static Main getInstance()
@@ -34,7 +34,6 @@ public final class Main extends JavaPlugin
     @Override
     public void onEnable()
     {
-        saveDefaultConfig();
         instance = this;
         setupEconomy();
         inter = 0;
