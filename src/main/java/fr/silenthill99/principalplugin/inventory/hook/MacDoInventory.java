@@ -3,8 +3,6 @@ package fr.silenthill99.principalplugin.inventory.hook;
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.InventoryManager;
-import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.MacDoHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,10 +21,10 @@ public class MacDoInventory extends AbstractInventory<MacDoHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
-
+        MacDoHolder holder = new MacDoHolder();
         ItemStack steak = new ItemBuilder(Material.COOKED_BEEF).setLore("Prix : 10€").toItemStack();
 
-        Inventory inv = createInventory(new MacDoHolder(), 36, "MacDo");
+        Inventory inv = createInventory(holder, 36, "MacDo");
         inv.setItem(0, steak);
         inv.setItem(inv.getSize()-1, CLOSE);
         p.openInventory(inv);
@@ -60,9 +58,9 @@ public class MacDoInventory extends AbstractInventory<MacDoHolder> {
         Player player = event.getPlayer();
         Entity target = event.getRightClicked();
 
-        if (target.getName().equalsIgnoreCase("MacDo"))
+        if (target.getName().equalsIgnoreCase("MacDo") || target.getName().equalsIgnoreCase("Philippe"))
         {
-            InventoryManager.openInventory(player, InventoryType.MACDO);
+            openInventory(player);
         }
     }
 }
