@@ -7,5 +7,16 @@ import java.util.HashMap;
 
 public class MetierHolder extends SilenthillHolder
 {
+    private final int page;
+
+    public MetierHolder(int page)
+    {
+        this.page = page;
+    }
+
+    public int getPage()
+    {
+        return this.page;
+    }
     public HashMap<Integer, Metier> metier = new HashMap<>();
 }

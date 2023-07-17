@@ -25,25 +25,46 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
     @Override
     public void openInventory(Player p, Object... args)
     {
+        int page = (int) args[0];
+        MetierHolder holder = new MetierHolder(page);
+
         ItemStack tete = new ItemBuilder(Material.PLAYER_HEAD).setName(ChatColor.GOLD + "Citoyen").toItemStack();
         ItemStack benevolat = new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Faire du bénévolat").toItemStack();
+        ItemStack suivant = new ItemBuilder(Material.GREEN_DYE).setName(ChatColor.GREEN + "Page suivante").toItemStack();
+        ItemStack precedent = new ItemBuilder(Material.RED_DYE).setName(ChatColor.RED + "Page précédente").toItemStack();
 
-        MetierHolder holder = new MetierHolder();
         Inventory inv = createInventory(holder, 54, ChatColor.YELLOW + "Pôle emploi");
-        int slot = 1;
-        inv.setItem(0, tete);
+        int slot = 0;
+
+        if (page < 2)
+        {
+            inv.setItem(53, suivant);
+        }
+        else
+            inv.setItem(45, precedent);
+
+        if (page == 1)
+        {
+            inv.setItem(0, tete);
+            inv.setItem(44, benevolat);
+            slot = 1;
+        }
         for (Metier metier : Metier.values())
         {
-            holder.metier.put(slot, metier);
-            inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.GOLD + metier.getTitre()).toItemStack());
+            if (metier.getPage() == page)
+            {
+                holder.metier.put(slot, metier);
+                inv.setItem(slot++, new ItemBuilder(Material.PAPER).setName(ChatColor.GOLD + metier.getTitre()).toItemStack());
+            }
         }
-        inv.setItem(53, benevolat);
         p.openInventory(inv);
     }
 
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MetierHolder holder) {
         Metier metier = holder.metier.get(e.getSlot());
+        int page = holder.getPage();
+
         switch (current.getType())
         {
             case PLAYER_HEAD:
@@ -73,6 +94,16 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
                 player.sendMessage(ChatColor.RED + "[Rappel] " + ChatColor.GREEN + "En faisant du bénévolat, vous n'êtes pas censés être payés. Par conséquent, votre salaire sera identique à celui d'un citoyen.");
                 break;
             }
+            case GREEN_DYE:
+            {
+                openInventory(player, page + 1);
+                break;
+            }
+            case RED_DYE:
+            {
+                openInventory(player, page - 1 );
+                break;
+            }
             default:
                 break;
         }
@@ -84,26 +115,28 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
         Entity target = event.getRightClicked();
         if (target.getName().equalsIgnoreCase("pôle emploi"))
         {
-            InventoryManager.openInventory(player, InventoryType.METIER);
+            openInventory(player, 1);
         }
     }
 
     public enum Metier
     {
-        CHASSEUR("Chasseur", "http://novask.in/5448143538.png"),
-        CUISINIER("Cuisinier", "http://novask.in/5921353192.png"),
-        FACTEUR("Facteur", "http://novask.in/2887483160.png"),
-        MEDECIN("Médecin", "http://novask.in/5290663328.png"),
-        POLICIER("Policier", "http://novask.in/5911833608.png"),
-        POMPIER("Pompier", "http://novask.in/5925383309.png"),
-        UBEREATS("Coursier Uber Eats", "http://novask.in/5259253120.png");
+        CHASSEUR("Chasseur", "http://novask.in/5448143538.png", 1),
+        CUISINIER("Cuisinier", "http://novask.in/5921353192.png", 1),
+        FACTEUR("Facteur", "http://novask.in/2887483160.png", 1),
+        MEDECIN("Médecin", "http://novask.in/5290663328.png", 1),
+        POLICIER("Policier", "http://novask.in/5911833608.png", 1),
+        POMPIER("Pompier", "http://novask.in/5925383309.png", 1),
+        UBEREATS("Coursier Uber Eats", "http://novask.in/5259253120.png", 1);
         private final String titre;
         private final String url;
+        private final int page;
 
-        Metier(String titre, String url)
+        Metier(String titre, String url, int page)
         {
             this.titre = titre;
             this.url = url;
+            this.page = page;
         }
 
         public String getTitre() {
@@ -112,6 +145,11 @@ public class MetierInventory extends AbstractInventory<MetierHolder> {
 
         public String getUrl() {
             return this.url;
+        }
+
+        public int getPage()
+        {
+            return this.page;
         }
     }
 }

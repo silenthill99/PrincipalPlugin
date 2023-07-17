@@ -43,7 +43,7 @@ public class BenevolatInventory extends AbstractInventory<BenevolatHolder>
         {
             case SUNFLOWER:
             {
-                InventoryManager.openInventory(player, InventoryType.METIER);
+                InventoryManager.openInventory(player, InventoryType.METIER, 1);
                 break;
             }
             case PAPER:
