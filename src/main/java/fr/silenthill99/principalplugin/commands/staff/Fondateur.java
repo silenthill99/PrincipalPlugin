@@ -24,6 +24,7 @@ public class Fondateur implements CommandExecutor
 
         Player player = (Player) sender;
 
+
         if (args.length != 1)
         {
             player.sendMessage(ChatColor.RED + "Veuillez faire /fondateur <on|off>");

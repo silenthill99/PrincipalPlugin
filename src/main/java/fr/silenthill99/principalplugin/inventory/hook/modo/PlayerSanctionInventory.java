@@ -75,7 +75,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 
 		switch (type)
 		{
-			case WARN: {
+			case WARN:
+			{
 				avertir.addGlowingEffect();
 				inv.setItem(10, avertir.toItemStack());
 				int slot = 27;
@@ -89,7 +90,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				}
 				break;
 			}
-			case BAN_TEMP: {
+			case BAN_TEMP:
+			{
 				bannir_temporairement.addGlowingEffect();
 				inv.setItem(11, bannir_temporairement.toItemStack());
 				int slot = 27;
@@ -103,7 +105,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				}
 				break;
 			}
-			case BAN: {
+			case BAN:
+			{
 				bannir.addGlowingEffect();
 				inv.setItem(12, bannir.toItemStack());
 				int slot = 27;
@@ -117,7 +120,8 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 				}
 				break;
 			}
-			case FREEZE: {
+			case FREEZE:
+			{
 				freeze.addGlowingEffect();
 				inv.setItem(13, freeze.toItemStack());
 				for (Freeze freezed : Freeze.values())
@@ -383,7 +387,9 @@ public class PlayerSanctionInventory extends AbstractInventory<PlayerSanctionHol
 		FREE_SHOT(1, "FreeShot"),
 		ARMES(1, "Armes en métier légal"),
 		OBJET_ILLEGAL(1, "Objet Illégal en métier légal"),
-		INSULTES_HRP(2, "Insultes HRP");
+		INSULTES_HRP(2, "Insultes HRP"),
+		PUB_NORP(2, "Pub NoRP"),
+		PUB_INTERDITE(2, "Publicité interdite");
 
 		private final int page;
 		private final String name;

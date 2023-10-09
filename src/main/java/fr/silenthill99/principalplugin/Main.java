@@ -4,12 +4,10 @@ import fr.silenthill99.principalplugin.commands.*;
 import fr.silenthill99.principalplugin.commands.staff.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -27,15 +25,12 @@ public final class Main extends JavaPlugin
     {
         return instance;
     }
-
-    public Economy economy = null;
     public int inter;
 
     @Override
     public void onEnable()
     {
         instance = this;
-        setupEconomy();
         inter = 0;
         getLogger().info("Le plugin est opérationnel !");
         PluginManager pm = Bukkit.getPluginManager();
@@ -80,6 +75,7 @@ public final class Main extends JavaPlugin
         getCommand("vanish").setExecutor(new Vanish());
         getCommand("vanish").setTabCompleter(new Staff());
         getCommand("worldname").setExecutor(new WorldName());
+        
     }
 
     public static boolean isPlayerInGroup(Player player, String group) {
@@ -109,14 +105,6 @@ public final class Main extends JavaPlugin
     public boolean isFreeze(Player player)
     {
         return getFrozenPlayers().containsKey(player.getUniqueId());
-    }
-
-    public boolean setupEconomy(){
-        RegisteredServiceProvider<Economy> eco = getServer().getServicesManager().getRegistration(Economy.class);
-        if (eco != null) {
-            economy = eco.getProvider();
-        }
-        return economy != null;
     }
 
     public static String convertSecondsToHMmSs(long seconds) {

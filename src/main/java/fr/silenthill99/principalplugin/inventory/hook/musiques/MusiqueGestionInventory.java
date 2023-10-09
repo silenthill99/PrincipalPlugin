@@ -25,7 +25,8 @@ public class MusiqueGestionInventory extends AbstractInventory<MusiqueGestionHol
     public void openInventory(Player p, Object... args)
     {
         Musiques music = (Musiques) args[0];
-        Inventory inv = createInventory(new MusiqueGestionHolder(music), 9, music.getName());
+        MusiqueGestionHolder holder = new MusiqueGestionHolder(music);
+        Inventory inv = createInventory(holder, 9, music.getName());
         inv.setItem(0, new ItemBuilder(Material.GREEN_WOOL).setName(ChatColor.GREEN + "Ecouter la musique").toItemStack());
         inv.setItem(1, new ItemBuilder(Material.ORANGE_WOOL).setName(ChatColor.GOLD + "Mettre sur pause").toItemStack());
         inv.setItem(2, new ItemBuilder(Material.RED_WOOL).setName(ChatColor.RED + "Arrêter la musique").toItemStack());

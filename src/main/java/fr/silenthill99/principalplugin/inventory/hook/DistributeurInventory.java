@@ -1,16 +1,15 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
+import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.holder.DistributeurHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import fr.silenthill99.principalplugin.ItemBuilder;
-import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.inventory.AbstractInventory;
-import fr.silenthill99.principalplugin.inventory.holder.DistributeurHolder;
 
 public class DistributeurInventory extends AbstractInventory<DistributeurHolder> {
 
@@ -39,19 +38,15 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Déposer de l'argent")) {
 			if (player.getInventory().contains(ItemBuilder.getArgent())) {
 				player.getInventory().removeItem(ItemBuilder.getArgent());
-				Main.getInstance().economy.depositPlayer(player, 100);
+				Bukkit.dispatchCommand(player, "eco give 100");
 				player.sendMessage(ChatColor.GREEN + "Vous avez déposé 100€ sur votre compte !");
 			} else {
 				player.sendMessage(ChatColor.RED + "Vous n'avez pas d'argent sur vous !");
 			}
 		} else if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Retirer de l'argent")) {
-			if (Main.getInstance().economy.has(player, 100)) {
-				player.getInventory().addItem(ItemBuilder.getArgent());
-				Main.getInstance().economy.withdrawPlayer(player, 100);
-				player.sendMessage(ChatColor.GREEN + "Vous avez retiré 100€ !");
-			} else {
-				player.sendMessage(ChatColor.RED + "Vous navez pas assez d'argent !");
-			}
+			player.getInventory().addItem(ItemBuilder.getArgent());
+			Bukkit.dispatchCommand(player, "eco take 100");
+			player.sendMessage(ChatColor.GREEN + "Vous avez retiré 100€ !");
 		}
 	}
 }

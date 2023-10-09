@@ -1,7 +1,6 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
-import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -38,17 +37,10 @@ public class ArmurerieInventory extends AbstractInventory<ArmurerieHolder> {
         {
             case WOODEN_HOE:
             {
-                if (Main.getInstance().economy.has(player, 200))
-                {
-                    player.closeInventory();
-                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté un Desert Eagle à 200€");
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "shot give " + player.getName() + " deagle");
-                    Main.getInstance().economy.withdrawPlayer(player, 200);
-                }
-                else
-                {
-                    player.sendMessage(ChatColor.RED + "Vous n'avez pas assez d'argent !");
-                }
+                player.closeInventory();
+                player.sendMessage(ChatColor.GREEN + "Vous avez acheté un Desert Eagle à 200€");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "shot give " + player.getName() + " deagle");
+                Bukkit.dispatchCommand(player, "eco take 200");
                 break;
             }
             default:
