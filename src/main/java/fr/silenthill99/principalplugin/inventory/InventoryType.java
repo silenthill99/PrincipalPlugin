@@ -3,10 +3,7 @@ package fr.silenthill99.principalplugin.inventory;
 import fr.silenthill99.principalplugin.inventory.hook.*;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.admin.AdminSanctionInventory;
-import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionErreurStaffInventory;
-import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionMenuInventory;
-import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionRankUpInventory;
-import fr.silenthill99.principalplugin.inventory.hook.direction.DirectionRankUpSuperInventory;
+import fr.silenthill99.principalplugin.inventory.hook.direction.*;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerChooseInventory;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerMenuInventory;
 import fr.silenthill99.principalplugin.inventory.hook.modo.PlayerSanctionInventory;
@@ -24,6 +21,7 @@ public enum InventoryType {
 	AMENDE(new AmendeInventory()),
 	APPEL(new AppelInventory()),
 	ARMURERIE(new ArmurerieInventory()),
+	BAN_STAFF(new BannissementStaffInventory()),
 	BENEVOLAT(new BenevolatInventory()),
 	CANDIDATS(new CandidatInventory()),
 	DIRECTION_ERREUR_STAFF(new DirectionErreurStaffInventory()),

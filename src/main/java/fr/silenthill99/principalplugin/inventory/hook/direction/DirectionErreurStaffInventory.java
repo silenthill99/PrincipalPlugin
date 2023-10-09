@@ -24,18 +24,20 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 	public void openInventory(Player p, Object... args) {
 		OfflinePlayer target = (OfflinePlayer) args[0];
 		DirectionErreurStaffHolder holder = new DirectionErreurStaffHolder(target);
-		
+
+		ItemStack ban_immediat = new ItemBuilder(Material.REDSTONE_TORCH).setName(ChatColor.DARK_RED + "Bannissement Immédiat").toItemStack();
+
         Inventory inv = createInventory(holder, 27, "Erreurs staff");
 		int slot = 0;
 		for (ErreurStaff erreur_staff : ErreurStaff.values())
 		{
 			holder.erreur_staff.put(slot, erreur_staff);
 			inv.setItem(slot++, new ItemBuilder(Material.REDSTONE).setName(ChatColor.DARK_RED + erreur_staff.getTitre()).setLore(erreur_staff.getLore()).toItemStack());
-
 		}
-        inv.setItem(18, RETOUR);
+		inv.setItem(18, ban_immediat);
         inv.setItem(22, new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(target.getName()).setName(target.getName()).toItemStack());
-        p.openInventory(inv);
+		inv.setItem(inv.getSize() - 1, RETOUR);
+		p.openInventory(inv);
 	}
 	
 	@Override
@@ -51,6 +53,10 @@ public class DirectionErreurStaffInventory extends AbstractInventory<DirectionEr
 		case REDSTONE: {
 			player.closeInventory();
 			Bukkit.dispatchCommand(player, "warn " + target.getName() + " Erreur staff : " + erreur_staff.getTitre());
+			break;
+		}
+		case REDSTONE_TORCH: {
+			InventoryManager.openInventory(player, InventoryType.BAN_STAFF, target);
 			break;
 		}
 		default:
