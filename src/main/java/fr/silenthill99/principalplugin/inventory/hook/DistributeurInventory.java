@@ -38,14 +38,14 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Déposer de l'argent")) {
 			if (player.getInventory().contains(ItemBuilder.getArgent())) {
 				player.getInventory().removeItem(ItemBuilder.getArgent());
-				Bukkit.dispatchCommand(player, "eco give 100");
+				Bukkit.dispatchCommand(player, "eco give "+ player.getName() + " 100");
 				player.sendMessage(ChatColor.GREEN + "Vous avez déposé 100€ sur votre compte !");
 			} else {
 				player.sendMessage(ChatColor.RED + "Vous n'avez pas d'argent sur vous !");
 			}
 		} else if (current.getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Retirer de l'argent")) {
 			player.getInventory().addItem(ItemBuilder.getArgent());
-			Bukkit.dispatchCommand(player, "eco take 100");
+			Bukkit.dispatchCommand(player, "eco take " + player.getName() + " 100");
 			player.sendMessage(ChatColor.GREEN + "Vous avez retiré 100€ !");
 		}
 	}
