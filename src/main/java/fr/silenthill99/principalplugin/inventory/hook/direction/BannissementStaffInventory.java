@@ -69,7 +69,8 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
     }
 
     public enum Sanctions {
-        CORRUPTION("Corruption", "Corruption (A ne pas débannir)");
+        CORRUPTION("Corruption", "Corruption (A ne pas débannir)"),
+        DISCRIMINATION("Discrimination", "Discrimination (A ne pas débannir)");
 
         private final String name;
         private final String reason;
