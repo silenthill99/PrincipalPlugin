@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook.direction;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.MySQL;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -10,16 +11,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
-@SuppressWarnings("DataFlowIssue")
 public class BannissementStaffInventory extends AbstractInventory<BannissementStaffHolder> {
     private final Main main = Main.getInstance();
     public BannissementStaffInventory() {
@@ -50,15 +51,29 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
                 Bukkit.dispatchCommand(player, "lp user " + target.getName() + " permission clear");
                 Bukkit.dispatchCommand(player, "lp user " + target.getName() + " parent set default");
                 Bukkit.dispatchCommand(player, "ipban " + target.getName() + " " + sanctions.getReason());
-                File blacklist = new File(main.getDataFolder(), "staff_blacklist.yml");
-                YamlConfiguration config = YamlConfiguration.loadConfiguration(blacklist);
-                if (config.getConfigurationSection("bannissements") == null) config.createSection("bannissements");
-                config.getConfigurationSection("bannissements").set(String.valueOf(target.getUniqueId()), sanctions.getReason());
-                try {
-                    config.save(blacklist);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+//                File blacklist = new File(main.getDataFolder(), "staff_blacklist.yml");
+//                YamlConfiguration config = YamlConfiguration.loadConfiguration(blacklist);
+//                if (config.getConfigurationSection("bannissements") == null) config.createSection("bannissements");
+//                config.getConfigurationSection("bannissements").set(String.valueOf(target.getUniqueId()), sanctions.getReason());
+//                try {
+//                    config.save(blacklist);
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+
+                MySQL mysql = new MySQL();
+                Connection connection = mysql.getConnection();
+                Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+                    try {
+                        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO staff_blacklist VALUES (?, ?, ?)");
+                        preparedStatement.setString(1, target.getUniqueId().toString());
+                        preparedStatement.setString(2, sanctions.getReason());
+                        preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+                        preparedStatement.executeUpdate();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 break;
             }
             case SUNFLOWER: {
