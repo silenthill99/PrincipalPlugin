@@ -37,7 +37,8 @@ public final class Main extends JavaPlugin
         pm.registerEvents(new Events(), this);
         pm.registerEvents(new InventoryManager(), this);
         commands();
-        
+        MySQL db = new MySQL();
+        db.connect("minecraft118.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
     }
 
     private void commands()

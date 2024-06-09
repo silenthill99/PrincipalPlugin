@@ -23,6 +23,7 @@ public enum InventoryType {
 	ARMURERIE(new ArmurerieInventory()),
 	BAN_STAFF(new BannissementStaffInventory()),
 	BENEVOLAT(new BenevolatInventory()),
+	BLACKLIST_STAFF(new BlackListStaffInventory()),
 	CANDIDATS(new CandidatInventory()),
 	DIRECTION_ERREUR_STAFF(new DirectionErreurStaffInventory()),
 	DIRECTION_MENU(new DirectionMenuInventory()),
