@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.listener;
 
 import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.MySQL;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -20,6 +21,10 @@ import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
@@ -77,6 +82,25 @@ public class Events implements Listener {
 	public void onJoin(PlayerJoinEvent event) throws IOException {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
+
+		Connection connection = MySQL.getInstance();
+
+		Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, reason FROM staff_blackist WHERE uuid = ?");
+				preparedStatement.setString(1, player.getUniqueId().toString());
+				ResultSet resultSet = preparedStatement.executeQuery();
+				if (resultSet.next()) {
+					String reason = resultSet.getString("reason");
+					if(player.isOp()) {
+						player.setOp(false);
+					}
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ipban " + player + " " + reason);
+				}
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
 		if (!player.hasPlayedBefore()) {
 			Bukkit.broadcastMessage("\n" + ChatColor.GOLD + player.getName() + ChatColor.AQUA
