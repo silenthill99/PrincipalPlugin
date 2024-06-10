@@ -89,7 +89,7 @@ public class Events implements Listener {
 		Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
-						"SELECT uuid, reason FROM staff_blackist WHERE uuid = ?");
+						"SELECT uuid, reason FROM staff_blacklist WHERE uuid = ?");
 				preparedStatement.setString(1, player.getUniqueId().toString());
 				ResultSet resultSet = preparedStatement.executeQuery();
 				if (resultSet.next() && !player.isBanned()) {
