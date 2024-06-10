@@ -6,6 +6,7 @@ import fr.silenthill99.principalplugin.MySQL;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
+import fr.silenthill99.principalplugin.timer.TimerBan;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -83,19 +84,25 @@ public class Events implements Listener {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
 
-		Connection connection = MySQL.getInstance();
+		Connection connection = MySQL.getInstance().getConnection();
 
 		Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, reason FROM staff_blackist WHERE uuid = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement(
+						"SELECT uuid, reason FROM staff_blackist WHERE uuid = ?");
 				preparedStatement.setString(1, player.getUniqueId().toString());
 				ResultSet resultSet = preparedStatement.executeQuery();
-				if (resultSet.next()) {
+				if (resultSet.next() && !player.isBanned()) {
 					String reason = resultSet.getString("reason");
 					if(player.isOp()) {
 						player.setOp(false);
 					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ipban " + player + " " + reason);
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+							"lp user " + player.getName() + " parent set default");
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+							"lp user " + player.getName() + " permission clear");
+					TimerBan ban = new TimerBan(player, reason);
+					ban.runTaskLater(main, 1);
 				}
             } catch (SQLException e) {
                 throw new RuntimeException(e);

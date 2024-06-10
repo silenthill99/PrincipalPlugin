@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("DataFlowIssue")
 public final class Main extends JavaPlugin
 {
 
@@ -37,8 +38,7 @@ public final class Main extends JavaPlugin
         pm.registerEvents(new Events(), this);
         pm.registerEvents(new InventoryManager(), this);
         commands();
-        MySQL db = new MySQL();
-        db.getConnection();
+        MySQL.getInstance();
     }
 
     private void commands()
@@ -77,6 +77,11 @@ public final class Main extends JavaPlugin
         getCommand("vanish").setTabCompleter(new Staff());
         getCommand("worldname").setExecutor(new WorldName());
         
+    }
+
+    @Override
+    public void onDisable() {
+        MySQL.getInstance().disconnect();
     }
 
     public static boolean isPlayerInGroup(Player player, String group) {

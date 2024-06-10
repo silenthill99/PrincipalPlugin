@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class MySQL
 {
     private static Connection conn;
@@ -47,10 +48,7 @@ public class MySQL
     }
     public static boolean isConnected() {
         try {
-            if ((conn == null) || (conn.isClosed()) ||conn.isValid(5)){
-                return false;
-            }
-            return true;
+            return (conn != null) && (!conn.isClosed()) && !conn.isValid(5);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,8 +60,7 @@ public class MySQL
      * @return connection
      */
 
-    public static Connection getConnection() {
-
+    public Connection getConnection() {
         return conn;
     }
 }

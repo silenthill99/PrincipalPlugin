@@ -7,6 +7,7 @@ import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.direction.BannissementStaffHolder;
+import fr.silenthill99.principalplugin.timer.TimerBan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -51,18 +52,8 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
                 Bukkit.dispatchCommand(player, "lp user " + target.getName() + " permission clear");
                 Bukkit.dispatchCommand(player, "lp user " + target.getName() + " parent set default");
                 Bukkit.dispatchCommand(player, "ipban " + target.getName() + " " + sanctions.getReason());
-//                File blacklist = new File(main.getDataFolder(), "staff_blacklist.yml");
-//                YamlConfiguration config = YamlConfiguration.loadConfiguration(blacklist);
-//                if (config.getConfigurationSection("bannissements") == null) config.createSection("bannissements");
-//                config.getConfigurationSection("bannissements").set(String.valueOf(target.getUniqueId()), sanctions.getReason());
-//                try {
-//                    config.save(blacklist);
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
 
-                MySQL mysql = new MySQL();
-                Connection connection = mysql.getConnection();
+                Connection connection = MySQL.getInstance().getConnection();
                 Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
                     try {
                         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO staff_blacklist VALUES (?, ?, ?)");
@@ -73,6 +64,15 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
+                    if(target.isOp()) {
+                        target.setOp(false);
+                    }
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                            "lp user " + target.getName() + " parent set default");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                            "lp user " + target.getName() + " permission clear");
+                    TimerBan ban = new TimerBan(target, sanctions.getReason());
+                    ban.runTaskLater(main, 20);
                 });
                 break;
             }
