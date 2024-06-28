@@ -54,7 +54,7 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
                 Bukkit.dispatchCommand(player, "ipban " + target.getName() + " " + sanctions.getReason());
 
                 Connection connection = MySQL.getInstance().getConnection();
-                Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+                Bukkit.getScheduler().runTask(main, () -> {
                     try {
                         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO staff_blacklist VALUES (?, ?, ?)");
                         preparedStatement.setString(1, target.getUniqueId().toString());
@@ -85,7 +85,8 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
 
     public enum Sanctions {
         CORRUPTION("Corruption", "Corruption (A ne pas débannir)"),
-        DISCRIMINATION("Discrimination", "Discrimination (A ne pas débannir)");
+        DISCRIMINATION("Discrimination", "Discrimination (A ne pas débannir)"),
+        HARCELEMENT("Harcèlement", "Harcèlement (A ne pas débannir)");
 
         private final String name;
         private final String reason;
