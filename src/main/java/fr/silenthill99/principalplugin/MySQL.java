@@ -15,11 +15,11 @@ public class MySQL
         if (instance == null) {
             instance = new MySQL();
         }
-        connect("minecraft118.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
+        instance.connect("minecraft118.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
         return instance;
     }
 
-    public static void connect(String host, int port, String database, String user, String password)
+    private void connect(String host, int port, String database, String user, String password)
     {
         if (!isConnected())
         {

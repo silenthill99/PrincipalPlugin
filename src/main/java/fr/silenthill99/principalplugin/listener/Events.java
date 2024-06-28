@@ -6,7 +6,6 @@ import fr.silenthill99.principalplugin.MySQL;
 import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
-import fr.silenthill99.principalplugin.timer.TimerBan;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -31,6 +30,8 @@ import java.sql.SQLException;
 public class Events implements Listener {
 
     Main main = Main.getInstance();
+	Connection connection = MySQL.getInstance().getConnection();
+
 	@EventHandler
 	public void onTchat(PlayerChatEvent event) throws IOException {
 		event.setCancelled(true);
@@ -84,8 +85,6 @@ public class Events implements Listener {
 		Player player = event.getPlayer();
 		event.setJoinMessage(ChatColor.AQUA + "[" + ChatColor.GREEN + "+" + ChatColor.AQUA + "] " + player.getName());
 
-		Connection connection = MySQL.getInstance().getConnection();
-
 		Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
@@ -94,15 +93,7 @@ public class Events implements Listener {
 				ResultSet resultSet = preparedStatement.executeQuery();
 				if (resultSet.next() && !player.isBanned()) {
 					String reason = resultSet.getString("reason");
-					if(player.isOp()) {
-						player.setOp(false);
-					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-							"lp user " + player.getName() + " parent set default");
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-							"lp user " + player.getName() + " permission clear");
-					TimerBan ban = new TimerBan(player, reason);
-					ban.runTaskLater(main, 1);
+					Bukkit.getScheduler().runTask(main, () -> customReason(player, reason));
 				}
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -123,6 +114,17 @@ public class Events implements Listener {
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fly " + player.getName() + " off");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "god " + player.getName() + " off");
 
+	}
+
+	private void customReason(Player player, String reason) {
+		if(player.isOp()) {
+			player.setOp(false);
+		}
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+				"lp user " + player.getName() + " parent set default");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+				"lp user " + player.getName() + " permission clear");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ipban " + player.getName() + " " + reason);
 	}
 
 	@EventHandler
