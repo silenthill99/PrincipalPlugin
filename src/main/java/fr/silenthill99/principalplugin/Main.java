@@ -4,6 +4,7 @@ import fr.silenthill99.principalplugin.commands.*;
 import fr.silenthill99.principalplugin.commands.staff.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
+import fr.silenthill99.principalplugin.timer.AutoMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public final class Main extends JavaPlugin
     @Override
     public void onEnable()
     {
+        saveDefaultConfig();
         instance = this;
         inter = 0;
         getLogger().info("Le plugin est opérationnel !");
@@ -39,6 +41,7 @@ public final class Main extends JavaPlugin
         pm.registerEvents(new InventoryManager(), this);
         commands();
         MySQL.getInstance();
+        new AutoMessage().runTaskTimer(this, 30*20, 30*20);
     }
 
     private void commands()
