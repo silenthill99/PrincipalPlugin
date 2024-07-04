@@ -10,7 +10,8 @@ import java.util.List;
 
 public enum CustomFiles
 {
-    LOGS(new File(Main.getInstance().getDataFolder(), "logs.yml"));
+    LOGS(new File(Main.getInstance().getDataFolder(), "logs.yml")),
+    LOIS(new File(Main.getInstance().getDataFolder(), "lois.yml"));
 
     private final File file;
     private final YamlConfiguration config;

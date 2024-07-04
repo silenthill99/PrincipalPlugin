@@ -2,6 +2,8 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
+import fr.silenthill99.principalplugin.inventory.InventoryManager;
+import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.MairieHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,20 +43,21 @@ public class MairieInventory extends AbstractInventory<MairieHolder> {
 
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, MairieHolder holder) {
-        switch(current.getType())
-        {
-            case RED_DYE:
-            {
+        switch(current.getType()) {
+            case RED_DYE: {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "Le maire est désormais en démocratie !");
                 holder.dictature = false;
                 player.getOpenInventory().setItem(2, democratie);
                 break;
             }
-            case GREEN_DYE:
-            {
+            case GREEN_DYE: {
                 Bukkit.broadcastMessage(ChatColor.RED + "Le maire vient de passer en dictature !");
                 holder.dictature = true;
                 player.getOpenInventory().setItem(2, dictature);
+                break;
+            }
+            case OAK_SIGN: {
+                InventoryManager.openInventory(player, InventoryType.LOIS);
                 break;
             }
             default:
