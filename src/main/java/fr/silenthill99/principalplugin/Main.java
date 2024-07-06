@@ -5,6 +5,7 @@ import fr.silenthill99.principalplugin.commands.staff.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
 import fr.silenthill99.principalplugin.timer.AutoMessage;
+import fr.silenthill99.principalplugin.timer.Salaire;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,7 +23,7 @@ import java.util.UUID;
 public final class Main extends JavaPlugin
 {
     private static Economy econ;
-
+    private Salaire salaire;
     private final Map<UUID, Location> frozenPlayers = new HashMap<>();
 
     private static Main instance;
@@ -49,6 +50,8 @@ public final class Main extends JavaPlugin
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
         }
+        salaire = new Salaire();
+        salaire.runTaskTimer(this, 20*60*10, 20*60*10);
     }
 
     private void commands()
