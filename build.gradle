@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'fr.silenthill99'
@@ -11,19 +10,19 @@ compileJava.options.encoding = "UTF-8"
 repositories {
     mavenCentral()
     maven {
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
     }
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
-    maven { url 'https://jitpack.io' }
     maven { url "https://maven.enginehub.org/repo/" }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-    compileOnly("net.luckperms:api:5.4") 
+    compileOnly "com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT"
+    compileOnly 'net.luckperms:api:5.4'
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.5'
 }
 
