@@ -1,9 +1,10 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.MacDoHolder;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -36,9 +37,13 @@ public class MacDoInventory extends AbstractInventory<MacDoHolder> {
         {
             case COOKED_BEEF:
             {
-                player.sendMessage(ChatColor.GREEN + "Vous avez acheté un steak pour 10€");
-                player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF));
-                Bukkit.dispatchCommand(player, "eco take 10");
+                if (Main.getEconomy().getBalance(player) >= 10) {
+                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté un steak pour 10€");
+                    player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF));
+                    Main.getEconomy().withdrawPlayer(player, 10);
+                } else {
+                    player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas assez d'argent"));
+                }
                 break;
             }
             default:
