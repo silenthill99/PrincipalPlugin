@@ -27,6 +27,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		Inventory inv = createInventory(holder, 27, "Distributeur");
 
 		for (Distributeur distributeur : Distributeur.values()) {
+			holder.distributeur.put(distributeur.getSlot(), distributeur);
 			inv.setItem(distributeur.getSlot(), new ItemBuilder(Material.GOLD_INGOT)
 					.setName(ChatColor.GREEN + distributeur.getName()).toItemStack());
 		}
