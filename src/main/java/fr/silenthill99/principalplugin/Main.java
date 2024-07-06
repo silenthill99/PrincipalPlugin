@@ -21,7 +21,7 @@ public final class Main extends JavaPlugin
 {
     private static Economy econ;
     private Salaire salaire;
-    private final Map<UUID, Location> frozenPlayers = new HashMap<>();
+    private Map<UUID, Location> frozenPlayers;
 
     private static Main instance;
     public static Main getInstance()
@@ -52,6 +52,7 @@ public final class Main extends JavaPlugin
         salaire = new Salaire();
         salaire.runTaskTimer(this, 20*60*10, 20*60*10);
         vanished = new ArrayList<>();
+        frozenPlayers = new HashMap<>();
     }
 
     private void commands()
@@ -142,7 +143,7 @@ public final class Main extends JavaPlugin
             return false;
         }
         econ = rsp.getProvider();
-        return econ != null;
+        return true;
     }
 
     public static Economy getEconomy() {
