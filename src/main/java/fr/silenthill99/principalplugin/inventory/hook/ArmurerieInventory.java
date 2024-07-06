@@ -1,10 +1,12 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.ArmurerieHolder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,10 +39,13 @@ public class ArmurerieInventory extends AbstractInventory<ArmurerieHolder> {
         {
             case WOODEN_HOE:
             {
-                player.closeInventory();
-                player.sendMessage(ChatColor.GREEN + "Vous avez acheté un Desert Eagle à 200€");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "shot give " + player.getName() + " deagle");
-                Bukkit.dispatchCommand(player, "eco take 200");
+                if (Main.getEconomy().has(player, 200)) {
+                    player.closeInventory();
+                    player.sendMessage(ChatColor.GREEN + "Vous avez acheté un Desert Eagle à 200€");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "shot give " + player.getName() + " deagle");
+                } else {
+                    player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas assez d'argent !"));
+                }
                 break;
             }
             default:
