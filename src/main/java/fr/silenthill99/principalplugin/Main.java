@@ -5,10 +5,12 @@ import fr.silenthill99.principalplugin.commands.staff.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.listener.Events;
 import fr.silenthill99.principalplugin.timer.AutoMessage;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @SuppressWarnings("DataFlowIssue")
 public final class Main extends JavaPlugin
 {
+    private static Economy econ;
 
     private final Map<UUID, Location> frozenPlayers = new HashMap<>();
 
@@ -42,6 +45,10 @@ public final class Main extends JavaPlugin
         commands();
         MySQL.getInstance();
         new AutoMessage().runTaskTimer(this, 30*20, 30*20);
+        if (!setupEconomy() ) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     private void commands()
@@ -121,5 +128,21 @@ public final class Main extends JavaPlugin
         long m = (seconds / 60) % 60;
         long h = (seconds / (60 * 60)) % 24;
         return String.format("%dh %02dmin et %02ds", h,m,s);
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
+    public static Economy getEconomy() {
+        return econ;
     }
 }
