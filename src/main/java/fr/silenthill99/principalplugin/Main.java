@@ -14,12 +14,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-@SuppressWarnings("DataFlowIssue")
+@SuppressWarnings({"DataFlowIssue", "unused"})
 public final class Main extends JavaPlugin
 {
     private static Economy econ;
@@ -32,6 +29,8 @@ public final class Main extends JavaPlugin
         return instance;
     }
     public int inter;
+
+    private List<String> vanished;
 
     @Override
     public void onEnable()
@@ -52,6 +51,7 @@ public final class Main extends JavaPlugin
         }
         salaire = new Salaire();
         salaire.runTaskTimer(this, 20*60*10, 20*60*10);
+        vanished = new ArrayList<>();
     }
 
     private void commands()
@@ -147,5 +147,13 @@ public final class Main extends JavaPlugin
 
     public static Economy getEconomy() {
         return econ;
+    }
+
+    public List<String> getVanished() {
+        return vanished;
+    }
+
+    public boolean isVanished(Player player) {
+        return vanished.contains(player.getName());
     }
 }

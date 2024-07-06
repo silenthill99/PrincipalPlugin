@@ -3,7 +3,6 @@ package fr.silenthill99.principalplugin.listener;
 import fr.silenthill99.principalplugin.CustomFiles;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.MySQL;
-import fr.silenthill99.principalplugin.commands.Vanish;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
@@ -57,15 +56,14 @@ public class Events implements Listener {
 		new TchatDuration(player, tchat);
 	}
 
-	@SuppressWarnings("RedundantCollectionOperation")
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
-		if (Vanish.getVanished().contains(player.getName()) && player.hasPermission("oxydia.vanish")) {
+		if (main.isVanished(player) && player.hasPermission("oxydia.vanish")) {
 			Bukkit.dispatchCommand(player, "vanish off");
 		} else {
-			if (Vanish.getVanished().contains(player.getName())) {
-				Vanish.getVanished().remove(player.getName());
+			if (main.isVanished(player)) {
+				main.getVanished().remove(player.getName());
 			}
 			for (Player players : Bukkit.getOnlinePlayers()) {
 				players.showPlayer(Main.getInstance(), player);

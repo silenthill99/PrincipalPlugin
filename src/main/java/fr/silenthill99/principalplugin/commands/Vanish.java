@@ -10,17 +10,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Vanish implements CommandExecutor
 {
     private final Main main = Main.getInstance();
 
-    private static final List<String> vanished = new ArrayList<>();
-    public static List<String> getVanished() {
-		return vanished;
-	}
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, String[] args)
@@ -46,7 +39,7 @@ public class Vanish implements CommandExecutor
 
         if (args[0].equalsIgnoreCase("on"))
         {
-            if (vanished.contains(player.getName()))
+            if (main.isVanished(player))
             {
                 player.sendMessage(ChatColor.DARK_RED + "Vous êtes déjà en vanish !");
                 return false;
@@ -58,7 +51,7 @@ public class Vanish implements CommandExecutor
                     players.hidePlayer(Main.getInstance(), player);
                 }
             }
-            vanished.add(player.getName());
+            main.getVanished().add(player.getName());
             player.sendMessage(ChatColor.GREEN + "Vous êtes désormais en vanish !");
             vanishMsg.runTaskTimer(main, 0, 1);
             return false;
@@ -66,7 +59,7 @@ public class Vanish implements CommandExecutor
 
         if (args[0].equalsIgnoreCase("off"))
         {
-            if (!vanished.contains(player.getName()))
+            if (!main.isVanished(player))
             {
                 player.sendMessage(ChatColor.DARK_RED + "Votre vanish est déjà désactivé !");
                 return false;
@@ -75,7 +68,7 @@ public class Vanish implements CommandExecutor
             {
                 players.showPlayer(Main.getInstance(), player);
             }
-            vanished.remove(player.getName());
+            main.getVanished().remove(player.getName());
             player.sendMessage(ChatColor.RED + "Vous avez désactivé votre vanish !");
             return false;
         }
