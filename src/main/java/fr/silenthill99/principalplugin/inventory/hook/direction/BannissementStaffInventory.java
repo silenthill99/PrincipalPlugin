@@ -49,10 +49,6 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
         switch (current.getType()) {
             case REDSTONE_BLOCK: {
                 player.closeInventory();
-                Bukkit.dispatchCommand(player, "lp user " + target.getName() + " permission clear");
-                Bukkit.dispatchCommand(player, "lp user " + target.getName() + " parent set default");
-                Bukkit.dispatchCommand(player, "ipban " + target.getName() + " " + sanctions.getReason());
-
                 Connection connection = MySQL.getInstance().getConnection();
                 Bukkit.getScheduler().runTask(main, () -> {
                     try {
@@ -71,6 +67,8 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
                             "lp user " + target.getName() + " parent set default");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
                             "lp user " + target.getName() + " permission clear");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                             "ipban " + target.getName() + " " + sanctions.getReason());
                     TimerBan ban = new TimerBan(target, sanctions.getReason());
                     ban.runTaskLater(main, 20);
                 });
