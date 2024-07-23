@@ -2,20 +2,19 @@ package fr.silenthill99.principalplugin;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public enum Items
 {
-    TELEPHONE(new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Téléphone").toItemStack());
+    TELEPHONE(new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Téléphone"));
 
-    private final ItemStack items;
+    private final ItemBuilder items;
 
-    Items(ItemStack items)
+    Items(ItemBuilder items)
     {
         this.items = items;
     }
 
-    public ItemStack getItems()
+    public ItemBuilder getItems()
     {
         return this.items;
     }

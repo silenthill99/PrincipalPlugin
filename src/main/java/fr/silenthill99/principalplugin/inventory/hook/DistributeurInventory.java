@@ -49,14 +49,14 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 			int argent = 0;
 			for (ItemStack item : player.getInventory().getContents()) {
 				if (item != null && item.isSimilar(ItemBuilder.getArgent())) {
-					argent += item.getAmount();
+					argent = 1;
 				}
 			}
 			if (argent == 0) {
 				player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
 			} else {
 				Main.getEconomy().depositPlayer(player, 100 * argent);
-				player.getInventory().remove(ItemBuilder.getArgent(argent));
+				player.getInventory().remove(ItemBuilder.getArgent(1));
 				player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé " + 100*argent + "€"));
 			}
 		} else if (distributeur.equals(Distributeur.RETRAIT)) {

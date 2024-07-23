@@ -47,7 +47,7 @@ public class KitInventory extends AbstractInventory<KitHolder> {
 
                 /*ItemStack telephone = new ItemBuilder(Material.BRICK).setName(ChatColor.YELLOW + "Téléphone").toItemStack();*/
                 player.closeInventory();
-                player.getInventory().addItem(Items.TELEPHONE.getItems());
+                player.getInventory().addItem(Items.TELEPHONE.getItems().toItemStack());
                 player.getInventory().addItem(ItemBuilder.getArgent(30));
                 cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 1000 * 3600 * 24);
                 break;
