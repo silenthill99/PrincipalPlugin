@@ -48,7 +48,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 			return;
 
 		if (distributeur.equals(Distributeur.DEPOT)) {
-			if (!player.getInventory().contains(ItemBuilder.getArgent())) {
+			if (!consumeItem(player, 1, ItemBuilder.getArgent().getType())) {
 				player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
 			} else {
 				Main.getEconomy().depositPlayer(player, 100);
