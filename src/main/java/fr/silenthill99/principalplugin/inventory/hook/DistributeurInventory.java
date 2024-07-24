@@ -13,6 +13,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DistributeurInventory extends AbstractInventory<DistributeurHolder> {
 
 	public DistributeurInventory() {
@@ -45,19 +48,12 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 			return;
 
 		if (distributeur.equals(Distributeur.DEPOT)) {
-
-			int argent = 0;
-			for (ItemStack item : player.getInventory().getContents()) {
-				if (item != null && item.isSimilar(ItemBuilder.getArgent())) {
-					argent = 1;
-				}
-			}
-			if (argent == 0) {
+			if (!player.getInventory().contains(ItemBuilder.getArgent())) {
 				player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
 			} else {
-				Main.getEconomy().depositPlayer(player, 100 * argent);
-				player.getInventory().remove(ItemBuilder.getArgent(1));
-				player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé " + 100*argent + "€"));
+				Main.getEconomy().depositPlayer(player, 100);
+				consumeItem(player, 1, ItemBuilder.getArgent().getType());
+				player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé 100€"));
 			}
 		} else if (distributeur.equals(Distributeur.RETRAIT)) {
 			if (Main.getEconomy().has(player, 100)) {
@@ -71,6 +67,34 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		}
 	}
 
+	@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    public boolean consumeItem(Player player, int count, Material mat) {
+		Map<Integer, ? extends ItemStack> ammo = new HashMap<>();
+
+		int found = 0;
+		for (ItemStack stack : ammo.values()) {
+			if (!stack.isSimilar(ItemBuilder.getArgent())) continue;
+			found += stack.getAmount();
+		}
+		if (count > found)
+			return false;
+
+		for (Integer index : ammo.keySet()) {
+			ItemStack stack = ammo.get(index);
+			int removed = Math.min(count, stack.getAmount());
+			count -= removed;
+
+			if (stack.getAmount() == removed)
+				player.getInventory().setItem(index, null);
+			else
+				stack.setAmount(stack.getAmount() - removed);
+
+			if (count <= 0)
+				break;
+		}
+		player.updateInventory();
+		return true;
+	}
 	public enum Distributeur {
 		DEPOT(10, "Déposer de l'argent"),
 		RETRAIT(16, "Retirer de l'argent");
