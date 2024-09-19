@@ -8,12 +8,17 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class DistributeurInventory extends AbstractInventory<DistributeurHolder> {
@@ -32,7 +37,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		for (Distributeur distributeur : Distributeur.values()) {
 			holder.distributeur.put(distributeur.getSlot(), distributeur);
 			inv.setItem(distributeur.getSlot(), new ItemBuilder(Material.GOLD_INGOT)
-					.setName(ChatColor.GREEN + distributeur.getName()).toItemStack());
+					.setName(ChatColor.GREEN + distributeur.getName()).setLore(distributeur.getLore()).toItemStack());
 		}
 
 		inv.setItem(inv.getSize() - 1, CLOSE);
@@ -48,12 +53,27 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 			return;
 
 		if (distributeur.equals(Distributeur.DEPOT)) {
-			if (!consumeItem(player, 1, ItemBuilder.getArgent().getType())) {
-				player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
-			} else {
-				Main.getEconomy().depositPlayer(player, 100);
-				consumeItem(player, 1, ItemBuilder.getArgent().getType());
-				player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé 100€"));
+			if (e.getClick().equals(ClickType.LEFT)) {
+				if (!consumeItem(player, 1, ItemBuilder.getArgent().getType())) {
+					player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
+				} else {
+					Main.getEconomy().depositPlayer(player, 100);
+					player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé 100€"));
+				}
+			} else if (e.getClick().equals(ClickType.RIGHT)) {
+				int stack = 0;
+				for (ItemStack item : player.getInventory().getContents()) {
+					if (item != null && item.isSimilar(ItemBuilder.getArgent(stack))) {
+						stack += item.getAmount();
+					}
+				}
+				if (stack == 0) {
+					player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas assez d'argent sur vous !"));
+				} else {
+					Main.getEconomy().depositPlayer(player, 100*stack);
+					player.sendMessage(Component.text(ChatColor.GREEN + "Vous avez déposé " + 100*stack + "€"));
+					player.getInventory().remove(ItemBuilder.getArgent(stack));
+				}
 			}
 		} else if (distributeur.equals(Distributeur.RETRAIT)) {
 			if (Main.getEconomy().has(player, 100)) {
@@ -67,9 +87,9 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		}
 	}
 
-	@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+
     public boolean consumeItem(Player player, int count, Material mat) {
-		Map<Integer, ? extends ItemStack> ammo = new HashMap<>();
+		Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(mat);
 
 		int found = 0;
 		for (ItemStack stack : ammo.values()) {
@@ -96,15 +116,17 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 		return true;
 	}
 	public enum Distributeur {
-		DEPOT(10, "Déposer de l'argent"),
+		DEPOT(10, "Déposer de l'argent", "Clique gauche pour déposer 100€", "Clique droit pour tout déposer"),
 		RETRAIT(16, "Retirer de l'argent");
 
 		private final int slot;
 		private final String name;
+		private final String[] lore;
 
-		Distributeur(int slot, String name) {
+		Distributeur(int slot, String name, String... lore) {
 			this.slot = slot;
 			this.name = name;
+			this.lore = lore;
 		}
 
 		public int getSlot() {
@@ -113,6 +135,10 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 
 		public String getName() {
 			return name;
+		}
+
+		public String[] getLore() {
+			return lore;
 		}
 	}
 }

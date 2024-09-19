@@ -80,7 +80,7 @@ public class TelephoneInventory extends AbstractInventory<TelephoneHolder> {
         {
             return;
         }
-        if (it.equals(Items.TELEPHONE.getItems()) && (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)))
+        if (it.isSimilar(Items.TELEPHONE.getItems().toItemStack()) && (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)))
         {
             InventoryManager.openInventory(player, InventoryType.TELEPHONE);
         }

@@ -112,6 +112,8 @@ public class Events implements Listener {
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fly " + player.getName() + " off");
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "god " + player.getName() + " off");
 
+		player.setPlayerListHeaderFooter("Essai 1", "Essai 2");
+
 	}
 
 	private void customReason(Player player, String reason) {
