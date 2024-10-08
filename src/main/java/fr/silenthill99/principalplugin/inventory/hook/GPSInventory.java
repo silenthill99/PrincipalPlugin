@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
 
     Main main = Main.getInstance();
 
-    public static Map<Player, Integer> gpsValuables = new HashMap<>();
+    public static Map<Player, BukkitTask> gpsValuables = new HashMap<>();
 
     @Override
     public void openInventory(Player p, Object... args)
@@ -53,13 +54,11 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             case FILLED_MAP:
             {
                 player.closeInventory();
+                GPSTimer gpsTimer = new GPSTimer(player, gps);
                 if (gpsValuables.containsKey(player)) {
-                    Bukkit.getScheduler().cancelTask(gpsValuables.get(player));
-                    gpsValuables.remove(player);
+                    gpsValuables.get(player).cancel();
                 }
-                GPSTimer gpsTimer = new GPSTimer(player, gps.coord());
-                gpsTimer.runTaskTimer(main, 0, 1);
-                gpsValuables.put(player, gpsTimer.getTaskId());
+                gpsValuables.put(player, gpsTimer.runTaskTimer(main, 0, 1));
                 player.sendMessage(ChatColor.GREEN + "Destination : " + gps.getName());
                 break;
             }
@@ -70,10 +69,13 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             }
             case RED_WOOL:
             {
-                if (gpsValuables.containsKey(player)) {
+                if (!gpsValuables.containsKey(player)) {
+                    player.sendMessage(ChatColor.RED + "Vous avez aucun itinéraires en cours !");
+                    break;
+                }
+                if (!gpsValuables.get(player).isCancelled()) {
                     player.closeInventory();
-                    Bukkit.getScheduler().cancelTask(gpsValuables.get(player));
-                    gpsValuables.remove(player);
+                    gpsValuables.get(player).cancel();
                     player.sendMessage(ChatColor.RED + "Vous avez éteint votre GPS !");
                 } else {
                     player.sendMessage(ChatColor.RED + "Vous avez aucun itinéraires en cours !");
