@@ -28,7 +28,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
     public void openInventory(Player p, Object... args)
     {
         GPSHolder holder = new GPSHolder();
-        Inventory inv = Bukkit.createInventory(holder, 54, "GPS");
+        Inventory inv = createInventory(holder, 54, "GPS");
         int slot = 0;
         for (Gps gps : Gps.values())
         {
@@ -103,6 +103,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
     {
 
         HOPITAL("Hôpital", new Location(world, 31.15, 64.0, 65.24)),
+        MAGASIN_DE_MUSIQUE("Magasin de musique", new Location(world, -32.5, 64, 229.5)),
         MAIRIE("Mairie", new Location(world,-141.9, 64.0, -43.9)),
         POLE_EMPLOI("Pôle emploi", new Location(world, -148.3, 64.0, 10.4));
         private final String name;
