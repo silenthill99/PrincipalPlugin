@@ -48,7 +48,8 @@ public enum InventoryType {
 	POUBELLE(new PoubelleInventory()),
 	POLICIER(new PolicierInventory()),
 	TELEPHONE(new TelephoneInventory()),
-	TEST(new TestInventory());
+	TEST(new TestInventory()),
+	VENDEUR(new VendeurInventory());
 	
 	private final AbstractInventory<?> inv;
 	
