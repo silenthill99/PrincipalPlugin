@@ -32,13 +32,14 @@ public class VendeurInventory extends AbstractInventory<VendeurHolder> {
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, VendeurHolder holder) {
         switch (current.getType()) {
-            case JUKEBOX -> {
+            case JUKEBOX: {
                 if (Main.getEconomy().has(player, 15)) {
                     player.getInventory().addItem(new ItemStack(Material.JUKEBOX));
                     Main.getEconomy().withdrawPlayer(player, 15);
                 } else {
                     player.sendMessage(ChatColor.RED + "Vous n'avez pas assez d'arent !");
                 }
+                break;
             }
         }
     }
@@ -46,7 +47,7 @@ public class VendeurInventory extends AbstractInventory<VendeurHolder> {
     @Override
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if (event.getRightClicked() instanceof Player) return;
+        if (!(event.getRightClicked() instanceof Player)) return;
         Player target = (Player) event.getRightClicked();
 
         if (!event.getHand().equals(EquipmentSlot.HAND)) return;
