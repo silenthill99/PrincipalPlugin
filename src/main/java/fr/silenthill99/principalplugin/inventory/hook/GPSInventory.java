@@ -7,15 +7,15 @@ import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.GPSHolder;
 import fr.silenthill99.principalplugin.timer.GPSTimer;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GPSInventory extends AbstractInventory<GPSHolder> {
     public GPSInventory() {
@@ -24,10 +24,15 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
 
     Main main = Main.getInstance();
 
+    public static Map<Player, Integer> gpsValuables = new HashMap<>();
+
     @Override
     public void openInventory(Player p, Object... args)
     {
         GPSHolder holder = new GPSHolder();
+
+        ItemStack arreter = new ItemBuilder(Material.RED_WOOL).setName(ChatColor.RED + "Arrêter le gps !").toItemStack();
+
         Inventory inv = createInventory(holder, 54, "GPS");
         int slot = 0;
         for (Gps gps : Gps.values())
@@ -35,6 +40,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             holder.gps.put(slot, gps);
             inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(gps.getName()).toItemStack());
         }
+        inv.setItem(45, arreter);
         inv.setItem(inv.getSize()-1, RETOUR);
         p.openInventory(inv);
     }
@@ -47,13 +53,31 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             case FILLED_MAP:
             {
                 player.closeInventory();
+                if (gpsValuables.containsKey(player)) {
+                    Bukkit.getScheduler().cancelTask(gpsValuables.get(player));
+                    gpsValuables.remove(player);
+                }
                 GPSTimer gpsTimer = new GPSTimer(player, gps.coord());
                 gpsTimer.runTaskTimer(main, 0, 1);
+                gpsValuables.put(player, gpsTimer.getTaskId());
+                player.sendMessage(ChatColor.GREEN + "Destination : " + gps.getName());
                 break;
             }
             case SUNFLOWER:
             {
                 InventoryManager.openInventory(player, InventoryType.TELEPHONE);
+                break;
+            }
+            case RED_WOOL:
+            {
+                if (gpsValuables.containsKey(player)) {
+                    player.closeInventory();
+                    Bukkit.getScheduler().cancelTask(gpsValuables.get(player));
+                    gpsValuables.remove(player);
+                    player.sendMessage(ChatColor.RED + "Vous avez éteint votre GPS !");
+                } else {
+                    player.sendMessage(ChatColor.RED + "Vous avez aucun itinéraires en cours !");
+                }
                 break;
             }
         }
