@@ -1,10 +1,12 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import fr.silenthill99.principalplugin.inventory.holder.GPSHolder;
+import fr.silenthill99.principalplugin.timer.GPSTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,11 +15,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 public class GPSInventory extends AbstractInventory<GPSHolder> {
     public GPSInventory() {
         super(GPSHolder.class);
     }
+
+    Main main = Main.getInstance();
 
     @Override
     public void openInventory(Player p, Object... args)
@@ -42,7 +47,8 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             case FILLED_MAP:
             {
                 player.closeInventory();
-                player.teleport(gps.coord());
+                GPSTimer gpsTimer = new GPSTimer(player, gps.coord());
+                gpsTimer.runTaskTimer(main, 0, 1);
                 break;
             }
             case SUNFLOWER:
@@ -53,6 +59,45 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
         }
     }
     static World world = Bukkit.getWorld("world");
+
+    public static String getArrowTo(Player p, Location loc) {
+        Location playerLocation = p.getLocation();
+        Vector locVector = loc.toVector().subtract(playerLocation.toVector());
+
+        String direction = null;
+
+        double locAngle = Math.atan2(locVector.getZ(), locVector.getX());
+        double playerAngle = Math.atan2(playerLocation.getDirection().getZ(), playerLocation.getDirection().getX());
+
+        double angle = playerAngle - locAngle;
+
+        while (angle > Math.PI) {
+            angle = angle - 2 * Math.PI;
+        }
+
+        while (angle < -Math.PI) {
+            angle = angle + 2 * Math.PI;
+        }
+
+        if (angle < -2.749 || angle >= 2.749) { // -7/8 pi
+            direction = "⬇";
+        } else if (angle < -1.963) { // -5/8 pi
+            direction = "⬊";
+        } else if (angle < -1.178) { // -3/8 pi
+            direction = "➡";
+        } else if (angle < -0.393) { // -1/8 pi
+            direction = "⬈";
+        } else if (angle < 0.393) { // 1/8 pi
+            direction = "⬆";
+        } else if (angle < 1.178) { // 3/8 pi
+            direction = "⬉";
+        } else if (angle < 1.963) { // 5/8 p
+            direction = "⬅";
+        } else if (angle < 2.749) { // 7/8 pi
+            direction = "⬋";
+        }
+        return direction;
+    }
 
     public enum Gps
     {
