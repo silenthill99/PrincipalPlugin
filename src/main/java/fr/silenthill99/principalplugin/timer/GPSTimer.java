@@ -18,7 +18,13 @@ public class GPSTimer extends BukkitRunnable {
 
     @Override
     public void run() {
-        player.sendTitle(ChatColor.GOLD + GPSInventory.getArrowTo(player, gps.coord()), null, 0, 20, 20);
+        player.sendTitle(
+                ChatColor.GOLD + GPSInventory.getArrowTo(player, gps.coord()),
+                ChatColor.AQUA +  String.format("%.2f", player.getLocation().distanceSquared(gps.coord())/100) + " m",
+                0,
+                20,
+                20
+        );
 
         if (player.getLocation().distanceSquared(gps.coord()) <= 4) {
             player.sendMessage(ChatColor.GREEN + "Vous êtes arrivé à destination");
