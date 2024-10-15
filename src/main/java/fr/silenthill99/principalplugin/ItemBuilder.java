@@ -16,16 +16,12 @@ import java.util.Arrays;
 public class ItemBuilder
 {
 
-    public static ItemStack getArgent()
-    {
-        return getArgent(1);
-    }
     public static ItemStack getArgent(int amount)
     {
         return new ItemBuilder(Material.GOLD_INGOT, amount).setName(ChatColor.GREEN + "100€").toItemStack();
     }
 
-    private ItemStack is;
+    private final ItemStack is;
 
     public ItemBuilder(Material m)
     {
