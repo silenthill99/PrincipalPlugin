@@ -20,6 +20,9 @@ commands:
   builder:
     permission: oxydia.builder
     permission-message: §4Seuls les builders peuvent faire cette commande !
+  clearlag:
+    permission: oxydia.clearlag
+    pêrmission-message: §4Vous n'avez pas accès à cette commande !
   co-fondateur:
     aliases: [cofondateur, co-fonda, cofonda]
     permission: oxydia.cofonfateur
