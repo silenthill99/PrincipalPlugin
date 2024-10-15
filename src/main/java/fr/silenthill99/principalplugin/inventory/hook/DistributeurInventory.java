@@ -1,6 +1,7 @@
 package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
+import fr.silenthill99.principalplugin.Items;
 import fr.silenthill99.principalplugin.Main;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.holder.DistributeurHolder;
@@ -8,18 +9,11 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-
-import java.util.Map;
 
 public class DistributeurInventory extends AbstractInventory<DistributeurHolder> {
 
@@ -54,7 +48,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 
 		if (distributeur.equals(Distributeur.DEPOT)) {
 			if (e.getClick().equals(ClickType.LEFT)) {
-				if (!consumeItem(player, 1, ItemBuilder.getArgent().getType())) {
+				if (!Main.getInstance().consumeItem(player, 1, Items.ARGENT.getItems().toItemStack().getType())) {
 					player.sendMessage(Component.text(ChatColor.RED + "Vous n'avez pas d'argent sur vous !"));
 				} else {
 					Main.getEconomy().depositPlayer(player, 100);
@@ -77,7 +71,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 			}
 		} else if (distributeur.equals(Distributeur.RETRAIT)) {
 			if (Main.getEconomy().has(player, 100)) {
-				player.getInventory().addItem(ItemBuilder.getArgent());
+				player.getInventory().addItem(Items.ARGENT.getItems().toItemStack());
 				Bukkit.dispatchCommand(player, "eco take " + player.getName() + " 100");
 				player.sendMessage(ChatColor.GREEN + "Vous avez retiré 100€ !");
 			} else {
@@ -88,33 +82,7 @@ public class DistributeurInventory extends AbstractInventory<DistributeurHolder>
 	}
 
 
-    public boolean consumeItem(Player player, int count, Material mat) {
-		Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(mat);
 
-		int found = 0;
-		for (ItemStack stack : ammo.values()) {
-			if (!stack.isSimilar(ItemBuilder.getArgent())) continue;
-			found += stack.getAmount();
-		}
-		if (count > found)
-			return false;
-
-		for (Integer index : ammo.keySet()) {
-			ItemStack stack = ammo.get(index);
-			int removed = Math.min(count, stack.getAmount());
-			count -= removed;
-
-			if (stack.getAmount() == removed)
-				player.getInventory().setItem(index, null);
-			else
-				stack.setAmount(stack.getAmount() - removed);
-
-			if (count <= 0)
-				break;
-		}
-		player.updateInventory();
-		return true;
-	}
 	public enum Distributeur {
 		DEPOT(10, "Déposer de l'argent", "Clique gauche pour déposer 100€", "Clique droit pour tout déposer"),
 		RETRAIT(16, "Retirer de l'argent");

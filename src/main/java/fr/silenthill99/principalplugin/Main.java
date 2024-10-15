@@ -9,7 +9,9 @@ import fr.silenthill99.principalplugin.timer.Salaire;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -63,6 +65,7 @@ public final class Main extends JavaPlugin
         getCommand("administrateur").setTabCompleter(new Staff());
         getCommand("builder").setExecutor(new Builder());
         getCommand("builder").setTabCompleter(new Staff());
+        getCommand("clearlag").setExecutor(new ClearLagCommand());
         getCommand("co-fondateur").setExecutor(new CoFondateur());
         getCommand("co-fondateur").setTabCompleter(new Staff());
         getCommand("developpeur").setExecutor(new Developpeur());
@@ -156,5 +159,33 @@ public final class Main extends JavaPlugin
 
     public boolean isVanished(Player player) {
         return vanished.contains(player.getName());
+    }
+
+    public boolean consumeItem(Player player, int count, Material mat) {
+        Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(mat);
+
+        int found = 0;
+        for (ItemStack stack : ammo.values()) {
+            if (!stack.isSimilar(Items.ARGENT.getItems().toItemStack())) continue;
+            found += stack.getAmount();
+        }
+        if (count > found)
+            return false;
+
+        for (Integer index : ammo.keySet()) {
+            ItemStack stack = ammo.get(index);
+            int removed = Math.min(count, stack.getAmount());
+            count -= removed;
+
+            if (stack.getAmount() == removed)
+                player.getInventory().setItem(index, null);
+            else
+                stack.setAmount(stack.getAmount() - removed);
+
+            if (count <= 0)
+                break;
+        }
+        player.updateInventory();
+        return true;
     }
 }

@@ -1,11 +1,11 @@
 package fr.silenthill99.principalplugin.listener;
 
-import fr.silenthill99.principalplugin.CustomFiles;
-import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.MySQL;
+import fr.silenthill99.principalplugin.*;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
 import org.bukkit.*;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,6 +17,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class Events implements Listener {
@@ -175,10 +177,25 @@ public class Events implements Listener {
 			if (event.getClickedBlock().getType().equals(Material.DROPPER)) {
 				event.setCancelled(true);
 				InventoryManager.openInventory(player, InventoryType.DISTRIBUTEUR);
+				return;
 			}
 			else if (event.getClickedBlock().getType().equals(Material.CAULDRON))
 			{
 				InventoryManager.openInventory(player, InventoryType.POUBELLE);
+				return;
+			}
+			BlockState state = event.getClickedBlock().getState();
+			if (state instanceof Sign) {
+				Sign sign = (Sign) state;
+				if (sign.getLine(0).equalsIgnoreCase("Traitement du") && sign.getLine(1).equalsIgnoreCase("fer")) {
+					if (event.getItem() == null) return;
+					if(event.getItem().getType().equals(Material.IRON_INGOT)) {
+						if (removeIron(player, 1)) {
+							player.sendMessage(ChatColor.GREEN + "Fer traité");
+							player.getInventory().addItem(Items.ARGENT.getItems().toItemStack());
+						}
+					}
+				}
 			}
 		}
 	}
@@ -218,5 +235,33 @@ public class Events implements Listener {
 			}
 			tchat.teleport(player.getLocation());
 		}
+	}
+
+	private boolean removeIron(Player player, int count) {
+		Map<Integer, ? extends ItemStack> ammo = player.getInventory().all(Material.IRON_INGOT);
+
+		int found = 0;
+		for (ItemStack stack : ammo.values()) {
+			if (stack.getType().equals(Material.IRON_INGOT))
+				found += stack.getAmount();
+		}
+		if (count > found)
+			return false;
+
+		for (Integer index : ammo.keySet()) {
+			ItemStack stack = ammo.get(index);
+			int removed = Math.min(count, stack.getAmount());
+			count -= removed;
+
+			if (stack.getAmount() == removed)
+				player.getInventory().setItem(index, null);
+			else
+				stack.setAmount(stack.getAmount() - removed);
+
+			if (count <= 0)
+				break;
+		}
+		player.updateInventory();
+		return true;
 	}
 }
