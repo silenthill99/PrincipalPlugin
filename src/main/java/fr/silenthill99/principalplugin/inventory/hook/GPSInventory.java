@@ -126,10 +126,11 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
     }
 
     public enum Gps {
+        BANQUE("Banque", new Location(world, 48.446, 64, -82.616)),
+        FRANCE_TRAVAIL("France travail", new Location(world, -148.3, 64.0, 10.4)),
         HOPITAL("Hôpital", new Location(world, 31.15, 64.0, 65.24)),
         MAGASIN_DE_MUSIQUE("Magasin de musique", new Location(world, -32.5, 64, 229.5)),
         MAIRIE("Mairie", new Location(world,-141.9, 64.0, -43.9)),
-        POLE_EMPLOI("Pôle emploi", new Location(world, -148.3, 64.0, 10.4)),
         PRISON("Prison", new Location(world, -307.6, 64, -91.9)),
         FOOT_AMERICAIN("Stade de foot américain", new Location(world, 133.5, 64, -95));
 
