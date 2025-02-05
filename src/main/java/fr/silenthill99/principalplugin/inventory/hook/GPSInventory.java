@@ -40,10 +40,7 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             for (String gps : Main.getInstance().getConfig().getConfigurationSection("locations").getKeys(false))
             {
                 String name = Main.getInstance().getConfig().getString("locations." + gps + ".name");
-                double x = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.x");
-                double y = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.y");
-                double z = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.z");
-                holder.gps.put(slot, new Location(world, x, y, z));
+                holder.gps.put(slot, name);
                 inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(name).toItemStack());
             }
         }
@@ -54,17 +51,25 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
 
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, GPSHolder holder) {
-        Location gps = holder.gps.get(e.getSlot());
+        String gps = holder.gps.get(e.getSlot());
         switch(current.getType())
         {
             case FILLED_MAP:
             {
                 player.closeInventory();
-                GPSTimer gpsTimer = new GPSTimer(player, gps);
+
+                double x = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.x");
+                double y = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.y");
+                double z = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.z");
+
+                Location loc = new Location(world, x, y, z);
+
+                GPSTimer gpsTimer = new GPSTimer(player,loc);
                 if (gpsValuables.containsKey(player)) {
                     gpsValuables.get(player).cancel();
                 }
                 gpsValuables.put(player, gpsTimer.runTaskTimer(main, 0, 1));
+                player.sendMessage(ChatColor.GREEN + " Destination : " + Main.getInstance().getConfig().get("locations." + gps + ".name"));
                 break;
             }
             case SUNFLOWER:
@@ -129,30 +134,4 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
         }
         return direction;
     }
-
-//    public enum Gps {
-//        BANQUE("Banque", new Location(world, 48.446, 64, -82.616)),
-//        FRANCE_TRAVAIL("France travail", new Location(world, -148.3, 64.0, 10.4)),
-//        HOPITAL("Hôpital", new Location(world, 31.15, 64.0, 65.24)),
-//        MAGASIN_DE_MUSIQUE("Magasin de musique", new Location(world, -32.5, 64, 229.5)),
-//        MAIRIE("Mairie", new Location(world,-141.9, 64.0, -43.9)),
-//        PRISON("Prison", new Location(world, -307.6, 64, -91.9)),
-//        FOOT_AMERICAIN("Stade de foot américain", new Location(world, 133.5, 64, -95));
-//
-//        private final String name;
-//        private final Location coord;
-//
-//        Gps(String name, Location coord) {
-//            this.name = name;
-//            this.coord = coord;
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        public Location coord() {
-//            return coord;
-//        }
-//    }
 }
