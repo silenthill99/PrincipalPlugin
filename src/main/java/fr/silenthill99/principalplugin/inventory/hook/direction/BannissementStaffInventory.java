@@ -84,7 +84,8 @@ public class BannissementStaffInventory extends AbstractInventory<BannissementSt
     public enum Sanctions {
         CORRUPTION("Corruption", "Corruption (A ne pas débannir)"),
         DISCRIMINATION("Discrimination", "Discrimination (A ne pas débannir)"),
-        HARCELEMENT("Harcèlement", "Harcèlement (A ne pas débannir)");
+        HARCELEMENT("Harcèlement", "Harcèlement (A ne pas débannir)"),
+        TCHAO("Tu n'es plus le bienvenu sur le serveur", "Tu n'es plus le bienvenu sur le serveur");
 
         private final String name;
         private final String reason;

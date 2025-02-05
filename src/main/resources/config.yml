@@ -2,3 +2,20 @@ prefix: "&b[Oxydia &6RP&b]"
 
 messages:
   - "Un souci avec un joueur ? Veuillez faire /report"
+  - "Nous rappelons qu'il est interdit de s'introduire dans le bâtiment staff sous peine de sanctions plus ou moins lourdes"
+  - "Le règlement est considéré comme lu et approuvé dès votre arrivée sur le serveur. Merci de votre compréhension"
+
+locations:
+  banque:
+    name: "Banque"
+    coord:
+      x: 48
+      y: 64
+      z: -83
+
+  france_travail:
+    name: "France travail"
+    coord:
+      x: -149
+      y: 64
+      z: 10

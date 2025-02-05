@@ -1,8 +1,6 @@
 package fr.silenthill99.principalplugin.commands;
 
 import fr.silenthill99.principalplugin.CustomFiles;
-import fr.silenthill99.principalplugin.Main;
-import fr.silenthill99.principalplugin.Variables;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -11,21 +9,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.List;
 
 public class Hrp implements CommandExecutor
 {
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args)
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String msg, String[] args)
     {
         if (!(sender instanceof Player))
         {
-            sender.sendMessage("Cette commande ne peutêtre éxécutée par la console !");
+            sender.sendMessage("Cette commande ne peut être éxécutée par la console !");
             return false;
         }
 
