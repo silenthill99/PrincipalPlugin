@@ -2,6 +2,7 @@ package fr.silenthill99.principalplugin.inventory.hook;
 
 import fr.silenthill99.principalplugin.ItemBuilder;
 import fr.silenthill99.principalplugin.Main;
+import fr.silenthill99.principalplugin.MySQL;
 import fr.silenthill99.principalplugin.inventory.AbstractInventory;
 import fr.silenthill99.principalplugin.inventory.InventoryManager;
 import fr.silenthill99.principalplugin.inventory.InventoryType;
@@ -15,6 +16,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,49 +32,77 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
 
     public static Map<Player, BukkitTask> gpsValuables = new HashMap<>();
 
+    private static final String WORLD_NAME = "Bessemer City V2.1.1 World";
+
     @Override
     public void openInventory(Player p, Object... args)
     {
+        World world = Bukkit.getWorld(WORLD_NAME);
+        if (world == null) {
+            p.sendMessage(ChatColor.RED + "Erreur: Le monde n'est pas chargé !");
+            return;
+        }
+
         GPSHolder holder = new GPSHolder();
 
         ItemStack arreter = new ItemBuilder(Material.RED_WOOL).setName(ChatColor.RED + "Arrêter le gps !").toItemStack();
 
         Inventory inv = createInventory(holder, 54, "GPS");
-        int slot = 0;
-        if (Main.getInstance().getConfig().contains("locations")) {
-            for (String gps : Main.getInstance().getConfig().getConfigurationSection("locations").getKeys(false))
-            {
-                String name = Main.getInstance().getConfig().getString("locations." + gps + ".name");
-                holder.gps.put(slot, name);
-                inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(name).toItemStack());
-            }
-        }
+
         inv.setItem(45, arreter);
         inv.setItem(inv.getSize()-1, RETOUR);
-        p.openInventory(inv);
+
+        final World finalWorld = world;
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            HashMap<String, Location> locations = new HashMap<>();
+            try (Connection conn = MySQL.getInstance().getConnection();
+                 PreparedStatement statement = conn.prepareStatement("SELECT * FROM locations");
+                 ResultSet rs = statement.executeQuery()) {
+
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    double x = Double.parseDouble(rs.getString("x"));
+                    double y = Double.parseDouble(rs.getString("y"));
+                    double z = Double.parseDouble(rs.getString("z"));
+
+                    locations.put(name, new Location(finalWorld, x, y, z));
+                }
+
+                // Retour sur le thread principal pour manipuler l'inventaire
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                    int slot = 0;
+                    for (Map.Entry<String, Location> entry : locations.entrySet()) {
+                        holder.gps.put(slot, locations);
+                        inv.setItem(slot++, new ItemBuilder(Material.FILLED_MAP).setName(entry.getKey()).toItemStack());
+                    }
+                    p.openInventory(inv);
+                });
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
     public void manageInventory(InventoryClickEvent e, ItemStack current, Player player, GPSHolder holder) {
-        String gps = holder.gps.get(e.getSlot());
+        HashMap<String, Location> gps = holder.gps.get(e.getSlot());
         switch(current.getType())
         {
             case FILLED_MAP:
             {
                 player.closeInventory();
 
-                double x = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.x");
-                double y = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.y");
-                double z = Main.getInstance().getConfig().getDouble("locations." + gps + ".coord.z");
+                String destinationName = current.getItemMeta().getDisplayName();
+                Location loc = gps.get(destinationName);
 
-                Location loc = new Location(world, x, y, z);
-
-                GPSTimer gpsTimer = new GPSTimer(player,loc);
+                GPSTimer gpsTimer = new GPSTimer(player, loc);
                 if (gpsValuables.containsKey(player)) {
                     gpsValuables.get(player).cancel();
                 }
                 gpsValuables.put(player, gpsTimer.runTaskTimer(main, 0, 1));
-                player.sendMessage(ChatColor.GREEN + " Destination : " + Main.getInstance().getConfig().get("locations." + gps + ".name"));
+                player.sendMessage(ChatColor.GREEN + " Destination : " + destinationName);
+
                 break;
             }
             case SUNFLOWER:
@@ -94,7 +127,6 @@ public class GPSInventory extends AbstractInventory<GPSHolder> {
             }
         }
     }
-    static World world = Bukkit.getWorld("world");
 
     public static String getArrowTo(Player p, Location loc) {
         Location playerLocation = p.getLocation();

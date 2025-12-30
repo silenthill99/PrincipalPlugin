@@ -60,6 +60,7 @@ public final class Main extends JavaPlugin
     private void commands()
     {
         getCommand("action").setExecutor(new Action());
+        getCommand("add-gps-coord").setExecutor(new AddGPSCoord());
         getCommand("aide").setExecutor(new Aide());
         getCommand("administrateur").setExecutor(new Administrateur());
         getCommand("administrateur").setTabCompleter(new Staff());

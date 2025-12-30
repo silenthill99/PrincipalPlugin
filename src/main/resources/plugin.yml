@@ -10,6 +10,9 @@ softdepend: [ LuckPerms ]
 
 commands:
   action:
+  add-gps-coord:
+    permission: oxydia.add-gps-coord
+    description: Ajoute les coordonnées pour le GPS
   administrateur:
     aliases: admin
     permission: oxydia.admin

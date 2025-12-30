@@ -1,8 +1,6 @@
 package fr.silenthill99.principalplugin;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class MySQL
@@ -15,7 +13,7 @@ public class MySQL
         if (instance == null) {
             instance = new MySQL();
         }
-        instance.connect("minecraft118.omgserv.com", 3306, "minecraft_235640", "minecraft_235640", "Mylene.10");
+        instance.connect("sql3.minestrator.com", 3306, "minesr_wACHU9Fo", "minesr_wACHU9Fo", "fyuJevJQiCuwzEYx");
         return instance;
     }
 
@@ -57,9 +55,9 @@ public class MySQL
 
     /**
      * Récupérer la connection
+     *
      * @return connection
      */
-
     public Connection getConnection() {
         return conn;
     }
