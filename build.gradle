@@ -31,7 +31,7 @@ dependencies {
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 }
 
-def targetJavaVersion = 25
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
